@@ -1,0 +1,98 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.main {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.section {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 20px;
+
+    &__image {
+        filter: grayscale(50%);
+        width: 45vw;
+        max-width: 700px;
+        min-width: 400px;
+        height: auto;
+        animation: left 1.5s ease;
+    }
+    &__title {
+        font-weight: 300;
+        font-size:$size_h1;
+        letter-spacing: 0.05em;
+        width: min-content;
+        text-align: end;
+        animation: right 1.5s ease;
+        // &:last-child {
+        //     animation: left 1.5s ease;
+        // }
+    }
+    &__text {
+        font-weight: 400;
+        font-size:$size_text;
+        width: 35vw;
+        max-width: 800px;
+        text-align: end;
+        animation: down 1.1s ease;
+    }
+    &__button {
+        animation: down 1.5s ease;
+    }
+    &__box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    &__block {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+    }
+}
+
+
+.cont {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    flex-wrap: nowrap;
+    gap: 35px;
+}
+
+@media (max-width: 760px) {
+    .section {
+        flex-direction: column;
+        &__image {
+            display: none;
+        }
+        &__title {
+            text-align: center;
+            font-size: $size_min_h1;
+        }
+        &__text {
+            width: 90vw;
+            text-align: center;
+            font-size: $size_min_text;
+        }
+        &__block {
+            align-items: center;
+        }
+    }
+    .cont {
+        align-items: center;
+        
+    }
+}

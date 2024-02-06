@@ -1,0 +1,79 @@
+@use "/app/styles/sizes.scss" as *;
+@use "/app/styles/animate.scss" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap");
+
+.section {
+    width: 100%;
+    animation: down 1.8s ease;
+    padding: 30px 0 50px;
+
+    &__title {
+        margin: 0px 0 30px;
+        text-align: center;
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: 300;
+        font-size: $size_h2;
+    }
+
+    &__block {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        animation: left 1.5s ease ;
+    }
+
+    &__image {
+        width: 45vw;
+        animation: right 1s ease ;
+        height: auto;
+    }
+}
+.cont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 0 30px;
+}
+.box {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &__card {
+        width: 2em;
+        height: 2em;
+    }
+
+    &__text {
+        font-family:  inherit;
+        font-weight: 400;
+        font-size: $size_text;
+    }
+}
+@media (max-width: 760px) {
+    .section {
+        &__title {
+            font-size: $size__min_h2;
+        }
+
+        &__image {
+            display: none;
+        }
+    }
+    .cont {
+        flex-direction: column;
+    }
+    .box {
+        
+        &__card {
+            width: $size__min_h2;
+            height: $size__min_h2;
+        }
+    
+        &__text {
+            font-size: $size_min_text;
+        }
+    }
+}

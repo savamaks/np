@@ -1,0 +1,38 @@
+@use "/app/styles/color.scss" as *;
+
+.burger {
+    z-index: 555;
+    border: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+    &__line {
+        width: 3em;
+        height: 0.4em;
+        background: $color_f2;
+        transition: all 0.3s ease;
+    }
+}
+
+.up {
+    transform: translateY(0.9em) rotate(-45deg);
+}
+.center {
+    opacity: 0;
+}
+.down {
+    transform: translateY(-0.9em) rotate(45deg);
+}
+.active {
+    position: fixed;
+    top: 5%;
+    right: 15%;
+}
+
+@media (min-width: 760px) {
+    .burger {
+        display: none;
+    }
+}

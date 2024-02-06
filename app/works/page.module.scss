@@ -1,0 +1,63 @@
+@use "/app/styles/animate.scss" as *;
+
+.section {
+    width: 90%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    animation: down 1.5s ease;
+
+    &__modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.644);
+        display: flex;
+        flex-direction: column;
+        z-index: 2;
+        align-items: center;
+        justify-content: center;
+
+        &_close {
+            animation: right 1s ease;
+            color: white;
+            position: absolute;
+            top: 2em;
+            right: 3em;
+        }
+
+        &_image {
+            animation: scale 0.5s ease;
+            width: 90vw;
+            max-width: 1440px;
+            height: auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+    }
+
+    &__box {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px 15px;
+
+        &_image {
+            max-width: 23%;
+            min-width: 300px;
+            max-height: 25vh;
+            z-index: 1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            object-fit: cover;
+            &:hover {
+                transform: scale(1.03);
+            }
+        }
+    }
+}

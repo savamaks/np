@@ -1,0 +1,35 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.644);
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+
+    &_close {
+        animation: up 0.3s ease-out;
+        color: white;
+        position: absolute;
+        top: 2em;
+        right: 3em;
+    }
+
+    &_image {
+        animation: scale 0.5s ease;
+        width: 90vw;
+        max-width: 1440px;
+        height: auto;
+        max-height: 90vh;
+        object-fit: contain;
+    }
+}

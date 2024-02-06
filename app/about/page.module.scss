@@ -1,0 +1,10 @@
+.cont{
+
+    &__img{
+        background-image: url('/3.jpg');
+        background-size:cover;
+        background-position: center center;
+        width: 100%;
+        height: 700px;
+    }
+}

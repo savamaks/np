@@ -1,0 +1,31 @@
+@use "/app/styles/color.scss" as *;
+
+.cont {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    &__phone {
+        color: $color_text;
+        transition: all 0.3s ease;
+        &:hover {
+            transform: scale(0.95);
+        }
+    }
+    &__image {
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: scale(0.95);
+        }
+    }
+}
+
+@media (max-width: 760px) {
+    .cont {
+        &__image {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
