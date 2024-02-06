@@ -12,7 +12,7 @@ const open: NextFont = Open_Sans({
 
 export const metadata: Metadata = {
     title: {
-        default: "Натяжные потолки",
+        default: "Натяжные потолки | Петрозаводск, Кондопога",
         template: "Натяжные потолки | %s",
     },
     description:
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "",
         description: "",
-        images: ["https://ptz-potolki.ru/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FIMG_20191223_204535.e4ffaa1d.jpg&w=1200&q=75"],
+        images: ["https://ptz-potolki.ru/_next/image?url=%2Filumination%2Flight%2F1.jpg&w=640&q=75"],
     },
 };
 
