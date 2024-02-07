@@ -6,6 +6,7 @@ import Image from "next/image";
 import photo from "@/public/imagesWork/IMG_20191223_204535.jpg";
 import Link from "next/link";
 import Advantage from "./components/advantages/Advantage";
+import FormTelegram from "./components/FormTelegram/FormTelegram";
 
 export default function Home() {
     return (
@@ -24,9 +25,10 @@ export default function Home() {
                             Производим установку натяжных потолков в Петрозаводске, Кондопоге и соседних районах по выгодным ценам. Занимаемся
                             производством потолочных конструкций из качественых матералов.
                         </p>
-                        <Link className={s.section__button} href="tel:+79602136949">
+                        {/* <Link className={s.section__button} href="tel:+79602136949">
                             <button>заказать замер</button>
-                        </Link>
+                        </Link> */}
+                        <FormTelegram />
                     </div>
                 </section>
                 <Advantage />
