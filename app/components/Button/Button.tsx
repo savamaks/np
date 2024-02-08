@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { FC, ReactNode, MouseEvent } from "react";
+import s from './Button.module.scss'
 
 interface IButton {
     children: ReactNode;
@@ -14,7 +15,6 @@ const Button: FC<IButton> = ({ children, className, path }) => {
     const router = useRouter();
 
     const click = (e: MouseEvent<HTMLButtonElement>) => {
-        console.log(path);
         router.push(`/services/${path}`);
     };
     return (

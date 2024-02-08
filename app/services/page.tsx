@@ -2,12 +2,13 @@ import React, { FC, Suspense } from "react";
 import Layout from "../components/layout/layout";
 import s from "./page.module.scss";
 import Image from "next/image";
-import Button from "../components/Button";
+import Button from "../components/Button/Button";
 import { IData, data } from "@/data";
 import cn from "classnames";
 import getBase64 from "../_handlerFunc/getLocalBase64";
 import { Metadata } from "next";
 import Link from "next/link";
+import FormTelegram from "../components/FormTelegram/FormTelegram";
 
 const getData = async () => {
     // await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -24,13 +25,12 @@ const Services = async () => {
     return (
         <Layout>
             <main className={s.section}>
-                <Link className={s.section__button} href="tel:+79602136949">
-                    <button>заказать замер</button>
-                </Link>
+                <FormTelegram />
+
                 <h1 className={cn(s.section__title)}>Виды услуг</h1>
                 <div className={s.section__box}>
                     {data.map(async (el: IData, index: number) => {
-                        const myBlurDataUrl = await getBase64(`http://localhost:3000/${el.name}/${el.image}`);
+                        const myBlurDataUrl = await getBase64(`http://localhost:3030/${el.name}/${el.image}`);
 
                         return (
                             <div key={index} className={cn(s.card)}>

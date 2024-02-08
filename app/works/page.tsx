@@ -8,8 +8,9 @@ import { toBase64, shimmer } from "../_handlerFunc/toBase64";
 import Modal from "../components/Modal/Modal";
 import Link from "next/link";
 import { IImages,IMouseEvent } from "../types";
-import Button from "../components/Button";
+import Button from "../components/Button/Button";
 import { images } from "@/data";
+import FormTelegram from "../components/FormTelegram/FormTelegram";
 
 
 
@@ -22,9 +23,8 @@ const CatalogWork = () => {
     return (
         <Layout>
             <section className={cn(s.section)}>
-                <Link className={s.section__button} href="tel:+79602136949">
-                    <Button>заказать замер</Button>
-                </Link>
+            <FormTelegram />
+
                 {srcFullImage !== "" && <Modal src={srcFullImage} setSrc={setSrcFullImage} />}
 
                 <div className={s.section__box}>

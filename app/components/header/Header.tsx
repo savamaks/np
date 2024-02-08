@@ -9,9 +9,19 @@ import cn from "classnames";
 
 const Header = () => {
     const [active, setActive] = useState(false);
+    const [animate, setAnimate] = useState(false);
+
     const burgerClick = () => {
+        setAnimate((a) => !a);
+        if (active) {
+            const timer = setTimeout(() => {
+                setActive((prev) => !prev);
+            }, 500);
+            return () => clearTimeout(timer);
+        }
         setActive((prev) => !prev);
     };
+    console.log(animate,active);
     return (
         <header className={cn(s.header)}>
             <Link className={cn(s.nav_link, active && s.deactive)} href="/">
@@ -41,7 +51,7 @@ const Header = () => {
 
             <Burger setActive={burgerClick} active={active} />
             {active && (
-                <div className={s.menu}>
+                <div className={cn(s.menu, !animate && active ? s.close : "")}>
                     <Nav />
                 </div>
             )}

@@ -15,6 +15,7 @@ body {
     margin: 0 auto;
     width: 100vw;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -22,14 +23,12 @@ body {
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
+    // background: #1a708f;
     background: linear-gradient(149deg, #70e6ce 0%, #6ec5ee 32%, #1a708f 72%, rgb(166, 43, 236) 100%);
     animation: gradient 10s infinite linear; // 10s - скорость анимации
     background-size: 300%; // Можно менять и подбирать интенсивность    width: 97%;
     color: $color_text;
-    /* background-image: url(/leibl.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center; */
+    
 }
 
 @keyframes gradient {
@@ -66,12 +65,7 @@ button {
     padding: 10px 15px;
     text-transform: uppercase;
     font-size: 1em;
-    transition: all 0.3s ease;
-    animation: right 1.5s ease;
-
-    &:hover {
-        transform: scale(0.95);
-    }
+    
 }
 /* @media (prefers-color-scheme: dark) {
     html {

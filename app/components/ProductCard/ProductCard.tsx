@@ -12,6 +12,7 @@ import { toBase64, shimmer } from "@/app/_handlerFunc/toBase64";
 import { useResize } from "@/app/Hooks/useResize";
 import Modal from "../Modal/Modal";
 import { IMouseEvent } from "@/app/types";
+import FormTelegram from "../FormTelegram/FormTelegram";
 
 const ProductCard = ({ el }: any) => {
     const { size } = useResize();
@@ -54,9 +55,8 @@ const ProductCard = ({ el }: any) => {
                 />
                 <p className={s.section__cont_text}>{el.description}</p>
             </div>
-            <Link className={s.section__button} href="tel:+79602136949">
-                <button>заказать замер</button>
-            </Link>
+            <FormTelegram />
+
             <h1 className={cn(s.section__title)}>Галерея</h1>
             <div className={s.section__slider}>
                 <Slider {...settings}>

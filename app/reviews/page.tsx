@@ -6,15 +6,14 @@ import Image from "next/image";
 import { IReview, arrRewiews } from "@/data";
 import star from "@/public/star.svg";
 import Link from "next/link";
-import Button from "../components/Button";
+import FormTelegram from "../components/FormTelegram/FormTelegram";
 
 export default async function Page() {
     return (
         <Layout>
             <section className={cn(s.section)}>
-                <Link className={s.section__button} href="tel:+79602136949">
-                    <Button>заказать замер</Button>
-                </Link>
+            <FormTelegram />
+
                 <div  className={cn(s.section__box)}>
                     {arrRewiews.map((el: IReview, index: number) => {
                         return (

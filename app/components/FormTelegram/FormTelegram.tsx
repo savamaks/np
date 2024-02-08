@@ -6,6 +6,7 @@ import cn from "classnames";
 import { TelegramBot } from "@/app/_handlerFunc/telegramBot";
 import Image from "next/image";
 import krestik from "@/public/krestik.svg";
+import PhoneInput from "react-phone-input-2";
 
 const FormTelegram = () => {
     const [active, setActive] = useState(false);
@@ -14,7 +15,18 @@ const FormTelegram = () => {
     const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
     const [result, setResult] = useState<boolean | undefined>(false);
+    const [valid, setValid] = useState(true);
 
+    const validatePhone = (input: string) => {
+        const phonePatern = /^\d{11}$/;
+        return phonePatern.test(input);
+    };
+
+    const changeNumber = (value: string) => {
+        setPhone(value);
+        setValid(validatePhone(value));
+        setError("");
+    };
     const clickActive = () => {
         setActive((prev) => !prev);
     };
@@ -37,12 +49,12 @@ const FormTelegram = () => {
 
     const sendApplication = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (name === "" || adress === "" || phone === "") {
+        if (name === "" || adress === "" || phone === "" || !valid) {
             setError("Заполните все поля ввода");
             return;
         }
 
-        const res = await TelegramBot({ name, adress, phone });
+        const res = await TelegramBot({ name, adress, phone: `+${phone}` });
 
         setResult(res);
     };
@@ -50,13 +62,15 @@ const FormTelegram = () => {
         if (result) {
             const timer = setTimeout(() => {
                 clickActive();
-            }, 3000);
+            }, 5000);
             return () => clearTimeout(timer);
         }
     }, [result]);
     return (
         <div className={cn(s.container)}>
-            <button onClick={clickActive}>Заявка на замер</button>
+            <button className={cn(s.container__button)} onClick={clickActive}>
+                Заявка на замер
+            </button>
             {active && (
                 <div className={cn(s.modal)}>
                     <form className={cn(s.modal__form)}>
@@ -92,16 +106,18 @@ const FormTelegram = () => {
                                 <div className={cn(s.modal__form_box)}>
                                     <label className={cn(s.modal__form_label)} htmlFor="">
                                         Телефон
+                                        <PhoneInput
+                                            specialLabel=""
+                                            disableCountryGuess
+                                            inputClass={cn(s.modal__form_input)}
+                                            country="ru"
+                                            value={phone}
+                                            onChange={changeNumber}
+                                            placeholder="+7 (900) 123-45-67"
+                                        />
                                     </label>
-                                    <input
-                                        onChange={changePhone}
-                                        value={phone}
-                                        className={cn(s.modal__form_input)}
-                                        type="tel"
-                                        name="phone_number"
-                                        placeholder="+7 (900) 123-45-67"
-                                    />
                                 </div>
+
                                 <div className={cn(s.modal__form_error)}>{error}</div>
                                 <button disabled={error !== "" && true} onClick={sendApplication} className={cn(s.modal__form_button)}>
                                     Отправить заявку
