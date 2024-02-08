@@ -3,6 +3,7 @@ import "./globals.scss";
 import cn from "classnames";
 import { Metadata } from "next";
 import { NextFont } from "next/dist/compiled/@next/font";
+import Head from "next/head";
 
 const open: NextFont = Open_Sans({
     subsets: ["latin", "cyrillic"],
@@ -27,6 +28,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
+            <Head>
+                <link rel="svg" href="/icon?<generated>" type="image/<generated>" sizes="<generated>" />
+            </Head>
             <html lang="ru">
                 <body className={cn(open.className)}>{children}</body>
             </html>

@@ -1,4 +1,4 @@
-import React, { FC, Suspense } from "react";
+import React from "react";
 import Layout from "../components/layout/layout";
 import s from "./page.module.scss";
 import Image from "next/image";

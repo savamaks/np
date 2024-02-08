@@ -55,6 +55,11 @@
             width: 100%;
             padding: 5px 10px;
             font-size: $size_text;
+            border-radius: 10px;
+            border:none;
+            box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+            margin-top: 5px;
+           
         }
         &_error {
             height: 20px;
@@ -64,6 +69,7 @@
             align-self: center;
         }
         &_button {
+            box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
             animation: none;
             margin-top: 30px;
             &:disabled {
@@ -84,8 +90,12 @@
         animation: none;
         align-self: end;
         color: white;
+        &:hover{
+            animation: vibration .1s ease infinite;
+        }
     }
 
+   
     &_image {
         animation: scale 0.5s ease;
         width: 90vw;

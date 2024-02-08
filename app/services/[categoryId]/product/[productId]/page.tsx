@@ -1,8 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 import Layout from "../../../../components/layout/layout";
 import { IData, IProduct, data } from "@/data";
 import ProductCard from "@/app/components/ProductCard/ProductCard";
-import Loading from "@/app/loading";
 import { Metadata } from "next";
 
 const getData = async () => {
@@ -18,7 +17,6 @@ export default async function Page({ params }: { params: { categoryId: string; p
 
     return (
         <Layout>
-            <Suspense fallback={<Loading />}>
                 <main>
                     {data.map((category: IData, index: number) => {
                         if (category.name !== params.categoryId) return;
@@ -32,7 +30,6 @@ export default async function Page({ params }: { params: { categoryId: string; p
                         );
                     })}
                 </main>
-            </Suspense>
         </Layout>
     );
 }

@@ -72,8 +72,13 @@ const FormTelegram = () => {
                 Заявка на замер
             </button>
             {active && (
-                <div className={cn(s.modal)}>
-                    <form className={cn(s.modal__form)}>
+                <div onClick={clickActive} className={cn(s.modal)}>
+                    <form
+                        onClick={(e: MouseEvent<HTMLFormElement>) => {
+                            e.stopPropagation();
+                        }}
+                        className={cn(s.modal__form)}
+                    >
                         <button className={cn(s.modal__close)} onClick={clickActive}>
                             <Image src={krestik} alt="close" width={18} height={18} />
                         </button>
@@ -100,7 +105,7 @@ const FormTelegram = () => {
                                         onChange={changeAdress}
                                         className={cn(s.modal__form_input)}
                                         type="text"
-                                        placeholder="Введите адрес..."
+                                        placeholder="Введите адрес: город, улица, дом, кв..."
                                     />
                                 </div>
                                 <div className={cn(s.modal__form_box)}>

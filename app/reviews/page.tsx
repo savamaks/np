@@ -12,9 +12,9 @@ export default async function Page() {
     return (
         <Layout>
             <section className={cn(s.section)}>
-            <FormTelegram />
+                <FormTelegram />
 
-                <div  className={cn(s.section__box)}>
+                <div className={cn(s.section__box)}>
                     {arrRewiews.map((el: IReview, index: number) => {
                         return (
                             <div key={index} className={cn(s.section__card)}>
@@ -27,7 +27,7 @@ export default async function Page() {
                                     <Image src={star} alt="star" width={20} height={20} />
                                     <Image src={star} alt="star" width={20} height={20} />
                                 </div>
-                                <p className={cn(s.section__card_text)}>{el.date}</p>
+                                <p className={cn(s.section__card_text, s.date)}>{el.date}</p>
                                 <p className={cn(s.section__card_text)}>{el.text}</p>
                             </div>
                         );

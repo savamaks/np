@@ -3,7 +3,7 @@
         transform: translate(-150px, 0);
         opacity: 0;
     }
-    
+
     100% {
         opacity: 1;
         transform: translate(0, 0);
@@ -57,5 +57,22 @@
     }
     100% {
         transform: scale(1);
+    }
+}
+@keyframes vibration {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-3deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(3deg);
+    }
+    100% {
+        transform: rotate(0deg);
     }
 }

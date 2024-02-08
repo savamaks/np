@@ -17,11 +17,13 @@
     justify-content: center;
 
     &_close {
-        animation: up 0.3s ease-out;
         color: white;
         position: absolute;
         top: 2em;
         right: 3em;
+        &:hover{
+            animation: vibration .1s ease infinite;
+        }
     }
 
     &_image {
