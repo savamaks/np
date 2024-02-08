@@ -1,6 +1,6 @@
 @use "/app/styles/color.scss" as *;
 
-.section{
+.section {
     width: 100vw;
     max-width: 1440px;
     margin: 0 auto;
@@ -11,30 +11,42 @@
 }
 
 .loader {
-    width: 120px;
-    height: 120px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     position: relative;
-    background-image: linear-gradient($color_text 30px, transparent 0), linear-gradient($color_f7 30px, transparent 0),
-        linear-gradient($color_f7 30px, transparent 0), linear-gradient($color_text 30px, transparent 0);
-    background-repeat: no-repeat;
-    background-size: 30px 30px;
-    background-position: left top, left bottom, right top, right bottom;
     animation: rotate 1s linear infinite;
 }
+.loader::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    animation: prixClipFix 2s linear infinite;
+}
+
 @keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes prixClipFix {
     0% {
-        width: 120px;
-        height: 120px;
-        transform: rotate(0deg);
+        clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+    }
+    25% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
     }
     50% {
-        width: 30px;
-        height: 30px;
-        transform: rotate(180deg);
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+    }
+    75% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
     }
     100% {
-        width: 120px;
-        height: 120px;
-        transform: rotate(360deg);
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
     }
 }

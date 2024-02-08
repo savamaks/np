@@ -24,13 +24,12 @@ body {
     justify-content: space-between;
     min-height: 100vh;
     // background: #305478;
-    background: linear-gradient(149deg, #70e6ce 0%, #6ec5ee 32%, #1a708f 72%, rgb(166, 43, 236) 100%);
+    background: linear-gradient(142deg, rgba(110,197,238,1) 10%, rgba(26,112,143,1) 64%, rgba(251,164,38,1) 100%);
     animation: gradient 10s infinite linear; // 10s - скорость анимации
     background-size: 300%; // Можно менять и подбирать интенсивность    width: 97%;
     color: $color_text;
     
 }
-
 @keyframes gradient {
     0% {
         background-position: 80% 0%;

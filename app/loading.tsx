@@ -6,7 +6,7 @@ const Loading = () => {
     return (
         <Layout>
             <section className={s.section}>
-                <div className={s.loader}></div>
+                <span className={s.loader}></span>
             </section>
         </Layout>
     );
