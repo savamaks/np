@@ -21,7 +21,6 @@ const Header = () => {
         }
         setActive((prev) => !prev);
     };
-    console.log(animate,active);
     return (
         <header className={cn(s.header)}>
             <Link className={cn(s.nav_link, active && s.deactive)} href="/">
