@@ -4,12 +4,14 @@ import s from "@/app/styles/NotFound.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import emot from "@/public/emot.svg";
+import FormTelegram from "./components/FormTelegram/FormTelegram";
 
 const NotFound = async () => {
     return (
         <Layout>
             <main className={s.section}>
-                {/* <Image src={emot} alt="emotion" width={200} height={200}/> */}
+            <FormTelegram />
+
                 <svg height="50%" version="1.1" viewBox="0 0 24 24" width="50%">
                     <g className={s.g} id="Social-/-5---Social,-emoticon,-neutral,-somewhat-icon">
                         <path

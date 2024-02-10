@@ -25,9 +25,23 @@
         height: auto;
         animation: left 1.5s ease;
     }
+    
+
+    @keyframes tr {
+        0% {
+            transform: translate(0, -200px);
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+
+            transform: translate(0, 0);
+        }
+    }
     &__title {
+        text-shadow: (2px 2px 10px rgba(0, 0, 0, 0.603));
         font-weight: 300;
-        font-size:$size_h1;
+        font-size: $size_h1;
         letter-spacing: 0.05em;
         width: min-content;
         text-align: end;
@@ -38,7 +52,7 @@
     }
     &__text {
         font-weight: 400;
-        font-size:$size_text;
+        font-size: $size_text;
         width: 35vw;
         max-width: 800px;
         text-align: end;
@@ -62,7 +76,6 @@
         align-items: end;
     }
 }
-
 
 .cont {
     display: flex;
@@ -93,6 +106,5 @@
     }
     .cont {
         align-items: center;
-        
     }
 }
