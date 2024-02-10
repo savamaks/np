@@ -25,41 +25,7 @@
         height: auto;
         animation: left 1.5s ease;
     }
-    &__cont {
-        display: flex;
-        &_title {
-            text-shadow: (2px 2px 10px rgba(0, 0, 0, 0.603));
-            font-weight: 300;
-            font-size: $size_h1;
-            letter-spacing: 0.05em;
-            width: min-content;
-            text-align: end;
-            &:nth-child(1) {
-                animation: tr 0.6s ease;
-            }
-            &:nth-child(2) {
-                animation: tr 0.8s ease;
-            }
-            &:nth-child(3) {
-                animation: tr 1s ease;
-            }
-            &:nth-child(4) {
-                animation: tr 1.2s ease;
-            }
-            &:nth-child(5) {
-                animation: tr 1.4s ease;
-            }
-            &:nth-child(6) {
-                animation: tr 1.6s ease;
-            }
-            &:nth-child(7) {
-                animation: tr 1.8s ease;
-            }
-            &:nth-child(8) {
-                animation: tr 2s ease;
-            }
-        }
-    }
+    
 
     @keyframes tr {
         0% {

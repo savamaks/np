@@ -17,18 +17,7 @@ export default function Home() {
 
                     <div className={s.cont}>
                         <div className={cn(s.section__block)}>
-                            <div className={cn(s.section__cont)}>
-                                <h1 className={cn(s.section__cont_title)}>Н</h1>
-                                <h1 className={cn(s.section__cont_title)}>а</h1>
-                                <h1 className={cn(s.section__cont_title)}>т</h1>
-                                <h1 className={cn(s.section__cont_title)}>я</h1>
-                                <h1 className={cn(s.section__cont_title)}>ж</h1>
-                                <h1 className={cn(s.section__cont_title)}>н</h1>
-                                <h1 className={cn(s.section__cont_title)}>ы</h1>
-                                <h1 className={cn(s.section__cont_title)}>е</h1>
-
-                            </div>
-
+                            <h1 className={cn(s.section__title)}>Натяжные</h1>
                             <h1 className={cn(s.section__title)}>Потолки</h1>
                         </div>
 
