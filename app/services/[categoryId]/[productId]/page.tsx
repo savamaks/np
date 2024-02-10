@@ -9,10 +9,6 @@ const getData = async () => {
     return data;
 };
 
-// export const metadata: Metadata = {
-//     title: "Услуги",
-// };
-
 export const generateMetadata = async ({ params }: { params: { categoryId: string; productId: string } }): Promise<Metadata> => {
     const dataProduct = await getData();
     const dataCategory = dataProduct.filter((el) => el.name === params.categoryId);
