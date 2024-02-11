@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "",
         description: "",
-        images: ["/ilumination/light/1.jpg"],
+        images: ["https://ptz-potolki.ru/ilumination/light/1.jpg"],
     },
     twitter: {
         card: "summary",
