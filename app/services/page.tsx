@@ -7,7 +7,6 @@ import { IData, data } from "@/data";
 import cn from "classnames";
 import getBase64 from "../_handlerFunc/getLocalBase64";
 import { Metadata } from "next";
-import Link from "next/link";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
 
 const getData = async () => {

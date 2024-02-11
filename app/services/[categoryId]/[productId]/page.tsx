@@ -17,16 +17,16 @@ const getData = async () => {
     return data;
 };
 
-//генерация страниц на сервере по полученым данным
-export const generateStaticParams = async ({ params }: { params: { categoryId: string; productId: string } }) => {
-    const dataProduct = await getData();
+// //генерация страниц на сервере по полученым данным
+// export const generateStaticParams = async ({ params }: { params: { categoryId: string; productId: string } }) => {
+//     const dataProduct = await getData();
 
-    const dataCategory = dataProduct.filter((el) => el.id === params.categoryId);
+//     const dataCategory = dataProduct.filter((el) => el.id === params.categoryId);
 
-    return dataCategory.map(({ id }) => {
-        id;
-    });
-};
+//     return dataCategory.map(({ id }) => {
+//         id;
+//     });
+// };
 
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string; productId: string } }): Promise<Metadata> => {
