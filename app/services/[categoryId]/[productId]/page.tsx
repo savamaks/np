@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../../components/layout/layout";
-import {  IProduct, data } from "@/data";
+import { IProduct, data } from "@/data";
 import { Metadata } from "next";
 import NotFound from "@/app/not-found";
 import Image from "next/image";
@@ -11,21 +11,23 @@ import { toBase64, shimmer } from "@/app/_handlerFunc/toBase64";
 import FormTelegram from "@/app/components/FormTelegram/FormTelegram";
 import SliderCont from "@/app/components/Slider/SliderCont";
 
-
 //получение данных
 const getData = async () => {
     return data;
 };
 
-// //генерация страниц на сервере по полученым данным
+//генерация страниц на сервере по полученым данным
 // export const generateStaticParams = async ({ params }: { params: { categoryId: string; productId: string } }) => {
-//     const dataProduct = await getData();
+//     const dataCategory = await getData();
 
-//     const dataCategory = dataProduct.filter((el) => el.id === params.categoryId);
-
-//     return dataCategory.map(({ id }) => {
-//         id;
+//     let arrId:Array<string> = [];
+//     dataCategory.map(({ products }) => {
+//         products.map(({ id }) => {
+//             arrId.push(id);
+//         });
 //     });
+
+//     return arrId.map((el) => el);
 // };
 
 //генерация метаданных
