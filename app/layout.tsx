@@ -23,6 +23,9 @@ export const metadata: Metadata = {
         description: "",
         images: ["/ilumination/light/1.jpg"],
     },
+    twitter: {
+        card: "summary",
+    },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,0 +1,37 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap");
+
+.slider {
+    position: relative;
+    width: 90vw;
+    height: auto;
+    padding: 20px;
+    max-width: 1200px;
+    animation: down 1s ease;
+    &__box {
+        width: 100%;
+    }
+
+    &_image {
+        width: 100%;
+        max-height: 500px;
+        padding: 15px 10px;
+        object-fit: cover;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 760px) {
+    .slider {
+        width: 90vw;
+        &_image {
+            width: 100%;
+            height: clamp(200px, 350px, 600px);
+            padding: 15px 10px;
+            object-fit: cover;
+        }
+    }
+}

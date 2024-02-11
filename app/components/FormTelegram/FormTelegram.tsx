@@ -7,6 +7,7 @@ import { TelegramBot } from "@/app/_handlerFunc/telegramBot";
 import Image from "next/image";
 import krestik from "@/public/krestik.svg";
 import PhoneInput from "react-phone-input-2";
+import { data } from "@/data";
 
 const FormTelegram = () => {
     const [active, setActive] = useState(false);

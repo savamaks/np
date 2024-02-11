@@ -11,12 +11,14 @@ import Link from "next/link";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
 
 const getData = async () => {
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
     return data;
 };
 
 export const metadata: Metadata = {
     title: "Услуги",
+    twitter: {
+        card: "summary",
+    },
 };
 
 //страница категории
@@ -30,13 +32,13 @@ const Services = async () => {
                 <h1 className={cn(s.section__title)}>Виды услуг</h1>
                 <div className={s.section__box}>
                     {data.map(async (el: IData, index: number) => {
-                        const myBlurDataUrl = await getBase64(`http://localhost:3030/${el.name}/${el.image}`);
+                        const myBlurDataUrl = await getBase64(`http://localhost:3030/${el.id}/${el.image}`);
 
                         return (
                             <div key={index} className={cn(s.card)}>
                                 <Image
                                     className={s.card__image}
-                                    src={`/${el.name}/${el.image}`}
+                                    src={`/${el.id}/${el.image}`}
                                     loading="lazy"
                                     width={400}
                                     height={300}
@@ -48,7 +50,7 @@ const Services = async () => {
                                     <h3 className={cn(s.card__cont_title)}>{el.title}</h3>
                                     <p className={s.card__cont_text}>{el.description}</p>
                                     {el.products && el.products.length > 0 && (
-                                        <Button path={el.name} className={s.card__cont_button}>
+                                        <Button path={el.id} className={s.card__cont_button}>
                                             Подробнее
                                         </Button>
                                     )}

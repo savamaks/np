@@ -11,33 +11,48 @@ import { Metadata } from "next";
 import FormTelegram from "@/app/components/FormTelegram/FormTelegram";
 import NotFound from "@/app/not-found";
 
+//получение данных
 const getData = async () => {
     return data;
 };
 
+//генерация страниц на сервере по полученым данным
+export const generateStaticParams = async () => {
+    
+    const dataProduct = await getData();
+
+    return dataProduct.map(({ id }) => {
+        id;
+    });
+};
+
+//генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string } }): Promise<Metadata> => {
     const dataProduct = await getData();
-    const dataCategory = dataProduct.filter((el) => el.name === params.categoryId);
+    const dataCategory = dataProduct.filter((el) => el.id === params.categoryId);
 
     if (dataCategory.length <= 0) return {};
 
     const title = dataCategory[0].title;
     const description = dataCategory[0].description;
-    const name = dataCategory[0].name;
+    const name = dataCategory[0].id;
 
     return {
         title: title,
         description: description,
         openGraph: {
-            images: [`/${dataCategory[0].name}/1.jpg`],
+            images: [`/${dataCategory[0].id}/1.jpg`],
+        },
+        twitter: {
+            card: "summary",
         },
     };
 };
 
-//страница продукта
-export default async function Page({ params }: { params: { categoryId: string } }) {
+//страница списка продукции из категории
+const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
     const data = await getData();
-    const dataCategory = data.filter((el) => el.name === params.categoryId);
+    const dataCategory = data.filter((el) => el.id === params.categoryId);
 
     if (dataCategory.length > 0) {
         return (
@@ -57,13 +72,13 @@ export default async function Page({ params }: { params: { categoryId: string } 
                                 </nav>
                                 <h1 className={cn(s.section__title)}>{el.title}</h1>
                                 {el.products.map(async (el: IProduct, index: number) => {
-                                    const myBlurDataUrl = await getBase64(`http://localhost:3030/${el.parentPath}/${el.name}/${el.images[0]}`);
+                                    const myBlurDataUrl = await getBase64(`http://localhost:3030/${el.parentPath}/${el.id}/${el.images[0]}`);
 
                                     return (
                                         <div key={index} className={s.card}>
                                             <Image
                                                 className={s.card__image}
-                                                src={`/${el.parentPath}/${el.name}/${el.images[0]}`}
+                                                src={`/${el.parentPath}/${el.id}/${el.images[0]}`}
                                                 loading="lazy"
                                                 width={400}
                                                 height={300}
@@ -75,7 +90,7 @@ export default async function Page({ params }: { params: { categoryId: string } 
                                             <div className={s.card__cont}>
                                                 <h3 className={cn(s.card__cont_title)}>{el.title}</h3>
                                                 <p className={s.card__cont_text}>{el.description}</p>
-                                                <Button path={`${el.parentPath}/${el.name}`} className={s.card__cont_button}>
+                                                <Button path={`${el.parentPath}/${el.id}`} className={s.card__cont_button}>
                                                     Подробнее
                                                 </Button>
                                             </div>
@@ -91,4 +106,5 @@ export default async function Page({ params }: { params: { categoryId: string } 
     } else {
         return <NotFound />;
     }
-}
+};
+export default CategoryPage
