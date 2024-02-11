@@ -7,8 +7,16 @@ import { IReview, arrRewiews } from "@/data";
 import star from "@/public/star.svg";
 import Link from "next/link";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
+import { Metadata } from "next";
 
-export default async function Page() {
+export const metadata: Metadata = {
+    title: "Отзывы",
+    twitter: {
+        card: "summary",
+    },
+};
+
+const ReviewsPage = async () => {
     return (
         <Layout>
             <section className={cn(s.section)}>
@@ -36,4 +44,5 @@ export default async function Page() {
             </section>
         </Layout>
     );
-}
+};
+export default ReviewsPage

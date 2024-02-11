@@ -18,7 +18,7 @@ const getData = async () => {
 
 //генерация страниц на сервере по полученым данным
 export const generateStaticParams = async () => {
-    
+
     const dataProduct = await getData();
 
     return dataProduct.map(({ id }) => {
@@ -41,7 +41,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
         title: title,
         description: description,
         openGraph: {
-            images: [`/${dataCategory[0].id}/1.jpg`],
+            images: [`https://ptz-potolki.ru/${dataCategory[0].id}/1.jpg`],
         },
         twitter: {
             card: "summary",
@@ -72,7 +72,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                                 </nav>
                                 <h1 className={cn(s.section__title)}>{el.title}</h1>
                                 {el.products.map(async (el: IProduct, index: number) => {
-                                    const myBlurDataUrl = await getBase64(`http://localhost:3030/${el.parentPath}/${el.id}/${el.images[0]}`);
+                                    const myBlurDataUrl = await getBase64(`https://ptz-potolki.ru/${el.parentPath}/${el.id}/${el.images[0]}`);
 
                                     return (
                                         <div key={index} className={s.card}>

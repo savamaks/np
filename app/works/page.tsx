@@ -1,19 +1,23 @@
 "use client";
-import React, { useState, MouseEvent } from "react";
+import React, { useState } from "react";
 import s from "./page.module.scss";
 import Image from "next/image";
 import Layout from "../components/layout/layout";
 import cn from "classnames";
 import { toBase64, shimmer } from "../_handlerFunc/toBase64";
 import Modal from "../components/Modal/Modal";
-import Link from "next/link";
 import { IImages,IMouseEvent } from "../types";
-import Button from "../components/Button/Button";
 import { images } from "@/data";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
+import { Metadata } from "next";
 
 
-
+export const metadata: Metadata = {
+    title: "Наши работы",
+    twitter: {
+        card: "summary",
+    },
+};
 const CatalogWork = () => {
     const [srcFullImage, setSrcFullImage] = useState("");
 

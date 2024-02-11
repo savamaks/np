@@ -47,7 +47,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
         openGraph: {
             title: "",
             description: "",
-            images: [`/${parentPath}/${id}/1.jpg`],
+            images: [`https://ptz-potolki.ru/${parentPath}/${id}/1.jpg`],
         },
     };
 };

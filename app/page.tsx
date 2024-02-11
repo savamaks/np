@@ -8,7 +8,7 @@ import Link from "next/link";
 import Advantage from "./components/advantages/Advantage";
 import FormTelegram from "./components/FormTelegram/FormTelegram";
 
-export default function Home() {
+const Home = () => {
     return (
         <Layout>
             <main className={s.main}>
@@ -33,4 +33,5 @@ export default function Home() {
             </main>
         </Layout>
     );
-}
+};
+export default Home;

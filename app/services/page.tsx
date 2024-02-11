@@ -32,7 +32,7 @@ const Services = async () => {
                 <h1 className={cn(s.section__title)}>Виды услуг</h1>
                 <div className={s.section__box}>
                     {data.map(async (el: IData, index: number) => {
-                        const myBlurDataUrl = await getBase64(`http://localhost:3030/${el.id}/${el.image}`);
+                        const myBlurDataUrl = await getBase64(`https://ptz-potolki.ru/${el.id}/${el.image}`);
 
                         return (
                             <div key={index} className={cn(s.card)}>
