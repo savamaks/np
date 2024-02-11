@@ -12,12 +12,7 @@ import FormTelegram from "../components/FormTelegram/FormTelegram";
 import { Metadata } from "next";
 
 
-export const metadata: Metadata = {
-    title: "Наши работы",
-    twitter: {
-        card: "summary",
-    },
-};
+
 const CatalogWork = () => {
     const [srcFullImage, setSrcFullImage] = useState("");
 
