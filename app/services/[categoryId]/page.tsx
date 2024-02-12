@@ -19,9 +19,9 @@ const getData = async () => {
 //генерация страниц на сервере по полученым данным
 export const generateStaticParams = async () => {
     
-    const dataProduct = await getData();
+    const data = await getData();
 
-    return dataProduct.map(({ id }) => {
+    return data.map(({ id }) => {
         id;
     });
 };
