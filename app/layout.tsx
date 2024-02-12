@@ -33,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <>
             <Head>
                 <link rel="svg" href="/icon?<generated>" type="image/<generated>" sizes="<generated>" />
+                <link rel="apple-touch-icon" href="/apple-icon?<generated>" type="image/<generated>" sizes="<generated>" />
             </Head>
             <html lang="ru">
                 <body className={cn(open.className)}>{children}</body>
