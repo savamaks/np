@@ -1,0 +1,46 @@
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.form {
+    animation: opacity 0.3s ease;
+    width: 50%;
+    max-width: 750px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 40px;
+    border-radius: 20px;
+    background: $BG_MAIN;
+    gap: 20px;
+
+    &__label {
+        font-size: $size_text;
+    }
+
+    &__input {
+        width: 100%;
+        padding: 5px 10px;
+        font-size: $size_text;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+        margin-top: 5px;
+    }
+    &__error {
+        height: 20px;
+        font-size: $size_text;
+        text-align: center;
+        color: rgb(231, 107, 107);
+        align-self: center;
+    }
+    &__button {
+        box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+        animation: none;
+        margin-top: 30px;
+        &:disabled {
+            transform: none;
+            cursor: not-allowed;
+        }
+    }
+}

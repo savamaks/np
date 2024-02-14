@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  image       Photo     @relation(fields: [photoId], references: [id])
+  products    Product[]
+  photoId     String
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  photo       Photo[]
+}
+
+model Photo {
+  id         String     @id @default(cuid())
+  name       String?
+  type       String?
+  accessLink String?
+  size       Float?     @default(0)
+  path       String?    @default("")
+  // name?: string — название отношения;
+  //fields?: [field1, field2, ...fieldN] — список полей текущей модели (в нашем случае это [author_id] модели Post);
+  // обратите внимание: само поле определяется отдельно);
+  //references: [field1, field2, ...fieldN] — список полей другой модели (стороны отношений) (в нашем случае это [id] модели User).
+  product    Product    @relation(fields: [productId], references: [id])
+  productId  String
+  date       String
+  Category   Category[]
+  
+}
