@@ -1,16 +1,40 @@
-import { data } from "@/data";
-import { url } from "inspector";
 import { MetadataRoute } from "next";
+import { ICategory, IProduct } from "./types";
+
+const getData = async () => {
+    try {
+        const response = await fetch(`http://wclouds.ru/api/categories?populate=*`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
+            },
+        });
+        const data = response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-    const idCategory: MetadataRoute.Sitemap = data.map(({ id }) => ({
-        url: `https://ptz-potolki.ru/services/${id}`,
+    const data = await getData();
+    const categories: Array<ICategory> = data.data;
+
+    const idCategory: MetadataRoute.Sitemap = categories.map(({ attributes }) => ({
+
+        url: `https://ptz-potolki.ru/services/${attributes.title}`,
     }));
+
     let idProduct: Array<string> = [];
-    data.map((el) => {
-        el.products.map(({ parentPath, id }) => {
-            idProduct.push(`https://ptz-potolki.ru/services/${parentPath}/${id}`);
-        });
+
+    categories.map((el) => {
+        const products = el.attributes.products;
+
+            products.data.map(({ attributes }) => {
+                idProduct.push(`https://ptz-potolki.ru/services/${ el.attributes.title}/${attributes.title}`);
+            });
+        
     });
 
     const linkProduct: MetadataRoute.Sitemap = idProduct.map((el) => ({
@@ -27,7 +51,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
             url: "https://ptz-potolki.ru/works",
         },
         ...idCategory,
-        ...linkProduct,
+        ...linkProduct
     ];
 };
 

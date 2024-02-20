@@ -2,11 +2,17 @@
 const nextConfig = {
     images: {
         remotePatterns: [
+          // {
+          //   protocol: 'http',
+          //   hostname: 'localhost',
+          //   port: '3030',
+          //   pathname: '/_next/image',
+          // },
           {
             protocol: 'http',
-            hostname: 'localhost',
-            port: '3030',
-            pathname: '/_next/image',
+            hostname: 'wclouds.ru',
+            port: '',
+            pathname: '/uploads/**',
           },
         ],
       },

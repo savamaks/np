@@ -1,4 +1,4 @@
-import { Open_Sans, Yanone_Kaffeesatz } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.scss";
 import cn from "classnames";
 import { Metadata } from "next";
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "",
         description: "",
-        images: ["https://ptz-potolki.ru/ilumination/light/1.jpg"],
+        images: ["http://wclouds.ru/uploads/light_2_c4fedcaf67.jpg"],
     },
     twitter: {
         card: "summary",

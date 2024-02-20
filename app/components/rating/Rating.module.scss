@@ -1,0 +1,33 @@
+
+.rating {
+    position: relative;
+    font-size: 40px;
+    align-self: self-start;
+    &__items {
+        position: relative;
+        display: flex;
+        flex-direction: row-reverse;
+        &_input {
+            position: absolute;
+            opacity: 0;
+            &:checked,
+            &:checked ~ .rating__items_label {
+                color: rgb(255, 217, 1);
+            }
+            &:hover,
+            &:hover ~ .rating__items_label {
+                color: rgb(245, 237, 135);
+            }
+        }
+        &_label {
+            height: 100%;
+            cursor: pointer;
+            color: #f2f2f2;
+            &::before {
+                text-shadow: 5px 5px 5px rgb(70, 70, 70);
+                content: "★";
+                transition: color 0.2s ease 0.05s;
+            }
+        }
+    }
+}

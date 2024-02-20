@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const Contacts = () => {
     return (
-        <div className={cn(s.cont)}>
+        <div id="contacts" className={cn(s.cont)}>
             <Link className={cn(s.cont__phone)} href="tel:+79602136949">
                 +7 (960) 213-69-49
             </Link>

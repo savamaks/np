@@ -3,12 +3,31 @@ import Layout from "./components/layout/layout";
 import s from "./page.module.scss";
 import cn from "classnames";
 import Image from "next/image";
-import photo from "@/public/imagesWork/IMG_20191223_204535.jpg";
-import Link from "next/link";
+import photo from "@/public/1.jpg";
 import Advantage from "./components/advantages/Advantage";
 import FormTelegram from "./components/FormTelegram/FormTelegram";
 
-const Home = () => {
+const getData = async () => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/main`, {
+            method: "GET",
+            next: {
+                revalidate: 300,
+            },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
+            },
+        });
+        const data = res.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const Home = async () => {
+    const data = await getData();
     return (
         <Layout>
             <main className={s.main}>
@@ -21,10 +40,7 @@ const Home = () => {
                             <h1 className={cn(s.section__title)}>Потолки</h1>
                         </div>
 
-                        <p className={s.section__text}>
-                            Производим установку натяжных потолков в Петрозаводске, Кондопоге и соседних районах по выгодным ценам. Занимаемся
-                            производством потолочных конструкций из качественых матералов.
-                        </p>
+                        <p className={s.section__text}>{data.data.attributes.text}</p>
 
                         <FormTelegram />
                     </div>

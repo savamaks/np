@@ -3,11 +3,13 @@
 @use "/app/styles/sizes.scss" as *;
 
 .section {
+    margin: 0 auto;
     display: flex;
     gap: 20px;
     flex-direction: column;
     align-items: center;
     padding: 0px 20px;
+    max-width: 1440px;
     &__box {
         display: flex;
         gap: 20px 30px;
