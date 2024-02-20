@@ -11,7 +11,7 @@ const getData = async () => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/work-photos?populate=*`, {
             method: "GET",
             next: {
-                revalidate: 300,
+                revalidate: 0,
             },
             headers: {
                 "Content-Type": "application/json",

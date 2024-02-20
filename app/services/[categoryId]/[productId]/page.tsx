@@ -18,7 +18,7 @@ const getData = async (categoriesId: string) => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?populate[products][populate][0]=images`, {
             method: "GET",
             next: {
-                revalidate: 300,
+                revalidate: 0,
             },
             headers: {
                 "Content-Type": "application/json",

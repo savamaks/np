@@ -12,7 +12,7 @@ const getData = async () => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/main`, {
             method: "GET",
             next: {
-                revalidate: 300,
+                revalidate: 0,
             },
             headers: {
                 "Content-Type": "application/json",
