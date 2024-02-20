@@ -9,7 +9,7 @@ const nextConfig = {
           //   pathname: '/_next/image',
           // },
           {
-            protocol: 'http',
+            protocol: 'https',
             hostname: 'wclouds.ru',
             port: '',
             pathname: '/uploads/**',
