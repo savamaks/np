@@ -1,21 +1,29 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, {  FC } from "react";
 import s from "./Nav.module.scss";
 
-const Nav = () => {
+interface IProps {
+    setActive?: () => void;
+}
+const Nav: FC<IProps> = ({ setActive }) => {
     return (
         <nav className={s.nav}>
-            <Link className={s.nav_link} href="/">
+            <Link onClick={setActive} className={s.nav_link} href="/">
                 Главная
             </Link>
-            <Link className={s.nav_link} href="/services">
+            <Link onClick={setActive} className={s.nav_link} href="/services">
                 Услуги
             </Link>
-            <Link className={s.nav_link} href="/works">
+            <Link onClick={setActive} className={s.nav_link} href="/works">
                 Наши работы
             </Link>
-            <Link className={s.nav_link} href="/reviews">
+            <Link onClick={setActive} className={s.nav_link} href="/reviews">
                 Отзывы
+            </Link>
+            <Link onClick={setActive} className={s.nav_link} href="#contacts">
+                Контакты
             </Link>
         </nav>
     );

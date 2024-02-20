@@ -18,7 +18,6 @@
     gap: 20px;
 
     &__image {
-        filter: grayscale(50%);
         width: 45vw;
         max-width: 700px;
         min-width: 400px;
@@ -46,9 +45,7 @@
         width: min-content;
         text-align: end;
         animation: right 1.5s ease;
-        // &:last-child {
-        //     animation: left 1.5s ease;
-        // }
+       
     }
     &__text {
         font-weight: 400;

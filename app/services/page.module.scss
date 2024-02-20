@@ -3,6 +3,7 @@
 @use "/app/styles/sizes.scss" as *;
 
 .section {
+    scroll-behavior: smooth;
     margin: 20px auto;
     display: flex;
     flex-direction: column;

@@ -1,21 +1,24 @@
 "use client";
 
 import React, { useState, MouseEvent, ChangeEvent, useEffect } from "react";
-import s from "./FormTelegram.module.scss";
+import s from "./WriteRewiev.module.scss";
 import cn from "classnames";
-import {  TelegramBotRequest } from "@/app/_handlerFunc/telegramBot";
+import { TelegramBotRewievs } from "@/app/_handlerFunc/telegramBot";
 import Image from "next/image";
 import krestik from "@/public/krestik.svg";
 import PhoneInput from "react-phone-input-2";
+import Rating from "../rating/Rating";
+import { createRewiev } from "@/app/_handlerFunc/createRewiev";
 
-const FormTelegram = () => {
+const WriteRewiev = () => {
     const [active, setActive] = useState(false);
     const [name, setName] = useState("");
-    const [adress, setAdress] = useState("");
+    const [rewiev, setRewiev] = useState("");
     const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
     const [result, setResult] = useState<boolean | undefined>(false);
     const [valid, setValid] = useState(true);
+    const [rating, setRating] = useState("");
 
     const validatePhone = (input: string) => {
         const phonePatern = /^\d{11}$/;
@@ -36,28 +39,25 @@ const FormTelegram = () => {
         setName(e.target.value);
         setError("");
     };
-    const changeAdress = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeRewiev = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
-        setAdress(e.target.value);
-        setError("");
-    };
-    const changePhone = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        setPhone(e.target.value);
+        setRewiev(e.target.value);
         setError("");
     };
 
     const sendApplication = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (name === "" || adress === "" || phone === "" || !valid) {
+        if (name === "" || rewiev === "" || phone === "" || !valid || rating === "") {
             setError("Заполните все поля ввода");
             return;
         }
 
-        const res = await TelegramBotRequest({ name, adress, phone: `+${phone}` });
+        const res = await TelegramBotRewievs({ name, rewiev, phone: `+${phone}`, rating });
+        const create = await createRewiev({ name, rewiev, phone: `+${phone}`, rating });
 
-        setResult(res);
+        setResult(create);
     };
+    
     useEffect(() => {
         if (result) {
             const timer = setTimeout(() => {
@@ -69,7 +69,7 @@ const FormTelegram = () => {
     return (
         <div className={cn(s.container)}>
             <button className={cn(s.container__button)} onClick={clickActive}>
-                Заявка на замер
+                Оставить отзыв
             </button>
             {active && (
                 <div onClick={clickActive} className={cn(s.modal)}>
@@ -84,7 +84,7 @@ const FormTelegram = () => {
                         </button>
                         {!result ? (
                             <>
-                                <div className={cn(s.modal__form_box)}>
+                                <div title="Введите свое имя..." className={cn(s.modal__form_box)}>
                                     <label className={cn(s.modal__form_label)} htmlFor="">
                                         Имя
                                     </label>
@@ -96,19 +96,24 @@ const FormTelegram = () => {
                                         placeholder="Введите свое имя..."
                                     />
                                 </div>
-                                <div className={cn(s.modal__form_box)}>
+                                <div title="Будем благодарны за ваш отзыв!" className={cn(s.modal__form_box)}>
                                     <label className={cn(s.modal__form_label)} htmlFor="">
-                                        Адрес
+                                        Отзыв
                                     </label>
-                                    <input
-                                        value={adress}
-                                        onChange={changeAdress}
-                                        className={cn(s.modal__form_input)}
-                                        type="text"
-                                        placeholder="Введите адрес: город, улица, дом, кв..."
+                                    <textarea
+                                        value={rewiev}
+                                        onChange={changeRewiev}
+                                        className={cn(s.modal__form_textArea, s.review)}
+                                        placeholder="Напишите отзыв..."
                                     />
                                 </div>
                                 <div className={cn(s.modal__form_box)}>
+                                    <label className={cn(s.modal__form_label)} htmlFor="">
+                                        Оцените нашу работу
+                                    </label>
+                                    <Rating setRating={setRating} setError={setError} />
+                                </div>
+                                <div title="Введите номер телефона..." className={cn(s.modal__form_box)}>
                                     <label className={cn(s.modal__form_label)} htmlFor="">
                                         Телефон
                                         <PhoneInput
@@ -125,11 +130,11 @@ const FormTelegram = () => {
 
                                 <div className={cn(s.modal__form_error)}>{error}</div>
                                 <button disabled={error !== "" && true} onClick={sendApplication} className={cn(s.modal__form_button)}>
-                                    Отправить заявку
+                                    Опубликовать отзыв
                                 </button>
                             </>
                         ) : (
-                            <p className={cn(s.modal__form_text)}> Спасибо за ваше обращение, в ближайшее время с вами свяжутся 😉</p>
+                            <p className={cn(s.modal__form_text)}> Спасибо за ваш отзыв, в ближайшее время мы его опубликуем😉</p>
                         )}
                     </form>
                 </div>
@@ -138,4 +143,4 @@ const FormTelegram = () => {
     );
 };
 
-export default FormTelegram;
+export default WriteRewiev;

@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../../../components/layout/layout";
-import { IProduct, data } from "@/data";
 import { Metadata } from "next";
 import NotFound from "@/app/not-found";
 import Image from "next/image";
@@ -10,91 +9,94 @@ import Link from "next/link";
 import { toBase64, shimmer } from "@/app/_handlerFunc/toBase64";
 import FormTelegram from "@/app/components/FormTelegram/FormTelegram";
 import SliderCont from "@/app/components/Slider/SliderCont";
+import { ICategory, IProduct } from "@/app/types";
+import getBase64 from "@/app/_handlerFunc/getLocalBase64";
 
 //получение данных
-const getData = async () => {
-    return data;
+const getData = async (categoriesId: string) => {
+    try {
+        const response = await fetch(`http://wclouds.ru/api/categories?populate[products][populate][0]=images`, {
+            method: "GET",
+            next:{
+                revalidate:300
+            },
+            headers: {
+                "Content-Type": "application/json",
+                
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
+            },
+        });
+        const data = response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
 };
-
-//генерация страниц на сервере по полученым данным
-// export const generateStaticParams = async () => {
-//     const data = await getData();
-
-//     let arr: Array<IProduct> = [];
-//     data.map(({ products }) => {
-//         products.map((el) => {
-//             arr.push(el);
-//         });
-//     });
-
-//     return arr.map((el) => ({
-//         categoryId: el.parentPath,
-//         productId: el.id,
-//     }));
-// };
 
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string; productId: string } }): Promise<Metadata> => {
-    const dataProduct = await getData();
-    const dataCategory = dataProduct.filter((el) => el.id === params.categoryId);
-    const product = dataCategory[0].products.filter((el) => el.id === params.productId);
+    const data = await getData(params.categoryId);
+    const category:Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
+    const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
 
     if (product.length <= 0) return {};
 
-    const title = product[0].title;
-    const description = product[0].description;
-    const parentPath = product[0].parentPath;
-    const id = product[0].id;
-
+    const title = product[0].attributes.name;
+    const description = product[0].attributes.description;
+    const srcImage = process.env.NEXT_PUBLIC_SRC_STRAPI+product[0].attributes.images.data[0].attributes.url
     return {
         title: title,
         description: description,
         openGraph: {
             title: "",
             description: "",
-            images: [`https://ptz-potolki.ru/${parentPath}/${id}/1.jpg`],
+            images: [srcImage],
         },
     };
 };
 
 //страница продукта
 const ProductPage = async ({ params }: { params: { categoryId: string; productId: string } }) => {
-    const data = await getData();
-    const dataCategory = data.filter((el) => el.id === params.categoryId);
-    const dataProduct = dataCategory[0].products.filter((el) => el.id === params.productId);
+    const data = await getData(params.categoryId);
+    const category:Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
+    const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
 
-    if (dataProduct.length > 0) {
+    if (product.length > 0) {
         return (
             <Layout>
                 <main>
-                    {dataProduct.map((product: IProduct, index: number) => {
+                    {product.map(async(product: IProduct, index: number) => {
+                        
+                        const myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.images.data[0].attributes.url}`);
+
                         return (
                             <section key={index} className={s.section}>
                                 <nav className={s.section__nav}>
                                     <p>
                                         {<Link href="/services">Услуги</Link>}
                                         {" > "}
-                                        {<Link href={`/services/${product.parentPath}`}>{product.parentName}</Link>}
+                                        {<Link href={`/services/${params.categoryId}`}>{category[0].attributes.name}</Link>}
                                         {" > "}
-                                        {product.title}
+                                        {product.attributes.name}
                                     </p>
                                 </nav>
-                                <h1 className={cn(s.section__title)}>{product.title}</h1>
+                                <h1 className={cn(s.section__title)}>{product.attributes.name}</h1>
                                 <div className={s.section__cont}>
                                     <Image
                                         className={s.section__cont_image}
-                                        src={`/${product.parentPath}/${product.id}/${product.images[0]}`}
+                                        src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.images.data[0].attributes.url}`}
                                         alt="img"
                                         width={600}
                                         height={450}
-                                        placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(100, 75))}`}
+                                        placeholder="blur"
+                                        blurDataURL={myBlurDataUrl}
                                     />
-                                    <p className={s.section__cont_text}>{product.description}</p>
+                                    <p className={s.section__cont_text}>{product.attributes.description}</p>
                                 </div>
                                 <FormTelegram />
 
                                 <h1 className={cn(s.section__title)}>Галерея</h1>
-                                <SliderCont el={product} />
+                                <SliderCont el={product.attributes.images.data} />
                             </section>
                         );
                     })}

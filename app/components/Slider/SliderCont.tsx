@@ -1,7 +1,7 @@
 "use client";
 
 import { useResize } from "@/app/Hooks/useResize";
-import { IMouseEvent } from "@/app/types";
+import { IDataImage, IMouseEvent } from "@/app/types";
 import React, { FC, useState } from "react";
 import Image from "next/image";
 import s from "./SliderCont.module.scss";
@@ -33,18 +33,19 @@ const SliderCont: FC<any> = ({ el }) => {
             {srcFullImage !== "" && <Modal src={srcFullImage} setSrc={setSrcFullImage} />}
 
             <Slider {...settings}>
-                {el.images.map((image: string, index: number) => {
+                {el.map((image: IDataImage, index: number) => {
+                    
                     return (
                         <div key={index} className={s.slider_box}>
                             <Image
                                 onClick={clickImage}
-                                id={`/${el.parentPath}/${el.id}/${image}`}
+                                 id={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
                                 className={s.slider_image}
-                                src={`/${el.parentPath}/${el.id}/${image}`}
+                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
                                 alt="img"
                                 width={300}
                                 height={225}
-                                placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(2000, 1500))}`}
+                                placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(20, 15))}`}
                             />
                         </div>
                     );

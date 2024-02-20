@@ -26,11 +26,6 @@
 .down {
     transform: translateY(-0.9em) rotate(45deg);
 }
-.active {
-    position: fixed;
-    top: 5%;
-    right: 15%;
-}
 
 @media (min-width: 760px) {
     .burger {

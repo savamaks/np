@@ -3,7 +3,7 @@ import s from "./Advantage.module.scss";
 import galka from "../../../public/galka.png";
 import Image from "next/image";
 import potolok from "../../../public/3.jpg";
-import cn from 'classnames'
+import cn from "classnames";
 
 const Advantage = () => {
     return (
@@ -40,7 +40,7 @@ const Advantage = () => {
                         <h2 className={s.box__text}>Не требует подготовки основной поверхности потолка</h2>
                     </div>
                 </div>
-                <Image className={s.section__image} src={potolok} alt="" />
+                <Image className={s.section__image} src={potolok} alt="" width={1200} height={900} placeholder="blur" />
             </div>
         </section>
     );

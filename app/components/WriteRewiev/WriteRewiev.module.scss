@@ -1,0 +1,136 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.container {
+    &__button {
+        transition: all 0.3s ease;
+        animation: right 1.5s ease;
+        box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+
+        &:hover {
+            transform: scale(0.95);
+        }
+    }
+}
+.cont {
+    background: red;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.644);
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+
+    &__form {
+        animation: opacity 0.3s ease;
+        width: 50%;
+        max-width: 750px;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+        padding: 30px 40px;
+        border-radius: 20px;
+        background: $BG_MAIN;
+        gap: 20px;
+
+        &_box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &_label {
+            font-size: $size_text;
+        }
+
+        &_input {
+            width: 100%;
+            padding: 5px 10px;
+            font-size: $size_text;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+            margin-top: 5px;
+        }
+        &_textArea {
+            width: 100%;
+            min-height: 7em;
+            padding: 5px 10px;
+            font-size: $size_text;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+            margin-top: 5px;
+            resize: vertical;
+        }
+        &_error {
+            height: 20px;
+            font-size: $size_text;
+            text-align: center;
+            color: rgb(231, 107, 107);
+            align-self: center;
+        }
+        &_button {
+            box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+            animation: none;
+            margin-top: 30px;
+            &:disabled {
+                transform: none;
+                cursor: not-allowed;
+            }
+        }
+
+        &_text {
+            font-size: $size_text;
+            text-align: center;
+            padding-bottom: 30px;
+        }
+    }
+
+    &__close {
+        border: none;
+        animation: none;
+        align-self: end;
+        color: white;
+        &:hover {
+            animation: vibration 0.1s ease infinite;
+        }
+    }
+
+    &_image {
+        animation: scale 0.5s ease;
+        width: 90vw;
+        max-width: 1440px;
+        height: auto;
+        max-height: 90vh;
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 760px) {
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.644);
+        display: flex;
+        flex-direction: column;
+        z-index: 999;
+        align-items: center;
+        justify-content: center;
+
+        &__form {
+            width: 100%;
+        }
+    }
+}
