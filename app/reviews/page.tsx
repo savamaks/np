@@ -25,7 +25,7 @@ interface IData {
 }
 const getData = async () => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/rewiews`, {
+        const res = await fetch(`https://wclouds.ru/api/rewiews`, {
             method: "GET",
             next: {
                 revalidate: 0,

@@ -8,7 +8,7 @@ import FullImage from "../components/FullImages/FullImage";
 
 const getData = async () => {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/work-photos?populate=*`, {
+        const response = await fetch(`https://wclouds.ru/api/work-photos?populate=*`, {
             method: "GET",
             next: {
                 revalidate: 0,
