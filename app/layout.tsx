@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "",
         description: "",
-        images: ["http://wclouds.ru/uploads/light_2_c4fedcaf67.jpg"],
+        images: [`${process.env.NEXT_PUBLIC_SRC_STRAPI}/uploads/light_2_c4fedcaf67.jpg`],
     },
     twitter: {
         card: "summary",

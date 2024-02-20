@@ -15,14 +15,14 @@ import getBase64 from "@/app/_handlerFunc/getLocalBase64";
 //получение данных
 const getData = async (categoriesId: string) => {
     try {
-        const response = await fetch(`http://wclouds.ru/api/categories?populate[products][populate][0]=images`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?populate[products][populate][0]=images`, {
             method: "GET",
-            next:{
-                revalidate:300
+            next: {
+                revalidate: 300,
             },
             headers: {
                 "Content-Type": "application/json",
-                
+
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
             },
         });
@@ -36,14 +36,14 @@ const getData = async (categoriesId: string) => {
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string; productId: string } }): Promise<Metadata> => {
     const data = await getData(params.categoryId);
-    const category:Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
+    const category: Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
     const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
 
     if (product.length <= 0) return {};
 
     const title = product[0].attributes.name;
     const description = product[0].attributes.description;
-    const srcImage = process.env.NEXT_PUBLIC_SRC_STRAPI+product[0].attributes.images.data[0].attributes.url
+    const srcImage = process.env.NEXT_PUBLIC_SRC_STRAPI + product[0].attributes.images.data[0].attributes.url;
     return {
         title: title,
         description: description,
@@ -58,16 +58,17 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 //страница продукта
 const ProductPage = async ({ params }: { params: { categoryId: string; productId: string } }) => {
     const data = await getData(params.categoryId);
-    const category:Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
+    const category: Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
     const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
 
     if (product.length > 0) {
         return (
             <Layout>
                 <main>
-                    {product.map(async(product: IProduct, index: number) => {
-                        
-                        const myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.images.data[0].attributes.url}`);
+                    {product.map(async (product: IProduct, index: number) => {
+                        const myBlurDataUrl = await getBase64(
+                            `${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.images.data[0].attributes.url}`
+                        );
 
                         return (
                             <section key={index} className={s.section}>

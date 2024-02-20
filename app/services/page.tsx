@@ -12,7 +12,7 @@ import { ICategory } from "../types";
 
 const getData = async () => {
     try {
-        const response = await fetch("http://wclouds.ru/api/categories/?populate=*", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories/?populate=*`, {
             method: "GET",
             next:{
                 revalidate:300

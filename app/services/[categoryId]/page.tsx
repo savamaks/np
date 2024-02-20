@@ -13,7 +13,7 @@ import { ICategory, IProduct } from "@/app/types";
 
 const getData = async () => {
     try {
-        const response = await fetch(`http://wclouds.ru/api/categories?populate[products][populate][0]=images`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?populate[products][populate][0]=images`, {
             method: "GET",
             next:{
                 revalidate:300
@@ -31,7 +31,7 @@ const getData = async () => {
 };
 const getCategoryMeta = async () => {
     try {
-        const response = await fetch(`http://wclouds.ru/api/categories?populate=*`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?populate=*`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
