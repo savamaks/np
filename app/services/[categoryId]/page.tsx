@@ -16,7 +16,7 @@ const getData = async () => {
         const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=images`, {
             method: "GET",
             next: {
-                revalidate: 0,
+                revalidate: 300,
             },
             headers: {
                 "Content-Type": "application/json",
@@ -33,6 +33,9 @@ const getCategoryMeta = async () => {
     try {
         const response = await fetch(`https://wclouds.ru/api/categories?populate=*`, {
             method: "GET",
+            next: {
+                revalidate: 300,
+            },
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
@@ -45,12 +48,12 @@ const getCategoryMeta = async () => {
     }
 };
 //генерация страниц на сервере по полученым данным
-// export const generateStaticParams = async () => {
-//     const categoryData = await getData();
-//     const data: Array<ICategory> = categoryData.data;
+export const generateStaticParams = async () => {
+    const categoryData = await getData();
+    const data: Array<ICategory> = categoryData.data;
 
-//     return data.map(({ attributes }) => attributes.title);
-// };
+    return data.map(({ attributes }) => attributes.title);
+};
 
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string } }): Promise<Metadata> => {
@@ -62,7 +65,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 
     const title = data[0].attributes.name;
     const description = data[0].attributes.description;
-    const srcImage = "https://wclouds.ru" + data[0].attributes.image.data.attributes.url;
+    const srcImage = "https://wclouds.ru" + data[0].attributes.image.data.attributes.formats.small.url;
 
     return {
         title: title,
@@ -80,7 +83,6 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
     const categoryData = await getData();
     const data: Array<ICategory> = categoryData.data.filter((el: ICategory) => el.attributes.title === params.categoryId);
-
     if (data.length !== 0) {
         return (
             <Layout>
@@ -98,7 +100,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                         let srcImage = "";
 
                         if (el.attributes.images.data !== null) {
-                            srcImage += "https://wclouds.ru" + el.attributes.images.data[0].attributes.url;
+                            srcImage += "https://wclouds.ru" + el.attributes.images.data[0].attributes.formats.small.url;
                         } else {
                             srcImage += "https://wclouds.ru" + "/uploads/assets_0f9f13cb55.png";
                         }

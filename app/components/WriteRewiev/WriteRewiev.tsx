@@ -61,7 +61,7 @@ const WriteRewiev = () => {
     useEffect(() => {
         if (result) {
             const timer = setTimeout(() => {
-                clickActive();
+                setActive(false);
             }, 5000);
             return () => clearTimeout(timer);
         }

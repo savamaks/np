@@ -28,7 +28,7 @@ const getData = async () => {
         const res = await fetch(`https://wclouds.ru/api/rewiews`, {
             method: "GET",
             next: {
-                revalidate: 0,
+                revalidate: 300,
             },
             headers: {
                 "Content-Type": "application/json",

@@ -1,5 +1,4 @@
-import  { MouseEvent } from "react";
-
+import { MouseEvent } from "react";
 
 export interface IImages {
     src: string;
@@ -15,6 +14,17 @@ export interface IMouseEvent extends MouseEvent<HTMLImageElement> {
 export interface IDataImage {
     id: string;
     attributes: {
+        formats: {
+            small: {
+                url: string;
+            };
+            medium: {
+                url: string;
+            };
+            large?: {
+                url: string;
+            };
+        };
         name: string;
         url: string;
     };
@@ -44,6 +54,14 @@ export interface ICategory {
         image: {
             data: {
                 attributes: {
+                    formats: {
+                        small: {
+                            url: string;
+                        };
+                        medium: {
+                            url: string;
+                        };
+                    };
                     url: string;
                 };
             };

@@ -11,7 +11,7 @@ const getData = async () => {
         const response = await fetch(`https://wclouds.ru/api/work-photos?populate=*`, {
             method: "GET",
             next: {
-                revalidate: 0,
+                revalidate: 300,
             },
             headers: {
                 "Content-Type": "application/json",

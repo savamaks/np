@@ -15,7 +15,7 @@ const getData = async () => {
         const response = await fetch(`https://wclouds.ru/api/categories/?populate=*`, {
             method: "GET",
             next:{
-                revalidate:0
+                revalidate:300
             },
             headers: {
                 "Content-Type": "application/json",
@@ -36,16 +36,6 @@ export const metadata: Metadata = {
     },
 };
 
-//генерация страниц на сервере по полученым данным
-// export const generateStaticParams = async () => {
-//     const categoryData = await getData();
-//     const data: Array<ICategory> = categoryData.data;
-
-//     return data.map(({ attributes }) => attributes.title);
-// };
-
-
-
 
 //страница категории
 const Services = async () => {
@@ -58,7 +48,7 @@ const Services = async () => {
                 <div className={s.section__box}>
                     {data.data.map(async (el: ICategory, index: number) => {
 
-                      const myBlurDataUrl = await getBase64('https://wclouds.ru'+`${el.attributes.image.data.attributes.url}`);
+                      const myBlurDataUrl = await getBase64('https://wclouds.ru'+`${el.attributes.image.data.attributes.formats.small.url}`);
                         
                         
                         return (
@@ -66,7 +56,7 @@ const Services = async () => {
                             
                                 <Image
                                     className={s.card__image}
-                                    src={'https://wclouds.ru'+`${el.attributes.image.data.attributes.url}`}
+                                    src={'https://wclouds.ru'+`${el.attributes.image.data.attributes.formats.small.url}`}
                                     loading="lazy"
                                     width={400}
                                     height={300}

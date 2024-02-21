@@ -10,14 +10,15 @@ import FormTelegram from "@/app/components/FormTelegram/FormTelegram";
 import SliderCont from "@/app/components/Slider/SliderCont";
 import { ICategory, IProduct } from "@/app/types";
 import getBase64 from "@/app/_handlerFunc/getLocalBase64";
+import FullImage from "@/app/components/FullImages/FullImage";
 
 //получение данных
-const getData = async (categoriesId: string) => {
+const getData = async () => {
     try {
         const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=images`, {
             method: "GET",
             next: {
-                revalidate: 0,
+                revalidate: 300,
             },
             headers: {
                 "Content-Type": "application/json",
@@ -34,7 +35,7 @@ const getData = async (categoriesId: string) => {
 
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string; productId: string } }): Promise<Metadata> => {
-    const data = await getData(params.categoryId);
+    const data = await getData();
     const category: Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
     const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
 
@@ -42,7 +43,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 
     const title = product[0].attributes.name;
     const description = product[0].attributes.description;
-    const srcImage = 'https://wclouds.ru' + product[0].attributes.images.data[0].attributes.url;
+    const srcImage = "https://wclouds.ru" + product[0].attributes.images.data[0].attributes.url;
     return {
         title: title,
         description: description,
@@ -54,9 +55,21 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
     };
 };
 
+//генерация страниц на сервере по полученым данным
+export const generateStaticParams = async ({ params }: { params: { categoryId: string; productId: string } }) => {
+    const categoryData = await getData();
+    const data: Array<ICategory> = categoryData.data;
+
+    return data.map((category) =>
+        category.attributes.products.data.map((product) => {
+            return { categoryId: category.attributes.title, productId: product.attributes.title };
+        })
+    );
+};
+
 //страница продукта
 const ProductPage = async ({ params }: { params: { categoryId: string; productId: string } }) => {
-    const data = await getData(params.categoryId);
+    const data = await getData();
     const category: Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
     const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
 
@@ -65,9 +78,8 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
             <Layout>
                 <main>
                     {product.map(async (product: IProduct, index: number) => {
-                        const myBlurDataUrl = await getBase64(
-                            `https://wclouds.ru${product.attributes.images.data[0].attributes.url}`
-                        );
+                        
+                        const myBlurDataUrl = await getBase64(`https://wclouds.ru${product.attributes.images.data[0].attributes.formats.small.url}`);
 
                         return (
                             <section key={index} className={s.section}>
@@ -96,7 +108,9 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                                 <FormTelegram />
 
                                 <h1 className={cn(s.section__title)}>Галерея</h1>
-                                <SliderCont el={product.attributes.images.data} />
+                                <FullImage images={product.attributes.images} />
+
+                                {/* <SliderCont el={product.attributes.images.data} /> */}
                             </section>
                         );
                     })}
