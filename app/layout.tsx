@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         images: [`https://wclouds.ru/uploads/light_2_c4fedcaf67.jpg`],
     },
     twitter: {
-        card: "summary",
+        card: 'summary_large_image',
     },
 };
 

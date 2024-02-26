@@ -5,6 +5,7 @@ import cn from "classnames";
 import {  IWorkPhoto } from "../types";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
 import FullImage from "../components/FullImages/FullImage";
+import { Metadata } from "next";
 
 const getData = async () => {
     try {
@@ -22,6 +23,17 @@ const getData = async () => {
         return data;
     } catch (error) {
         console.log(error);
+    }
+};
+
+export const metadata: Metadata = {
+    title: 'Наши Работы',
+    description:
+        "Производим установку натяжных потолков в Петрозаводске, Кондопоге и соседних районах по выгодным ценам. Занимаемся производством потолочных конструкций из качественых матералов.",
+    openGraph: {
+        title: "",
+        description: "",
+        images: [`https://wclouds.ru/uploads/light_2_c4fedcaf67.jpg`],
     }
 };
 

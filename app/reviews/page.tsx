@@ -44,7 +44,7 @@ const getData = async () => {
 export const metadata: Metadata = {
     title: "Отзывы",
     twitter: {
-        card: "summary",
+        card:'summary_large_image',
     },
 };
 const ReviewsPage = async () => {

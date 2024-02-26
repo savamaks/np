@@ -32,7 +32,7 @@ const getData = async () => {
 export const metadata: Metadata = {
     title: "Услуги",
     twitter: {
-        card: "summary",
+        card: 'summary_large_image',
     },
 };
 

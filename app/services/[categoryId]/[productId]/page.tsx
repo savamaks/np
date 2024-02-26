@@ -51,7 +51,11 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
             title: "",
             description: "",
             images: [srcImage],
+            
         },
+        twitter: {
+            card: "summary_large_image",
+        }
     };
 };
 
@@ -78,7 +82,6 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
             <Layout>
                 <main>
                     {product.map(async (product: IProduct, index: number) => {
-                        
                         const myBlurDataUrl = await getBase64(`https://wclouds.ru${product.attributes.images.data[0].attributes.formats.small.url}`);
 
                         return (
