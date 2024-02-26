@@ -55,14 +55,15 @@
         flex-direction: column;
         gap: 20px;
         padding: 1.5em 0;
-
         &_title {
             text-shadow: (2px 2px 10px rgba(0, 0, 0, 0.603));
             font-size: $size_h2;
             font-weight: 300;
             font-size: 2.3em;
-            width: max-content;
+            max-width: 25vw;
+
         }
+      
         &_text {
             font-size: $size_text;
             max-width: 25vw;
