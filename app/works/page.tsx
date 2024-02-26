@@ -31,8 +31,7 @@ export const metadata: Metadata = {
     description:
         "Производим установку натяжных потолков в Петрозаводске, Кондопоге и соседних районах по выгодным ценам. Занимаемся производством потолочных конструкций из качественых матералов.",
     openGraph: {
-        title: "",
-        description: "",
+        
         images: [`https://wclouds.ru/uploads/light_2_c4fedcaf67.jpg`],
     }
 };
