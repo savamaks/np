@@ -50,12 +50,17 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
         openGraph: {
             title: "",
             description: "",
-            images: [srcImage],
-            
+            images: [
+                {
+                    url: srcImage,
+                    width: 800,
+                    height: 600,
+                },
+            ],
         },
         twitter: {
             card: "summary_large_image",
-        }
+        },
     };
 };
 

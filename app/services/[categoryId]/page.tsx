@@ -70,14 +70,19 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
     return {
         title: title,
         description: description,
-        authors:[{name:'Maksim Savinec'}],
+        authors: [{ name: "Maksim Savinec" }],
         openGraph: {
-            images: [srcImage],
+            images: [
+                {
+                    url: srcImage,
+                    width: 800,
+                    height: 600,
+                },
+            ],
         },
         twitter: {
-            card:'summary_large_image'
+            card: "summary_large_image",
         },
-        
     };
 };
 

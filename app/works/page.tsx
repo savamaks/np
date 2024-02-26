@@ -2,7 +2,7 @@ import React from "react";
 import s from "./page.module.scss";
 import Layout from "../components/layout/layout";
 import cn from "classnames";
-import {  IWorkPhoto } from "../types";
+import { IWorkPhoto } from "../types";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
 import FullImage from "../components/FullImages/FullImage";
 import { Metadata } from "next";
@@ -27,19 +27,23 @@ const getData = async () => {
 };
 
 export const metadata: Metadata = {
-    title: 'Наши Работы',
+    title: "Наши Работы",
     description:
         "Производим установку натяжных потолков в Петрозаводске, Кондопоге и соседних районах по выгодным ценам. Занимаемся производством потолочных конструкций из качественых матералов.",
     openGraph: {
-        
-        images: [`https://wclouds.ru/uploads/light_2_c4fedcaf67.jpg`],
-    }
+        images: [
+            {
+                url: `https://wclouds.ru/uploads/light_2_c4fedcaf67.jpg`,
+                width: 800,
+                height: 600,
+            },
+        ],
+    },
 };
 
 const CatalogWork = async () => {
     const data = await getData();
     const photo: Array<IWorkPhoto> = data.data;
-
 
     return (
         <Layout>
