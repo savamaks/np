@@ -7,6 +7,7 @@ import FormTelegram from "../components/FormTelegram/FormTelegram";
 import FullImage from "../components/FullImages/FullImage";
 import { Metadata } from "next";
 
+
 const getData = async () => {
     try {
         const response = await fetch(`https://wclouds.ru/api/work-photos?populate=*`, {

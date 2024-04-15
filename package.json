@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev -p 3030",
+        "dev": "next dev -p 3020",
         "build": "next build",
         "start": "next start -p 3030",
         "lint": "next lint"
@@ -11,6 +11,7 @@
     "dependencies": {
         "@types/react-transition-group": "^4.4.10",
         "classnames": "^2.5.1",
+        "framer-motion": "^11.0.24",
         "next": "14.0.4",
         "plaiceholder": "^3.0.0",
         "react": "^18",

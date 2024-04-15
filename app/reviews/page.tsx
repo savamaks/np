@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Layout from "@/app/components/layout/layout";
 import s from "./page.module.scss";
@@ -8,6 +10,29 @@ import FormTelegram from "../components/FormTelegram/FormTelegram";
 import { Metadata } from "next";
 import WriteRewiev from "../components/WriteRewiev/WriteRewiev";
 import { correctDate } from "../_handlerFunc/correctDate";
+import { motion, Variants } from "framer-motion";
+
+const items = {
+    visible: (i: number) => ({
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: i * 0.15,
+        },
+    }),
+    hidden: { opacity: 0, y: 300 },
+
+};
+const list = {
+    visible: {
+        opacity: 1,
+        
+    },
+    hidden: {
+        opacity: 0,
+       
+    },
+};
 
 interface IDataRewive {
     id: number;
@@ -41,12 +66,12 @@ const getData = async () => {
         console.log(error);
     }
 };
-export const metadata: Metadata = {
-    title: "Отзывы",
-    twitter: {
-        card:'summary_large_image',
-    },
-};
+// export const metadata: Metadata = {
+//     title: "Отзывы",
+//     twitter: {
+//         card:'summary_large_image',
+//     },
+// };
 const ReviewsPage = async () => {
     const data: IData = await getData();
     return (
@@ -56,8 +81,8 @@ const ReviewsPage = async () => {
                     <FormTelegram />
                     <WriteRewiev />
                 </div>
-
-                <div className={cn(s.section__box)}>
+                <motion.div className={cn(s.section__box)} initial="hidden" animate="visible" variants={list}>
+                    {/* <div className={cn(s.section__box)}> */}
                     {data.data.map((el: IDataRewive, index: number) => {
                         if (!el.attributes.published) return;
 
@@ -80,7 +105,8 @@ const ReviewsPage = async () => {
                         }
 
                         return (
-                            <div key={index} className={cn(s.section__card)}>
+                            <motion.div key={index} className={cn(s.section__card)} custom={index} variants={items}>
+                                {/* <div key={index} className={cn(s.section__card)}> */}
                                 <h1 className={cn(s.section__card_title)}>{correctName}</h1>
 
                                 <div className={cn(s.section__card_box)}>
@@ -90,10 +116,10 @@ const ReviewsPage = async () => {
                                 </div>
                                 <p className={cn(s.section__card_text, s.date)}>{date}</p>
                                 <p className={cn(s.section__card_text)}>{el.attributes.text}</p>
-                            </div>
+                            </motion.div>
                         );
                     })}
-                </div>
+                </motion.div>
             </section>
         </Layout>
     );

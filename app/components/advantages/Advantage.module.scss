@@ -21,14 +21,14 @@
         display: flex;
         flex-direction: column;
         gap: 3px;
-        animation: left 1.5s ease ;
+        animation: down 1.1s ease ;
     }
 
     &__image {
         width: 55vw;
         max-width: 45vw;
         max-width: 800px;
-        animation: right 1s ease ;
+        animation: down 1.1s ease ;
         height: auto;
     }
 }
