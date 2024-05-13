@@ -1,0 +1,58 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.container {
+    position: relative;
+    border-bottom: 1px solid rgb(112, 112, 112);
+    max-width: 700px;
+    padding: 25px 40px;
+    transition: 2s;
+    p {
+        font-size: 18px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+}
+.request {
+    background: rgb(161, 161, 161);
+    width: 50%;
+    word-wrap: break-word;
+}
+
+.answer {
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    & p {
+        padding: 10px 0;
+        font-size: $size_text;
+        @media (max-width: 760px) {
+            font-size: $size_min_text;
+        }
+    }
+}
+.text {
+    margin-bottom: 0;
+}
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    border: none;
+    background: none;
+    color: white;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.activeBtn {
+    transform: rotate(45deg) translateX(0);
+}
+
+.active {
+    opacity: 1;
+}

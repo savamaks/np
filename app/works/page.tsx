@@ -5,6 +5,7 @@ import { IWorkPhoto } from "../types";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
 import FullImage from "../components/FullImages/FullImage";
 import { Metadata } from "next";
+import ArrowUp from "../components/arrowUp/ArrowUp";
 
 const getData = async () => {
     try {
@@ -47,6 +48,7 @@ const CatalogWork = async () => {
     return (
         <>
             <section className={cn(s.section)}>
+                <ArrowUp />
                 <FormTelegram />
                 <FullImage images={photo[0].attributes.images} />
             </section>

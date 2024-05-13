@@ -5,6 +5,9 @@ import Image from "next/image";
 import photo from "@/public/1.jpg";
 import Advantage from "./components/advantages/Advantage";
 import FormTelegram from "./components/FormTelegram/FormTelegram";
+import ArrowUp from "./components/arrowUp/ArrowUp";
+import List from "./components/LIstRequest/List";
+import { RequesrAnswer } from "./data";
 
 const getData = async () => {
     try {
@@ -30,6 +33,8 @@ const Home = async () => {
     return (
         <>
             <main className={s.main}>
+                <ArrowUp />
+
                 <section className={s.section}>
                     <Image className={s.section__image} src={photo} alt="image" width={1200} height={900} placeholder="blur" />
 
@@ -45,6 +50,10 @@ const Home = async () => {
                     </div>
                 </section>
                 <Advantage />
+                <div className={s.cont}>
+                    <h1>Вопросы Ответы</h1>
+                    <List arr={RequesrAnswer} />
+                </div>
             </main>
         </>
     );

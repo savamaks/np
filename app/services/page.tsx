@@ -6,15 +6,16 @@ import getBase64 from "../_handlerFunc/getLocalBase64";
 import { Metadata } from "next";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
 import { ICategory } from "../types";
-import ButtonLink from "../components/ButtonLink/ButtonLink";
-
+import ArrowUp from "../components/arrowUp/ArrowUp";
+import Link from "next/link";
+import Button from "../components/Button/Button";
 
 const getData = async () => {
     try {
         const response = await fetch(`https://wclouds.ru/api/categories/?populate=*`, {
             method: "GET",
-            next:{
-                revalidate:300
+            next: {
+                revalidate: 300,
             },
             headers: {
                 "Content-Type": "application/json",
@@ -31,10 +32,9 @@ const getData = async () => {
 export const metadata: Metadata = {
     title: "Услуги",
     twitter: {
-        card: 'summary_large_image',
+        card: "summary_large_image",
     },
 };
-
 
 //страница категории
 const Services = async () => {
@@ -42,37 +42,33 @@ const Services = async () => {
     return (
         <>
             <main className={s.section}>
+                <ArrowUp />
                 <FormTelegram />
                 <h1 className={cn(s.section__title)}>Виды услуг</h1>
                 <div className={s.section__box}>
                     {data.data.map(async (el: ICategory, index: number) => {
+                        const myBlurDataUrl = await getBase64("https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`);
 
-                      const myBlurDataUrl = await getBase64('https://wclouds.ru'+`${el.attributes.image.data.attributes.formats.small.url}`);
-                        
-                        
                         return (
-                            <div key={index} className={cn(s.card)}>
-                            
-                                <Image
-                                    className={s.card__image}
-                                    src={'https://wclouds.ru'+`${el.attributes.image.data.attributes.formats.small.url}`}
-                                    loading="lazy"
-                                    width={400}
-                                    height={300}
-                                    alt="services"
-                                    placeholder="blur"
-                                    blurDataURL={myBlurDataUrl}
-                                />
-                                <div className={s.card__cont}>
-                                    <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
-                                    <p className={s.card__cont_text}>{el.attributes.description}</p>
-                                    {el.attributes.products.data.length > 0 && (
-                                        <ButtonLink path={el.attributes.title} className={s.card__cont_button}>
-                                            Подробнее
-                                        </ButtonLink>
-                                    )}
+                            <Link key={index} className={s.link} href={`/services/${el.attributes.title}`}>
+                                <div  className={cn(s.card)}>
+                                    <Image
+                                        className={s.card__image}
+                                        src={"https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`}
+                                        loading="lazy"
+                                        width={400}
+                                        height={300}
+                                        alt="services"
+                                        placeholder="blur"
+                                        blurDataURL={myBlurDataUrl}
+                                    />
+                                    <div className={s.card__cont}>
+                                        <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
+                                        <p className={s.card__cont_text}>{el.attributes.description}</p>
+                                        {el.attributes.products.data.length > 0 && <Button>Подробнее</Button>}
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         );
                     })}
                 </div>

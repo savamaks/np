@@ -130,7 +130,7 @@ const WriteRewiev = () => {
                                 </div>
 
                                 <div className={cn(s.modal__form_error)}>{error}</div>
-                                <Button disabled={error !== "" && true} onClick={sendApplication} >
+                                <Button animation disabled={error !== "" && true} onClick={sendApplication} >
                                     Опубликовать отзыв
                                 </Button>
                             </>

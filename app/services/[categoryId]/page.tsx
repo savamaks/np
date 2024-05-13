@@ -8,7 +8,8 @@ import { Metadata } from "next";
 import FormTelegram from "@/app/components/FormTelegram/FormTelegram";
 import NotFound from "@/app/not-found";
 import { ICategory, IProduct } from "@/app/types";
-import ButtonLink from "../../components/ButtonLink/ButtonLink";
+import Button from "@/app/components/Button/Button";
+import ArrowUp from "@/app/components/arrowUp/ArrowUp";
 
 const getData = async () => {
     try {
@@ -94,6 +95,8 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
             <>
                 <main className={s.section}>
                     <FormTelegram />
+                    <ArrowUp />
+
                     <nav className={s.section__nav}>
                         <p>
                             {<Link href="/services">Услуги</Link>}
@@ -115,27 +118,27 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
 
                         return (
                             <>
-                                <div key={index} className={s.card}>
-                                    <Image
-                                        className={s.card__image}
-                                        src={`${srcImage}`}
-                                        loading="lazy"
-                                        width={400}
-                                        height={300}
-                                        alt="services"
-                                        placeholder="blur"
-                                        blurDataURL={myBlurDataUrl}
-                                    />
+                                <Link key={index} className={s.link} href={`${data[0].attributes.title}/${el.attributes.title}`}>
+                                    <div  className={s.card}>
+                                        <Image
+                                            className={s.card__image}
+                                            src={`${srcImage}`}
+                                            loading="lazy"
+                                            width={400}
+                                            height={300}
+                                            alt="services"
+                                            placeholder="blur"
+                                            blurDataURL={myBlurDataUrl}
+                                        />
 
-                                    <div className={s.card__cont}>
-                                        <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
-                                        <p className={s.card__cont_text}>{el.attributes.description}</p>
+                                        <div className={s.card__cont}>
+                                            <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
+                                            <p className={s.card__cont_text}>{el.attributes.description}</p>
 
-                                        <ButtonLink path={`${data[0].attributes.title}/${el.attributes.title}`} className={s.card__cont_button}>
-                                            Подробнее
-                                        </ButtonLink>
+                                            <Button >Подробнее</Button>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </>
                         );
                     })}

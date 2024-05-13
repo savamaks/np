@@ -6,6 +6,7 @@
     border-radius: 20px;
     transition: all 0.2s ease;
     box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+    align-self: stretch;
     &:hover {
         transform: scale(1.02);
     }

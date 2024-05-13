@@ -67,6 +67,7 @@ const FormTelegram = () => {
             return () => clearTimeout(timer);
         }
     }, [result]);
+
     return (
         <div className={cn(s.container)}>
             <Button onClick={clickActive}>Заявка на замер</Button>
@@ -123,7 +124,7 @@ const FormTelegram = () => {
                                 </div>
 
                                 <div className={cn(s.modal__form_error)}>{error}</div>
-                                <Button disabled={error !== "" && true} onClick={sendApplication}>
+                                <Button animation disabled={error !== "" && true} onClick={sendApplication}>
                                     Отправить заявку
                                 </Button>
                             </>

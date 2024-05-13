@@ -9,11 +9,13 @@ interface IButton {
     className?: string;
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
     disabled?: boolean;
+    animation?: boolean;
 }
 
-const Button: FC<IButton> = ({ children, className, onClick, disabled }) => {
+const Button: FC<IButton> = ({ animation, children, className, onClick, disabled }) => {
+    const style = animation ? { animation: "none" } : {};
     return (
-        <button disabled={disabled} onClick={onClick} className={cn(className, s.button)}>
+        <button style={style} disabled={disabled} onClick={onClick} className={cn(className, s.button)}>
             {children}
         </button>
     );

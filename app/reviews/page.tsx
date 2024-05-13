@@ -7,6 +7,7 @@ import FormTelegram from "../components/FormTelegram/FormTelegram";
 import { Metadata } from "next";
 import WriteRewiev from "../components/WriteRewiev/WriteRewiev";
 import { correctDate } from "../_handlerFunc/correctDate";
+import ArrowUp from "../components/arrowUp/ArrowUp";
 
 interface IDataRewive {
     id: number;
@@ -43,7 +44,7 @@ const getData = async () => {
 export const metadata: Metadata = {
     title: "Отзывы",
     twitter: {
-        card:'summary_large_image',
+        card: "summary_large_image",
     },
 };
 const ReviewsPage = async () => {
@@ -55,6 +56,7 @@ const ReviewsPage = async () => {
                     <FormTelegram />
                     <WriteRewiev />
                 </div>
+                <ArrowUp />
 
                 <div className={cn(s.section__box)}>
                     {data.data.map((el: IDataRewive, index: number) => {

@@ -10,6 +10,7 @@ import SliderCont from "@/app/components/Slider/SliderCont";
 import { ICategory, IProduct } from "@/app/types";
 import getBase64 from "@/app/_handlerFunc/getLocalBase64";
 import FullImage from "@/app/components/FullImages/FullImage";
+import ArrowUp from "@/app/components/arrowUp/ArrowUp";
 
 //получение данных
 const getData = async () => {
@@ -90,6 +91,8 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
 
                         return (
                             <section key={index} className={s.section}>
+                                                <ArrowUp />
+
                                 <nav className={s.section__nav}>
                                     <p>
                                         {<Link href="/services">Услуги</Link>}
