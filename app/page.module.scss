@@ -24,7 +24,6 @@
         height: auto;
         animation: down 0.8s ease;
     }
-    
 
     @keyframes tr {
         0% {
@@ -45,7 +44,6 @@
         width: min-content;
         text-align: end;
         animation: down 0.8s ease;
-       
     }
     &__text {
         font-weight: 400;
@@ -55,7 +53,7 @@
         text-align: end;
         animation: down 0.8s ease;
     }
-   
+
     &__box {
         display: flex;
         align-items: center;
@@ -80,7 +78,9 @@
     flex-wrap: nowrap;
     gap: 35px;
 }
-.box{
+.box {
+    animation: down 0.8s ease;
+
     display: flex;
     flex-direction: column;
     align-items: center;
