@@ -3,10 +3,11 @@
 import React, { useState, MouseEvent, ChangeEvent, useEffect } from "react";
 import s from "./FormTelegram.module.scss";
 import cn from "classnames";
-import {  TelegramBotRequest } from "@/app/_handlerFunc/telegramBot";
+import { TelegramBotRequest } from "@/app/_handlerFunc/telegramBot";
 import Image from "next/image";
 import krestik from "@/public/krestik.svg";
 import PhoneInput from "react-phone-input-2";
+import Button from "../Button/Button";
 
 const FormTelegram = () => {
     const [active, setActive] = useState(false);
@@ -68,9 +69,7 @@ const FormTelegram = () => {
     }, [result]);
     return (
         <div className={cn(s.container)}>
-            <button className={cn(s.container__button)} onClick={clickActive}>
-                Заявка на замер
-            </button>
+            <Button onClick={clickActive}>Заявка на замер</Button>
             {active && (
                 <div onClick={clickActive} className={cn(s.modal)}>
                     <form
@@ -124,9 +123,9 @@ const FormTelegram = () => {
                                 </div>
 
                                 <div className={cn(s.modal__form_error)}>{error}</div>
-                                <button disabled={error !== "" && true} onClick={sendApplication} className={cn(s.modal__form_button)}>
+                                <Button disabled={error !== "" && true} onClick={sendApplication}>
                                     Отправить заявку
-                                </button>
+                                </Button>
                             </>
                         ) : (
                             <p className={cn(s.modal__form_text)}> Спасибо за ваше обращение, в ближайшее время с вами свяжутся 😉</p>

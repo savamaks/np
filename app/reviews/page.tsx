@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 const ReviewsPage = async () => {
     const data: IData = await getData();
     return (
-        <Layout>
+        <>
             <section className={cn(s.section)}>
                 <div className={cn(s.section__box)}>
                     <FormTelegram />
@@ -95,7 +95,7 @@ const ReviewsPage = async () => {
                     })}
                 </div>
             </section>
-        </Layout>
+        </>
     );
 };
 export default ReviewsPage;

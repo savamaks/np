@@ -1,13 +1,12 @@
 import React from "react";
-import Layout from "../components/layout/layout";
 import s from "./page.module.scss";
 import Image from "next/image";
-import Button from "../components/Button/Button";
 import cn from "classnames";
 import getBase64 from "../_handlerFunc/getLocalBase64";
 import { Metadata } from "next";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
 import { ICategory } from "../types";
+import ButtonLink from "../components/ButtonLink/ButtonLink";
 
 
 const getData = async () => {
@@ -41,7 +40,7 @@ export const metadata: Metadata = {
 const Services = async () => {
     const data = await getData();
     return (
-        <Layout>
+        <>
             <main className={s.section}>
                 <FormTelegram />
                 <h1 className={cn(s.section__title)}>Виды услуг</h1>
@@ -68,9 +67,9 @@ const Services = async () => {
                                     <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
                                     <p className={s.card__cont_text}>{el.attributes.description}</p>
                                     {el.attributes.products.data.length > 0 && (
-                                        <Button path={el.attributes.title} className={s.card__cont_button}>
+                                        <ButtonLink path={el.attributes.title} className={s.card__cont_button}>
                                             Подробнее
-                                        </Button>
+                                        </ButtonLink>
                                     )}
                                 </div>
                             </div>
@@ -78,7 +77,7 @@ const Services = async () => {
                     })}
                 </div>
             </main>
-        </Layout>
+        </>
     );
 };
 

@@ -1,23 +1,19 @@
 "use client";
-import { useRouter } from "next/navigation";
 import React, { FC, ReactNode, MouseEvent } from "react";
 import s from "./Button.module.scss";
+import cn from "classnames";
 
 interface IButton {
     children: ReactNode;
     path?: string;
     className?: string;
-    onClick?: () => void;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    disabled?: boolean;
 }
 
-const Button: FC<IButton> = ({ children, className, path }) => {
-    const router = useRouter();
-
-    const clickCard = (e: MouseEvent<HTMLButtonElement>) => {
-        router.push(`/services/${path}`);
-    };
+const Button: FC<IButton> = ({ children, className, onClick, disabled }) => {
     return (
-        <button onClick={clickCard} className={className}>
+        <button disabled={disabled} onClick={onClick} className={cn(className, s.button)}>
             {children}
         </button>
     );

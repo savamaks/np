@@ -9,6 +9,7 @@ import krestik from "@/public/krestik.svg";
 import PhoneInput from "react-phone-input-2";
 import Rating from "../rating/Rating";
 import { createRewiev } from "@/app/_handlerFunc/createRewiev";
+import Button from "../Button/Button";
 
 const WriteRewiev = () => {
     const [active, setActive] = useState(false);
@@ -68,9 +69,9 @@ const WriteRewiev = () => {
     }, [result]);
     return (
         <div className={cn(s.container)}>
-            <button className={cn(s.container__button)} onClick={clickActive}>
+            <Button onClick={clickActive}>
                 Оставить отзыв
-            </button>
+            </Button>
             {active && (
                 <div onClick={clickActive} className={cn(s.modal)}>
                     <form
@@ -129,9 +130,9 @@ const WriteRewiev = () => {
                                 </div>
 
                                 <div className={cn(s.modal__form_error)}>{error}</div>
-                                <button disabled={error !== "" && true} onClick={sendApplication} className={cn(s.modal__form_button)}>
+                                <Button disabled={error !== "" && true} onClick={sendApplication} >
                                     Опубликовать отзыв
-                                </button>
+                                </Button>
                             </>
                         ) : (
                             <p className={cn(s.modal__form_text)}> Спасибо за ваш отзыв, в ближайшее время мы его опубликуем😉</p>

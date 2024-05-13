@@ -12,7 +12,7 @@ const Header = () => {
     const [animate, setAnimate] = useState(false);
 
     const burgerClick = () => {
-        console.log('object');
+        console.log("object");
         setAnimate((prev) => !prev);
         if (active) {
             const timer = setTimeout(() => {
@@ -23,7 +23,7 @@ const Header = () => {
         setActive((prev) => !prev);
     };
     return (
-        <header className={cn(s.header,animate ? s.active : "")}>
+        <header className={cn(s.header, animate ? s.active : "")}>
             <Link className={cn(s.nav_link)} href="/">
                 <svg className={s.header__logo} width="80" height="80" viewBox="0 0 100 100">
                     <g id="Слой_x0020_1">
@@ -48,11 +48,11 @@ const Header = () => {
             <div className={s.box}>
                 <Nav />
             </div>
-
+           
             <Burger setActive={burgerClick} active={animate} />
             {active && (
                 <div className={cn(s.menu, !animate && active ? s.close : "")}>
-                    <Nav  setActive={burgerClick} />
+                    <Nav setActive={burgerClick} />
                 </div>
             )}
         </header>

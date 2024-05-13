@@ -8,7 +8,7 @@ import FormTelegram from "./components/FormTelegram/FormTelegram";
 
 const NotFound = async () => {
     return (
-        <Layout>
+        <>
             <main className={s.section}>
             <FormTelegram />
 
@@ -32,7 +32,7 @@ const NotFound = async () => {
                     </Link>
                 </h1>
             </main>
-        </Layout>
+        </>
     );
 };
 

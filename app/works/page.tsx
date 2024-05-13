@@ -46,12 +46,12 @@ const CatalogWork = async () => {
     const photo: Array<IWorkPhoto> = data.data;
 
     return (
-        <Layout>
+        <>
             <section className={cn(s.section)}>
                 <FormTelegram />
                 <FullImage images={photo[0].attributes.images} />
             </section>
-        </Layout>
+        </>
     );
 };
 

@@ -1,8 +1,6 @@
 import React from "react";
-import Layout from "../../components/layout/layout";
 import s from "./page.module.scss";
 import Image from "next/image";
-import Button from "../../components/Button/Button";
 import cn from "classnames";
 import Link from "next/link";
 import getBase64 from "@/app/_handlerFunc/getLocalBase64";
@@ -10,6 +8,7 @@ import { Metadata } from "next";
 import FormTelegram from "@/app/components/FormTelegram/FormTelegram";
 import NotFound from "@/app/not-found";
 import { ICategory, IProduct } from "@/app/types";
+import ButtonLink from "../../components/ButtonLink/ButtonLink";
 
 const getData = async () => {
     try {
@@ -92,7 +91,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
     const data: Array<ICategory> = categoryData.data.filter((el: ICategory) => el.attributes.title === params.categoryId);
     if (data.length !== 0) {
         return (
-            <Layout>
+            <>
                 <main className={s.section}>
                     <FormTelegram />
                     <nav className={s.section__nav}>
@@ -132,16 +131,16 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                                         <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
                                         <p className={s.card__cont_text}>{el.attributes.description}</p>
 
-                                        <Button path={`${data[0].attributes.title}/${el.attributes.title}`} className={s.card__cont_button}>
+                                        <ButtonLink path={`${data[0].attributes.title}/${el.attributes.title}`} className={s.card__cont_button}>
                                             Подробнее
-                                        </Button>
+                                        </ButtonLink>
                                     </div>
                                 </div>
                             </>
                         );
                     })}
                 </main>
-            </Layout>
+            </>
         );
     } else {
         return <NotFound />;

@@ -29,7 +29,7 @@ const getData = async () => {
 const Home = async () => {
     const data = await getData();
     return (
-        <Layout>
+        <>
             <main className={s.main}>
                 <section className={s.section}>
                     <Image className={s.section__image} src={photo} alt="image" width={1200} height={900} placeholder="blur" />
@@ -47,7 +47,7 @@ const Home = async () => {
                 </section>
                 <Advantage />
             </main>
-        </Layout>
+        </>
     );
 };
 export default Home;

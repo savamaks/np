@@ -4,11 +4,11 @@ import s from "./styles/loading.module.scss";
 
 const Loading = () => {
     return (
-        <Layout>
+        <>
             <section className={s.section}>
                 <span className={s.loader}></span>
             </section>
-        </Layout>
+        </>
     );
 };
 
