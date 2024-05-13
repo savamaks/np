@@ -41,11 +41,7 @@ const FormTelegram = () => {
         setAdress(e.target.value);
         setError("");
     };
-    const changePhone = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        setPhone(e.target.value);
-        setError("");
-    };
+    
 
     const sendApplication = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();

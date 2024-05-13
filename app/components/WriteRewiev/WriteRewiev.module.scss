@@ -4,12 +4,16 @@
 
 .container {
     &__button {
-        transition: all 0.3s ease;
-        animation: right 1.5s ease;
+        animation: right 0.8s ease;
+        transition: all 0.2s ease;
         box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+        border-radius: 20px;
 
         &:hover {
-            transform: scale(0.95);
+            transform: scale(1.02);
+        }
+        &:active {
+            transform: scale(0.98);
         }
     }
 }
@@ -79,12 +83,15 @@
             align-self: center;
         }
         &_button {
+            transition: all 0.2s ease;
             box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
-            animation: none;
-            margin-top: 30px;
-            &:disabled {
-                transform: none;
-                cursor: not-allowed;
+            border-radius: 20px;
+
+            &:hover {
+                transform: scale(1.02);
+            }
+            &:active {
+                transform: scale(0.98);
             }
         }
 

@@ -4,6 +4,8 @@ import cn from "classnames";
 import { Metadata } from "next";
 import { NextFont } from "next/dist/compiled/@next/font";
 import Head from "next/head";
+import Header from "./components/header/Header";
+import Footer from "./components/Footer/Footer";
 
 const open: NextFont = Open_Sans({
     subsets: ["latin", "cyrillic"],
@@ -12,7 +14,7 @@ const open: NextFont = Open_Sans({
 });
 
 export const metadata: Metadata = {
-    metadataBase:new URL('https://wclouds.ru'),
+    metadataBase: new URL("https://wclouds.ru"),
     title: {
         default: "Натяжные потолки | Петрозаводск, Кондопога",
         template: "Натяжные потолки | %s",
@@ -43,7 +45,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <link rel="apple-touch-icon" href="/apple-icon?<generated>" type="image/<generated>" sizes="<generated>" />
             </Head>
             <html lang="ru">
-                <body className={cn(open.className)}>{children}</body>
+                <body className={cn(open.className)}>
+                    <Header />
+                    {children}
+                    <Footer />
+                </body>
             </html>
         </>
     );

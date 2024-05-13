@@ -12,7 +12,6 @@ const Header = () => {
     const [animate, setAnimate] = useState(false);
 
     const burgerClick = () => {
-        console.log('object');
         setAnimate((prev) => !prev);
         if (active) {
             const timer = setTimeout(() => {

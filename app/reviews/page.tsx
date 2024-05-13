@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "@/app/components/layout/layout";
 import s from "./page.module.scss";
 import cn from "classnames";
 import Image from "next/image";
@@ -50,7 +49,7 @@ export const metadata: Metadata = {
 const ReviewsPage = async () => {
     const data: IData = await getData();
     return (
-        <Layout>
+        <>
             <section className={cn(s.section)}>
                 <div className={cn(s.section__box)}>
                     <FormTelegram />
@@ -95,7 +94,7 @@ const ReviewsPage = async () => {
                     })}
                 </div>
             </section>
-        </Layout>
+        </>
     );
 };
 export default ReviewsPage;

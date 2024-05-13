@@ -15,7 +15,7 @@
     position: relative;
     &__nav {
         padding: 10px;
-        animation: right 1.5s ease;
+        animation: down 0.8s ease;
     }
     &__cont {
         display: flex;
@@ -27,11 +27,10 @@
             box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
             width: 50%;
             height: auto;
-            animation: left 1s ease;
-
+            animation: down 0.8s ease;
         }
         &_text {
-            animation: right 1s ease;
+            animation: down 0.8s ease;
             padding: 20px 30px;
             font-size: $size_text;
         }
@@ -51,7 +50,7 @@
         height: auto;
         padding: 20px;
         max-width: 1200px;
-        animation: down 1s ease;
+        animation: down 0.8s ease;
         &__box {
             width: 100%;
         }
@@ -70,11 +69,10 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 20px;
-
     }
 
     &__text {
-        animation: down 1.5s ease;
+        animation: down 0.8s ease;
         padding: 20px 30px;
         font-size: $size_text;
     }
@@ -113,7 +111,7 @@
                 height: auto;
             }
             &_text {
-                animation: down 1.5s ease;
+                animation: down .8s ease;
                 padding: 10px 10px;
                 font-size: $size_min_text;
             }

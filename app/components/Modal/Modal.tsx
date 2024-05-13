@@ -24,7 +24,7 @@ const Modal: FC<IModalProps> = ({ src, setSrc }) => {
                 onClick={clickImage}
                 className={s.modal_image}
                 src={`${src}`}
-                placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+                // placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
                 alt="fullImage"
                 width={4000}
                 height={4000}

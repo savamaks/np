@@ -1,14 +1,12 @@
 import React from "react";
-import Layout from "./components/layout/layout";
 import s from "@/app/styles/NotFound.module.scss";
 import Link from "next/link";
-import Image from "next/image";
-import emot from "@/public/emot.svg";
+
 import FormTelegram from "./components/FormTelegram/FormTelegram";
 
 const NotFound = async () => {
     return (
-        <Layout>
+        <>
             <main className={s.section}>
             <FormTelegram />
 
@@ -32,7 +30,7 @@ const NotFound = async () => {
                     </Link>
                 </h1>
             </main>
-        </Layout>
+        </>
     );
 };
 

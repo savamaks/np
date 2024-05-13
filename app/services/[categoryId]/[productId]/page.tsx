@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../../../components/layout/layout";
 import { Metadata } from "next";
 import NotFound from "@/app/not-found";
 import Image from "next/image";
@@ -84,7 +83,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
 
     if (product.length > 0) {
         return (
-            <Layout>
+            <>
                 <main>
                     {product.map(async (product: IProduct, index: number) => {
                         const myBlurDataUrl = await getBase64(`https://wclouds.ru${product.attributes.images.data[0].attributes.formats.small.url}`);
@@ -123,7 +122,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                         );
                     })}
                 </main>
-            </Layout>
+            </>
         );
     } else {
         return <NotFound />;

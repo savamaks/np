@@ -1,6 +1,5 @@
 import React from "react";
 import s from "./page.module.scss";
-import Layout from "../components/layout/layout";
 import cn from "classnames";
 import { IWorkPhoto } from "../types";
 import FormTelegram from "../components/FormTelegram/FormTelegram";
@@ -46,12 +45,12 @@ const CatalogWork = async () => {
     const photo: Array<IWorkPhoto> = data.data;
 
     return (
-        <Layout>
+        <>
             <section className={cn(s.section)}>
                 <FormTelegram />
                 <FullImage images={photo[0].attributes.images} />
             </section>
-        </Layout>
+        </>
     );
 };
 
