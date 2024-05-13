@@ -50,7 +50,7 @@ const Home = async () => {
                     </div>
                 </section>
                 <Advantage />
-                <div className={s.cont}>
+                <div className={s.box}>
                     <h1>Вопросы Ответы</h1>
                     <List arr={RequesrAnswer} />
                 </div>
