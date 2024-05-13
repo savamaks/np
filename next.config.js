@@ -2,12 +2,7 @@
 const nextConfig = {
     images: {
         remotePatterns: [
-            // {
-            //   protocol: 'http',
-            //   hostname: 'localhost',
-            //   port: '3030',
-            //   pathname: '/_next/image',
-            // },
+         
             {
                 protocol: "https",
                 hostname: "wclouds.ru",
@@ -16,9 +11,8 @@ const nextConfig = {
             },
         ],
     },
-    distDir: "out",
-    experimental: {
-        webpackBuildWorker: true,
-    },
+    distDir: 'out',
+    
+
 };
 module.exports = nextConfig;
