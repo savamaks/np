@@ -68,14 +68,14 @@
     &__block {
         display: flex;
         flex-direction: column;
-        align-items: end;
+        align-items: flex-end;
     }
 }
 
 .cont {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     flex-wrap: nowrap;
     gap: 35px;
 }

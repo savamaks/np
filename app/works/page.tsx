@@ -1,6 +1,5 @@
 import React from "react";
 import s from "./page.module.scss";
-import Layout from "../components/layout/layout";
 import cn from "classnames";
 import { IWorkPhoto } from "../types";
 import FormTelegram from "../components/FormTelegram/FormTelegram";

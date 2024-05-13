@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "./components/layout/layout";
 import s from "./page.module.scss";
 import cn from "classnames";
 import Image from "next/image";

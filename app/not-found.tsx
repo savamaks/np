@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "./components/layout/layout";
 import s from "@/app/styles/NotFound.module.scss";
 import Link from "next/link";
 import Image from "next/image";

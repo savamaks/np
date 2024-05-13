@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../../../components/layout/layout";
 import { Metadata } from "next";
 import NotFound from "@/app/not-found";
 import Image from "next/image";
