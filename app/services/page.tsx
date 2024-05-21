@@ -50,8 +50,12 @@ const Services = async () => {
                         const myBlurDataUrl = await getBase64("https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`);
 
                         return (
-                            <Link key={index} className={s.link} href={`/services/${el.attributes.title}`}>
-                                <div  className={cn(s.card)}>
+                            <Link
+                                key={index}
+                                className={s.link}
+                                href={el.attributes.products.data.length > 0 ? `/services/${el.attributes.title}` : ""}
+                            >
+                                <div className={cn(s.card)}>
                                     <Image
                                         className={s.card__image}
                                         src={"https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`}
