@@ -44,6 +44,7 @@ export const metadata: Metadata = {
 const CatalogWork = async () => {
     const data = await getData();
     const photo: Array<IWorkPhoto> = data.data;
+    
 
     return (
         <>

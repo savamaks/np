@@ -25,7 +25,7 @@ interface IData {
 }
 const getData = async () => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/rewiews`, {
+        const res = await fetch(`https://wclouds.ru/api/rewiews?sort=date:desc`, {
             method: "GET",
             next: {
                 revalidate: 300,
@@ -49,7 +49,8 @@ export const metadata: Metadata = {
 };
 const ReviewsPage = async () => {
     const data: IData = await getData();
-    return (
+   
+   return (
         <>
             <section className={cn(s.section)}>
                 <div className={cn(s.section__box)}>
@@ -61,7 +62,7 @@ const ReviewsPage = async () => {
                 <div className={cn(s.section__box)}>
                     {data.data.map((el: IDataRewive, index: number) => {
                         if (!el.attributes.published) return;
-
+                        // console.log(el.attributes.date);
                         let arrStar = [];
                         for (let i = 0; i < +el.attributes.rating; i++) {
                             arrStar.push(i);
