@@ -11,10 +11,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Modal from "../Modal/Modal";
 
-const SliderCont: FC<any> = ({ el }) => {
-    const { size } = useResize();
-    const [srcFullImage, setSrcFullImage] = useState("");
+interface IProps {
+    el: Array<IDataImage>;
+}
 
+const SliderCont: FC<IProps> = ({ el }) => {
+    const { size } = useResize();
+    const [index, setIndex] = useState("");
+    console.log(size);
     const settings = {
         // dots: true,
         infinite: true,
@@ -25,21 +29,22 @@ const SliderCont: FC<any> = ({ el }) => {
         autoplay: true,
     };
     const clickImage = (e: IMouseEvent) => {
-        setSrcFullImage(e.target.id);
+        setIndex(e.target.dataset.index);
     };
 
     return (
         <div className={s.slider}>
-            {srcFullImage !== "" && <Modal src={srcFullImage} setSrc={setSrcFullImage} />}
+            {index !== "" && <Modal images={el} numIndex={index} setIndex={setIndex} />}
 
             <Slider {...settings}>
                 {el.map((image: IDataImage, index: number) => {
-                    
                     return (
                         <div key={index} className={s.slider_box}>
                             <Image
                                 onClick={clickImage}
-                                 id={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
+                                data-index={index}
+                                data-src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
+                                id={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
                                 className={s.slider_image}
                                 src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
                                 alt="img"

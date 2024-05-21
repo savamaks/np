@@ -7,6 +7,10 @@ export interface IImages {
 }
 export interface ITarget extends EventTarget {
     id: string;
+    dataset: {
+        src: string;
+        index: string;
+    };
 }
 export interface IMouseEvent extends MouseEvent<HTMLImageElement> {
     target: ITarget;
@@ -27,6 +31,15 @@ export interface IDataImage {
         };
         name: string;
         url: string;
+    };
+}
+export interface IWorkPhoto {
+    id: string;
+    attributes: {
+        title: string;
+        images: {
+            data: Array<IDataImage>;
+        };
     };
 }
 
@@ -69,17 +82,4 @@ export interface ICategory {
     };
 }
 
-export interface IPhoto {
-    name: string;
-    size: number;
-    url: string;
-}
-export interface IWorkPhoto {
-    id: string;
-    attributes: {
-        title: string;
-        images: {
-            data: Array<IPhoto>;
-        };
-    };
-}
+
