@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@plaiceholder/next": "^3.0.0",
         "@types/react-transition-group": "^4.4.10",
         "classnames": "^2.5.1",
         "next": "14.0.4",
@@ -20,7 +21,9 @@
         "react-responsive-carousel": "^3.2.23",
         "react-slick": "^0.29.0",
         "react-transition-group": "^4.4.5",
+        "react-zoom-pan-pinch": "^3.4.4",
         "sass": "^1.69.6",
+        "sharp": "^0.33.4",
         "slick-carousel": "^1.8.1"
     },
     "devDependencies": {

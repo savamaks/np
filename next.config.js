@@ -2,21 +2,22 @@
 const nextConfig = {
     images: {
         remotePatterns: [
-          // {
-          //   protocol: 'http',
-          //   hostname: 'localhost',
-          //   port: '3030',
-          //   pathname: '/_next/image',
-          // },
-          {
-            protocol: 'https',
-            hostname: 'wclouds.ru',
-            port: '',
-            pathname: '/uploads/**',
-          },
+            // {
+            //   protocol: 'http',
+            //   hostname: 'localhost',
+            //   port: '3030',
+            //   pathname: '/_next/image',
+            // },
+            {
+                protocol: "https",
+                hostname: "wclouds.ru",
+                port: "",
+                pathname: "/uploads/**",
+            },
         ],
-      },
-      distDir:"out",
-}
+    },
+    distDir: "out",
+    transpilePackages: ["@plaiceholder/ui"],
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

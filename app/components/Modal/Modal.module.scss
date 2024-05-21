@@ -2,7 +2,6 @@
 @use "/app/styles/color.scss" as *;
 @use "/app/styles/sizes.scss" as *;
 
-
 .modal {
     position: fixed;
     top: 0;
@@ -16,22 +15,74 @@
     align-items: center;
     justify-content: center;
 
-    &_close {
-        color: white;
+    &__block {
+        animation: scale 0.4s ease;
+        position: relative;
+        width: 100vw;
+        max-width: 1440px;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+    &__box {
         position: absolute;
-        top: 2em;
-        right: 3em;
-        &:hover{
-            animation: vibration .1s ease infinite;
+        top: 2%;
+        right: 2%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        @media (max-width: 768px) {
+            right: 7%;
+        }
+        &_count {
+        }
+        &_close {
+            border: none;
+            padding: 0;
         }
     }
+    &__cont {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 1500px;
+        &_arrow {
+            z-index: 999;
+            position: absolute;
+            height: 100%;
+            opacity: 1;
+            padding: 40px;
+            border: none;
+            transition: opacity 0.2s ease;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        &_left {
+            left: 0;
+            @media (max-width: 768px) {
+                left: 0;
+            }
+        }
+        &_right {
+            right: 20px;
+            @media (max-width: 768px) {
+                right: 0;
+            }
+        }
 
-    &_image {
-        animation: scale 0.5s ease;
-        width: 90vw;
-        max-width: 1440px;
-        height: auto;
-        max-height: 90vh;
-        object-fit: contain;
+        &_image {
+            cursor: pointer;
+            width: 100%;
+            max-width: 1440px;
+            height: auto;
+            max-height: 85vh;
+            object-fit: contain;
+            transition: all 0.2s ease;
+        }
     }
 }
