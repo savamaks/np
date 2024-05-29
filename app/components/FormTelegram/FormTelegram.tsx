@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, MouseEvent, ChangeEvent, useEffect } from "react";
+import React, { useState, MouseEvent, ChangeEvent, useEffect, useRef } from "react";
 import s from "./FormTelegram.module.scss";
 import cn from "classnames";
 import { TelegramBotRequest } from "@/app/_handlerFunc/telegramBot";
@@ -13,6 +13,8 @@ const FormTelegram = () => {
     const [active, setActive] = useState(false);
     const [name, setName] = useState("");
     const [adress, setAdress] = useState("");
+    const [description, setDescription] = useState("");
+    const inputRef = useRef<HTMLInputElement | null>(null);
     const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
     const [result, setResult] = useState<boolean | undefined>(false);
@@ -42,31 +44,41 @@ const FormTelegram = () => {
         setAdress(e.target.value);
         setError("");
     };
-    const changePhone = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const changeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
-        setPhone(e.target.value);
+        setDescription(e.target.value);
         setError("");
     };
 
     const sendApplication = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (name === "" || adress === "" || phone === "" || !valid) {
+        if (name === "" || adress === "" || phone === "" || !valid || description === "") {
             setError("Заполните все поля ввода");
             return;
         }
 
-        const res = await TelegramBotRequest({ name, adress, phone: `+${phone}` });
-
+        const res = await TelegramBotRequest({ name, adress, description, phone: `+${phone}` });
         setResult(res);
     };
     useEffect(() => {
         if (result) {
             const timer = setTimeout(() => {
-                clickActive();
+                if (active) {
+                    setActive(false);
+                }
             }, 5000);
             return () => clearTimeout(timer);
         }
     }, [result]);
+
+    useEffect(() => {
+        if (active) {
+            if (inputRef.current !== null) {
+                inputRef.current.focus();
+            }
+        }
+    }, [active]);
 
     return (
         <div className={cn(s.container)}>
@@ -89,6 +101,7 @@ const FormTelegram = () => {
                                         Имя
                                     </label>
                                     <input
+                                        ref={inputRef}
                                         value={name}
                                         onChange={changeName}
                                         className={cn(s.modal__form_input)}
@@ -107,6 +120,17 @@ const FormTelegram = () => {
                                         type="text"
                                         placeholder="Введите адрес: город, улица, дом, кв..."
                                     />
+                                </div>
+                                <div className={cn(s.modal__form_box)}>
+                                    <label className={cn(s.modal__form_label)} htmlFor="">
+                                        Описание
+                                    </label>
+                                    <textarea
+                                        value={description}
+                                        onChange={changeDescription}
+                                        className={cn(s.modal__form_textarea)}
+                                        placeholder="Опишите задачу..."
+                                    ></textarea>
                                 </div>
                                 <div className={cn(s.modal__form_box)}>
                                     <label className={cn(s.modal__form_label)} htmlFor="">

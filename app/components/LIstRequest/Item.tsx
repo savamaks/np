@@ -11,8 +11,8 @@ const Item = ({ count, setCount, index, request, children, close }: any) => {
     const [flag, setFlag] = useState(false);
     const refName = useRef<HTMLDivElement | null>(null);
 
-    const heightAnswerMin = 3;
-    const timeOut = 5;
+    const heightAnswerMin = 1;
+    const timeOut = 1;
     const procent = heightAnswerMin * (height / 100);
 
     const click = (e: MouseEvent<HTMLDivElement | HTMLButtonElement>) => {

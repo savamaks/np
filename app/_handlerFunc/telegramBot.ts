@@ -2,14 +2,16 @@ interface IPropsRequest {
     name: string;
     adress: string;
     phone: string;
+    description: string;
 }
 const API = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN}/sendMessage`;
 
-export const TelegramBotRequest = async ({ name, adress, phone }: IPropsRequest) => {
+export const TelegramBotRequest = async ({ name, adress, description, phone }: IPropsRequest) => {
     const text = `
     Заявка на замер потолка: 
     Имя: ${name},
     адрес: ${adress} ,
+    описание: ${description},
     телефон: ${phone}`;
     try {
         const response = await fetch(API, {
@@ -33,12 +35,11 @@ export const TelegramBotRequest = async ({ name, adress, phone }: IPropsRequest)
     }
 };
 
-
 interface IPropsRewievs {
     name: string;
     phone: string;
     rating: string;
-    rewiev:string
+    rewiev: string;
 }
 export const TelegramBotRewievs = async ({ name, rewiev, phone, rating }: IPropsRewievs) => {
     const text = `

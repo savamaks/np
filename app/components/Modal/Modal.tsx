@@ -25,7 +25,6 @@ const Modal: FC<IModalProps> = ({ numIndex, setIndex, images }) => {
     const refName = useRef<HTMLDivElement>(null);
     const [screen, setScreen] = useState(false);
     const [count, setCount] = useState(+numIndex);
-
     const closeModal = (e: MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         e.stopPropagation();
         setIndex("");
@@ -83,6 +82,7 @@ const Modal: FC<IModalProps> = ({ numIndex, setIndex, images }) => {
             {images.map((el: IDataImage, index: number) => {
                 if (index !== count) return;
                 return (
+                    
                     <TransformWrapper key={index} initialScale={1} initialPositionX={0} initialPositionY={0}>
                         {({ zoomIn, zoomOut }) => (
                             <>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, MouseEvent, ChangeEvent, useEffect } from "react";
+import React, { useState, MouseEvent, ChangeEvent, useEffect, useRef } from "react";
 import s from "./WriteRewiev.module.scss";
 import cn from "classnames";
 import { TelegramBotRewievs } from "@/app/_handlerFunc/telegramBot";
@@ -20,6 +20,7 @@ const WriteRewiev = () => {
     const [result, setResult] = useState<boolean | undefined>(false);
     const [valid, setValid] = useState(true);
     const [rating, setRating] = useState("");
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
     const validatePhone = (input: string) => {
         const phonePatern = /^\d{11}$/;
@@ -58,7 +59,7 @@ const WriteRewiev = () => {
 
         setResult(create);
     };
-    
+
     useEffect(() => {
         if (result) {
             const timer = setTimeout(() => {
@@ -67,11 +68,16 @@ const WriteRewiev = () => {
             return () => clearTimeout(timer);
         }
     }, [result]);
+    useEffect(() => {
+        if (active) {
+            if (inputRef.current !== null) {
+                inputRef.current.focus();
+            }
+        }
+    }, [active]);
     return (
         <div className={cn(s.container)}>
-            <Button onClick={clickActive}>
-                Оставить отзыв
-            </Button>
+            <Button onClick={clickActive}>Оставить отзыв</Button>
             {active && (
                 <div onClick={clickActive} className={cn(s.modal)}>
                     <form
@@ -90,6 +96,7 @@ const WriteRewiev = () => {
                                         Имя
                                     </label>
                                     <input
+                                        ref={inputRef}
                                         value={name}
                                         onChange={changeName}
                                         className={cn(s.modal__form_input)}
@@ -130,7 +137,7 @@ const WriteRewiev = () => {
                                 </div>
 
                                 <div className={cn(s.modal__form_error)}>{error}</div>
-                                <Button animation disabled={error !== "" && true} onClick={sendApplication} >
+                                <Button animation disabled={error !== "" && true} onClick={sendApplication}>
                                     Опубликовать отзыв
                                 </Button>
                             </>
