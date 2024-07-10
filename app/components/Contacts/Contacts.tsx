@@ -1,4 +1,4 @@
-"use client";
+
 import React from "react";
 import s from "./Contacts.module.scss";
 import cn from "classnames";
@@ -16,7 +16,7 @@ const Contacts = () => {
                 {/* <Image title="+7 (960) 213-69-49" className={cn(s.cont__image)} src={telephone} alt="telephone" width={50} height={50}/> */}
 
             </Link>
-            <Link href="https://t.me/maxsavinec" target='_blank' title="Ссылка на телеграм">
+            <Link href="https://t.me/maximsavinec" target='_blank' title="Ссылка на телеграм">
                 <Image className={cn(s.cont__image)} src={telegram} alt="telegram"  width={50} height={50}/>
             </Link>
             <Link href="https://wa.me/79602136949" target="_blank" title="Ссылка на WhatsApp">
