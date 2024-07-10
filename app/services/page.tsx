@@ -9,6 +9,7 @@ import { ICategory } from "../types";
 import ArrowUp from "../components/arrowUp/ArrowUp";
 import Link from "next/link";
 import Button from "../components/Button/Button";
+import CardProduct from "../components/CardProduct/CardProduct";
 
 const getData = async () => {
     try {
@@ -48,31 +49,15 @@ const Services = async () => {
                 <div className={s.section__box}>
                     {data.data.map(async (el: ICategory, index: number) => {
                         const myBlurDataUrl = await getBase64("https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`);
-
                         return (
-                            <Link
+                            <CardProduct
                                 key={index}
-                                className={s.link}
-                                href={el.attributes.products.data.length > 0 ? `/services/${el.attributes.title}` : ""}
-                            >
-                                <div className={cn(s.card)}>
-                                    <Image
-                                        className={s.card__image}
-                                        src={"https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`}
-                                        loading="lazy"
-                                        width={400}
-                                        height={300}
-                                        alt="services"
-                                        placeholder="blur"
-                                        blurDataURL={myBlurDataUrl}
-                                    />
-                                    <div className={s.card__cont}>
-                                        <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
-                                        <p className={s.card__cont_text}>{el.attributes.description}</p>
-                                        {el.attributes.products.data.length > 0 && <Button>Подробнее</Button>}
-                                    </div>
-                                </div>
-                            </Link>
+                                href={`/services/${el.attributes.title}`}
+                                src={"https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`}
+                                blur={myBlurDataUrl}
+                                name={el.attributes.name}
+                                description={el.attributes.description}
+                            />
                         );
                     })}
                 </div>

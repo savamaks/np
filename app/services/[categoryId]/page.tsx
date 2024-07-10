@@ -10,6 +10,7 @@ import NotFound from "@/app/not-found";
 import { ICategory, IProduct } from "@/app/types";
 import Button from "@/app/components/Button/Button";
 import ArrowUp from "@/app/components/arrowUp/ArrowUp";
+import CardProduct from "@/app/components/CardProduct/CardProduct";
 
 const getData = async () => {
     try {
@@ -94,8 +95,8 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
         return (
             <>
                 <main className={s.section}>
-                <FormTelegram>Заявка на замер</FormTelegram>
-                <ArrowUp />
+                    <FormTelegram>Заявка на замер</FormTelegram>
+                    <ArrowUp />
 
                     <nav className={s.section__nav}>
                         <p>
@@ -105,42 +106,29 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                         </p>
                     </nav>
                     <h1 className={cn(s.section__title)}>{data[0].attributes.name}</h1>
-                    {data[0].attributes.products.data.map(async (el: IProduct, index: number) => {
-                        let srcImage = "";
+                    <div className={s.section__box}>
+                        {data[0].attributes.products.data.map(async (el: IProduct, index: number) => {
+                            let srcImage = "";
 
-                        if (el.attributes.images.data !== null) {
-                            srcImage += "https://wclouds.ru" + el.attributes.images.data[0].attributes.formats.small.url;
-                        } else {
-                            srcImage += "https://wclouds.ru" + "/uploads/assets_0f9f13cb55.png";
-                        }
+                            if (el.attributes.images.data !== null) {
+                                srcImage += "https://wclouds.ru" + el.attributes.images.data[0].attributes.formats.small.url;
+                            } else {
+                                srcImage += "https://wclouds.ru" + "/uploads/assets_0f9f13cb55.png";
+                            }
 
-                        const myBlurDataUrl = await getBase64(srcImage);
-                        return (
-                            <>
-                                <Link key={index} className={s.link} href={`${data[0].attributes.title}/${el.attributes.title}`}>
-                                    <div  className={s.card}>
-                                        <Image
-                                            className={s.card__image}
-                                            src={`${srcImage}`}
-                                            loading="lazy"
-                                            width={400}
-                                            height={300}
-                                            alt="services"
-                                            placeholder="blur"
-                                            blurDataURL={myBlurDataUrl}
-                                        />
-
-                                        <div className={s.card__cont}>
-                                            <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
-                                            <p className={s.card__cont_text}>{el.attributes.description}</p>
-
-                                            <Button >Подробнее</Button>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </>
-                        );
-                    })}
+                            const myBlurDataUrl = await getBase64(srcImage);
+                            return (
+                                <CardProduct
+                                    key={index}
+                                    href={`${data[0].attributes.title}/${el.attributes.title}`}
+                                    src={`${srcImage}`}
+                                    blur={myBlurDataUrl}
+                                    name={el.attributes.name}
+                                    description={el.attributes.description}
+                                />
+                            );
+                        })}
+                    </div>
                 </main>
             </>
         );

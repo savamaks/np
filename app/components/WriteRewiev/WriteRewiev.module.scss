@@ -41,6 +41,7 @@
         border-radius: 20px;
         background: $BG_MAIN;
         gap: 20px;
+        box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.349);
 
         &_box {
             display: flex;
@@ -130,7 +131,7 @@
         justify-content: center;
 
         &__form {
-            width: 100%;
+            width: 93%;
         }
     }
 }
