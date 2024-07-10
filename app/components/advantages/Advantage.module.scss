@@ -6,8 +6,9 @@
 .section {
     width: 100%;
     animation: down 0.8s ease;
-
+    background: #0000002f;
     padding: 30px 0 50px;
+
 
     &__title {
         text-shadow: (2px 2px 10px rgba(0, 0, 0, 0.603));

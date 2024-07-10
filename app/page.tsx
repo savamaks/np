@@ -8,6 +8,13 @@ import FormTelegram from "./components/FormTelegram/FormTelegram";
 import ArrowUp from "./components/arrowUp/ArrowUp";
 import List from "./components/LIstRequest/List";
 import { RequesrAnswer } from "./data";
+import Link from "next/link";
+import getBase64 from "./_handlerFunc/getLocalBase64";
+import Button from "./components/Button/Button";
+import { ICategory } from "./types";
+import ServicesData from "./components/ServicesData/ServicesData";
+import Sales from "./components/Sales/Sales";
+import MainListRequest from "./components/LIstRequest/MainListRequest";
 
 const getData = async () => {
     try {
@@ -30,6 +37,7 @@ const getData = async () => {
 
 const Home = async () => {
     const data = await getData();
+
     return (
         <>
             <main className={s.main}>
@@ -46,14 +54,14 @@ const Home = async () => {
 
                         <p className={s.section__text}>{data.data.attributes.text}</p>
 
-                        <FormTelegram />
+                        <FormTelegram>Заявка на замер</FormTelegram>
                     </div>
                 </section>
                 <Advantage />
-                <div className={s.box}>
-                    <h1>Вопросы Ответы</h1>
-                    <List arr={RequesrAnswer} />
-                </div>
+                <ServicesData/>
+                <Sales />
+                <MainListRequest/>
+               
             </main>
         </>
     );

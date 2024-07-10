@@ -9,7 +9,7 @@ const NotFound = async () => {
     return (
         <>
             <main className={s.section}>
-            <FormTelegram />
+                <FormTelegram>Заявка на замер</FormTelegram>
 
                 <svg height="50%" version="1.1" viewBox="0 0 24 24" width="50%">
                     <g className={s.g} id="Social-/-5---Social,-emoticon,-neutral,-somewhat-icon">

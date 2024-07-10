@@ -50,7 +50,7 @@ const CatalogWork = async () => {
         <>
             <section className={cn(s.section)}>
                 <ArrowUp />
-                <FormTelegram />
+                <FormTelegram>Заявка на замер</FormTelegram>
                 <FullImage images={photo[0].attributes.images} />
             </section>
         </>

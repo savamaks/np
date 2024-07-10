@@ -6,6 +6,7 @@ import s from "./Header.module.scss";
 import Burger from "../burger/burger/Burger";
 import Nav from "../Nav/Nav";
 import cn from "classnames";
+import Contacts from "../Contacts/Contacts";
 
 const Header = () => {
     const [active, setActive] = useState(false);
@@ -23,7 +24,7 @@ const Header = () => {
         setActive((prev) => !prev);
     };
     return (
-        <header id='header' className={cn(s.header, animate ? s.active : "")}>
+        <header id="header" className={cn(s.header, animate ? s.active : "")}>
             <Link className={cn(s.nav_link)} href="/">
                 <svg className={s.header__logo} width="80" height="80" viewBox="0 0 100 100">
                     <g id="Слой_x0020_1">
@@ -48,7 +49,6 @@ const Header = () => {
             <div className={s.box}>
                 <Nav />
             </div>
-           
             <Burger setActive={burgerClick} active={animate} />
             {active && (
                 <div className={cn(s.menu, !animate && active ? s.close : "")}>

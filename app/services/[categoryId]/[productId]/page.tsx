@@ -115,7 +115,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                                     />
                                     <p className={s.section__cont_text}>{product.attributes.description}</p>
                                 </div>
-                                <FormTelegram />
+                                <FormTelegram>Заявка на замер</FormTelegram>
 
                                 <h1 className={cn(s.section__title)}>Галерея</h1>
                                 <FullImage images={product.attributes.images} />

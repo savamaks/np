@@ -83,3 +83,9 @@ export interface ICategory {
 }
 
 
+export interface IRequest {
+    attributes: {
+        request: string;
+        answer: string;
+    };
+}

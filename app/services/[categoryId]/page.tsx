@@ -94,8 +94,8 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
         return (
             <>
                 <main className={s.section}>
-                    <FormTelegram />
-                    <ArrowUp />
+                <FormTelegram>Заявка на замер</FormTelegram>
+                <ArrowUp />
 
                     <nav className={s.section__nav}>
                         <p>
@@ -115,7 +115,6 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                         }
 
                         const myBlurDataUrl = await getBase64(srcImage);
-
                         return (
                             <>
                                 <Link key={index} className={s.link} href={`${data[0].attributes.title}/${el.attributes.title}`}>

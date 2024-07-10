@@ -17,7 +17,6 @@
     background: red;
 }
 .modal {
-
     position: fixed;
     top: 0;
     left: 0;
@@ -30,9 +29,8 @@
     align-items: center;
     justify-content: center;
 
-
     &__form {
-        animation: opacity .3s ease;
+        animation: opacity 0.3s ease;
         width: 50%;
         max-width: 750px;
         min-width: 300px;
@@ -57,22 +55,20 @@
             padding: 5px 10px;
             font-size: $size_text;
             border-radius: 10px;
-            border:none;
+            border: none;
             box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
             margin-top: 5px;
             resize: vertical;
             min-height: 100px;
-           
         }
         &_input {
             width: 100%;
             padding: 5px 10px;
             font-size: $size_text;
             border-radius: 10px;
-            border:none;
+            border: none;
             box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
             margin-top: 5px;
-           
         }
         &_error {
             height: 20px;
@@ -96,19 +92,25 @@
             text-align: center;
             padding-bottom: 30px;
         }
-    }
-
-    &__close {
-        border: none;
-        animation: none;
-        align-self: end;
-        color: white;
-        &:hover{
-            animation: vibration .1s ease infinite;
+        &_close {
+            border: none;
+            animation: none;
+            align-self: end;
+            color: white;
+            &:hover {
+                animation: vibration 0.1s ease infinite;
+            }
+        }
+        &_sale {
+            width: max-content;
+            text-align: center;
+            background: rgba(3, 218, 200, 0.897);
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
         }
     }
 
-   
     &_image {
         animation: scale 0.5s ease;
         width: 90vw;

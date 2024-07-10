@@ -3,16 +3,20 @@ interface IPropsRequest {
     adress: string;
     phone: string;
     description: string;
+    textSale?: string;
 }
 const API = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN}/sendMessage`;
 
-export const TelegramBotRequest = async ({ name, adress, description, phone }: IPropsRequest) => {
-    const text = `
+export const TelegramBotRequest = async ({ name, adress, description, textSale, phone }: IPropsRequest) => {
+    let text = `
     Заявка на замер потолка: 
     Имя: ${name},
     адрес: ${adress} ,
     описание: ${description},
-    телефон: ${phone}`;
+    телефон: ${phone},
+   ${textSale ? `АКЦИЯ: ${textSale.toUpperCase()}` : ""}
+    `;
+
     try {
         const response = await fetch(API, {
             method: "POST",

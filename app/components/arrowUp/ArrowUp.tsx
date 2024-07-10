@@ -10,7 +10,7 @@ const ArrowUp = () => {
     const style = cn(s.arrow, y !== null && y > 200 ? s.active : s.deactive);
     return (
         <Link href="#header">
-            <button className={style}></button>
+            <button className={style} title="кнопка вверх"></button>
         </Link>
     );
 };

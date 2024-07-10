@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, MouseEvent, ChangeEvent, useEffect, useRef } from "react";
+import React, { useState, MouseEvent, ChangeEvent, useEffect, useRef, FC, ReactNode } from "react";
 import s from "./FormTelegram.module.scss";
 import cn from "classnames";
 import { TelegramBotRequest } from "@/app/_handlerFunc/telegramBot";
@@ -9,7 +9,12 @@ import krestik from "@/public/krestik.svg";
 import PhoneInput from "react-phone-input-2";
 import Button from "../Button/Button";
 
-const FormTelegram = () => {
+interface IProps {
+    children: ReactNode;
+    type?: "click" | "button";
+    textSale?: string;
+}
+const FormTelegram: FC<IProps> = ({ children, type, textSale }) => {
     const [active, setActive] = useState(false);
     const [name, setName] = useState("");
     const [adress, setAdress] = useState("");
@@ -58,7 +63,7 @@ const FormTelegram = () => {
             return;
         }
 
-        const res = await TelegramBotRequest({ name, adress, description, phone: `+${phone}` });
+        const res = await TelegramBotRequest({ name, adress, description, textSale, phone: `+${phone}` });
         setResult(res);
     };
     useEffect(() => {
@@ -82,7 +87,9 @@ const FormTelegram = () => {
 
     return (
         <div className={cn(s.container)}>
-            <Button onClick={clickActive}>Заявка на замер</Button>
+            <Button type={type} onClick={clickActive}>
+                {children}
+            </Button>
             {active && (
                 <div onClick={clickActive} className={cn(s.modal)}>
                     <form
@@ -91,9 +98,16 @@ const FormTelegram = () => {
                         }}
                         className={cn(s.modal__form)}
                     >
-                        <button className={cn(s.modal__close)} onClick={clickActive}>
+                        <button className={cn(s.modal__form_close)} onClick={clickActive}>
                             <Image src={krestik} alt="close" width={18} height={18} />
                         </button>
+                        {textSale && !result && (
+                            <>
+                                <p>Акция:</p>
+                                <p className={cn(s.modal__form_sale)}>{textSale}</p>
+                            </>
+                        )}
+
                         {!result ? (
                             <>
                                 <div className={cn(s.modal__form_box)}>

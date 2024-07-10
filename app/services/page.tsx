@@ -43,7 +43,7 @@ const Services = async () => {
         <>
             <main className={s.section}>
                 <ArrowUp />
-                <FormTelegram />
+                <FormTelegram>Заявка на замер</FormTelegram>
                 <h1 className={cn(s.section__title)}>Виды услуг</h1>
                 <div className={s.section__box}>
                     {data.data.map(async (el: ICategory, index: number) => {

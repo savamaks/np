@@ -54,8 +54,8 @@ const ReviewsPage = async () => {
         <>
             <section className={cn(s.section)}>
                 <div className={cn(s.section__box)}>
-                    <FormTelegram />
-                    <WriteRewiev />
+                <FormTelegram>Заявка на замер</FormTelegram>
+                <WriteRewiev />
                 </div>
                 <ArrowUp />
 

@@ -1,0 +1,64 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.container {
+    animation: down 0.8s ease;
+    background: #0000002f;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 70px 0;
+    gap: 15px;
+
+    &__title {
+        font-size: $size_h2;
+    }
+    &__text {
+        padding: 0 20px;
+        font-size: $size_min_text;
+        text-align: center;
+        color: #ffffff88;
+    }
+}
+.box {
+    display: flex;
+    align-items: center;
+    max-width: 1440px;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 40px 0;
+    justify-content: center;
+}
+
+.card {
+    width: 300px;
+    height: 200px;
+    box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: linear-gradient(300deg, rgb(16, 99, 138) 10%, rgb(24, 133, 173) 60%);
+    cursor: pointer;
+    transition: all 0.1s ease;
+
+    &:hover {
+        transform: scale(1.01);
+    }
+    &__title {
+        font-size: $size__min_h2;
+        text-align: center;
+        text-transform: none;
+    }
+    &__text {
+        font-size: $size_min_text;
+        text-align: center;
+        color: #ffffff88;
+        text-transform: none;
+    }
+}
