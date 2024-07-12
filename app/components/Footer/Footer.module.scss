@@ -1,13 +1,14 @@
+@use "/app/styles/animate.scss" as *;
+
+
 .footer {
     min-height: 100px;
     width: 100%;
     max-width: 1440px;
     display: flex;
     align-items: center;
-    justify-content:flex-end;
-    padding:0 25px ;
-    // background: rgb(245, 245, 245);
+    justify-content: flex-end;
+    padding: 0 25px;
     margin: 0 auto;
-
-    
+    animation: left 0.8s ease;
 }
