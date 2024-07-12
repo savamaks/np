@@ -1,9 +1,19 @@
-.container{
-   
-        width: 100%;
-        padding: 30px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
 
+.container {
+    width: 100%;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title {
+        text-shadow: (2px 2px 10px rgba(0, 0, 0, 0.603));
+        text-align: center;
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: 300;
+        font-size: $size_h2;
+    }
 }

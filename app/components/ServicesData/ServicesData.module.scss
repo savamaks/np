@@ -12,15 +12,19 @@
     gap: 20px;
     animation: down 0.8s ease;
 
-    &__title{
+    &__title {
+        text-shadow: (2px 2px 10px rgba(0, 0, 0, 0.603));
+        text-align: center;
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: 300;
         font-size: $size_h2;
     }
-    &__text{
+    &__text {
         font-size: $size_text;
         text-align: center;
     }
 }
-.box{
+.box {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -48,26 +52,49 @@
         width: 350px;
         background: rgba(0, 0, 0, 0.158);
         transition: all 0.5s ease;
-      
+
         &_title {
             font-size: $size__min_h2;
             text-align: center;
             padding: 10px 0;
             text-shadow: (2px 2px 10px rgba(0, 0, 0, 0.603));
+            &:after {
+                content: "";
+                display: block;
+                margin: 3px auto 0;
+                width: 0%;
+                height: 2px;
+                background: $color_text;
+                transition: width 0.3s ease-in 0s;
+            }
 
+            &:hover:after {
+                width: 90%;
+            }
         }
 
-        &_product{
+        &_product {
             cursor: pointer;
-            width: 100%;
             text-align: center;
             padding: 7px 20px;
             font-size: 18px;
+            &:after {
+                content: "";
+                display: block;
+                margin: 3px auto 0;
+                width: 0%;
+                height: 1px;
+                background: $color_text;
+                transition: width 0.3s ease-in 0s;
+            }
+
+            &:hover:after {
+                width: 90%;
+            }
         }
     }
-    &:hover{
+    &:hover {
         border-radius: 10px;
-
     }
     &:hover > &__cont {
         background: rgba(0, 0, 0, 0.801);

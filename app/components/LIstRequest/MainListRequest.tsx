@@ -26,7 +26,7 @@ const MainListRequest = async () => {
 
     return (
         <div className={s.container}>
-            <h1>Вопросы Ответы</h1>
+            <h1 className={s.container__title}>Вопросы Ответы</h1>
             <List data={data.data} />
         </div>
     );
