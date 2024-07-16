@@ -49,6 +49,7 @@ export interface IProduct {
         title: string;
         name: string;
         description: string;
+        video: string;
         images: {
             data: Array<IDataImage>;
         };
@@ -81,7 +82,6 @@ export interface ICategory {
         };
     };
 }
-
 
 export interface IRequest {
     attributes: {

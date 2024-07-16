@@ -1,0 +1,33 @@
+@use "/app/styles/sizes.scss" as *;
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    padding: 0 20px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+
+    &__title {
+        text-shadow: (2px 2px 10px rgba(0, 0, 0, 0.603));
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: 300;
+        font-size: $size_h2;
+        width: 95%;
+        animation: down 0.8s ease;
+    }
+
+    &__iframe {
+        align-self: center;
+        width: 100%;
+        max-width: 900px;
+        height: 450px;
+
+        @media (max-width: 960px) {
+            height: 350px;
+        }
+        @media (max-width: 760px) {
+            height: 250px;
+        }
+    }
+}

@@ -11,6 +11,7 @@ import { ICategory, IProduct } from "@/app/types";
 import getBase64 from "@/app/_handlerFunc/getLocalBase64";
 import FullImage from "@/app/components/FullImages/FullImage";
 import ArrowUp from "@/app/components/arrowUp/ArrowUp";
+import Video from "@/app/components/Video/Video";
 
 //получение данных
 const getData = async () => {
@@ -91,8 +92,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
 
                         return (
                             <section key={index} className={s.section}>
-                                                <ArrowUp />
-
+                                <ArrowUp />
                                 <nav className={s.section__nav}>
                                     <p>
                                         {<Link href="/services">Услуги</Link>}
@@ -102,7 +102,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                                         {product.attributes.name}
                                     </p>
                                 </nav>
-                                <h1 className={cn(s.section__title)}>{product.attributes.name}</h1>
+                                <h2 className={cn(s.section__title)}>{product.attributes.name}</h2>
                                 <div className={s.section__cont}>
                                     <Image
                                         className={s.section__cont_image}
@@ -117,9 +117,14 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                                 </div>
                                 <FormTelegram>Заявка на замер</FormTelegram>
 
-                                <h1 className={cn(s.section__title)}>Галерея</h1>
+                                {product.attributes.video && (
+                                    <>
+                                        <h2 className={cn(s.section__title)}>Видео</h2>
+                                        <Video title={product.attributes.name} src={product.attributes.video} />
+                                    </>
+                                )}
+                                <h2 className={cn(s.section__title)}>Галерея</h2>
                                 <FullImage images={product.attributes.images} />
-
                                 {/* <SliderCont el={product.attributes.images.data} /> */}
                             </section>
                         );
