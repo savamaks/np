@@ -137,3 +137,4 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
     }
 };
 export default ProductPage;
+
