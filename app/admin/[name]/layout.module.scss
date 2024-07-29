@@ -1,0 +1,26 @@
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+
+    &__nav {
+        display: flex;
+        gap: 10px;
+
+        &_link {
+            font-size: 18px;
+        }
+    }
+
+    &__main {
+        width: 100%;
+    }
+}

@@ -2,7 +2,7 @@
 @use "/app/styles/color.scss" as *;
 @use "/app/styles/sizes.scss" as *;
 .button {
-    animation: down 0.8s ease;
+    animation: scale 0.3s ease;
     border-radius: 20px;
     transition: all 0.2s ease;
     box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
@@ -13,8 +13,17 @@
     &:active {
         transform: scale(0.98);
     }
+    &:disabled{
+        color: #ffffff2f;
+        border-color:#ffffff2f ;
+    }
 }
 .click{
     border: none;
     padding: 0;
+}
+
+.border{
+    border: none;
+    text-transform: none;
 }

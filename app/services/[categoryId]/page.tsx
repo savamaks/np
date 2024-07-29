@@ -109,7 +109,6 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                     <div className={s.section__box}>
                         {data[0].attributes.products.data.map(async (el: IProduct, index: number) => {
                             let srcImage = "";
-
                             if (el.attributes.images.data !== null) {
                                 srcImage += "https://wclouds.ru" + el.attributes.images.data[0].attributes.formats.small.url;
                             } else {

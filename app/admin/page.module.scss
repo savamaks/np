@@ -3,75 +3,9 @@
 @use "/app/styles/sizes.scss" as *;
 
 .section {
-    margin: 0 auto;
+    width: 100%;
     display: flex;
     gap: 20px;
     flex-direction: column;
-    align-items: center;
-    padding: 0px 20px;
-    max-width: 1440px;
-    &__box {
-        display: flex;
-        gap: 20px 30px;
-        align-items: stretch;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    &__card {
-        animation: down 0.8s ease;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        border-radius: 10px;
-        box-shadow: 0 10px 10px #18262820;
-        background: #1826280c;
-        padding: 15px 20px;
-        width: 30%;
-        min-width: 200px;
-        align-items: center;
-        padding: 20px 20px 30px;
-
-        &_title {
-            font-weight: 300;
-            font-size: $size_h2;
-        }
-
-        &_box {
-            display: flex;
-            align-items: center;
-        }
-
-        &_text {
-            width: 90%;
-            font-weight: 300;
-            font-size: $size_text;
-        }
-    }
-}
-
-.date{
-   text-align: center;
-}
-
-@media (max-width: 760px) {
-    .section {
-        &__card {
-            width: 85%;
-
-            &_title {
-                font-size: $size__min_h2;
-            }
-
-            &_box {
-                display: flex;
-                align-items: center;
-            }
-
-            &_text {
-                width: 100%;
-                font-weight: 300;
-                font-size: $size_min_text;
-            }
-        }
-    }
+    justify-content: center;
 }

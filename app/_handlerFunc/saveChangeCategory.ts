@@ -15,7 +15,7 @@ export const saveChangeCategory = async ({ data, id }: any) => {
         }
 
         const data = await response.json();
-        console.log("Категория изменена", data);
+        return true
     } catch (error) {
         console.error("Error during file upload:", error);
     }

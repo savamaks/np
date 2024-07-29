@@ -1,0 +1,39 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid white;
+    padding: 50px;
+    gap: 20px;
+    border-radius: 20px;
+    box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+
+    &__box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    &__label {
+    }
+
+    &__input {
+        width: 100%;
+        padding: 3px 10px;
+        font-size: $size_text;
+        border-radius: 10px;
+        border:  none;
+        box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
+
+    }
+
+   
+}

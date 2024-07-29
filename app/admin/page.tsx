@@ -1,33 +1,20 @@
-import Categories from "../components/adminPanel/Categories/Categories";
-import Create from "../components/adminPanel/create/create";
-import s from './page.module.scss'
-// const getData = async () => {
-//     try {
-//         const res = await fetch(`https://wclouds.ru/api/categories?populate=*`, {
-//             method: "GET",
-//             next: {
-//                 revalidate: 0,
-//             },
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
-//             },
-//         });
-//         const data = res.json();
-//         return data;
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
-const AdminPage = async () => {
-    // const data = await getData();
+"use client";
+import Auth from "../components/adminPanel/Auth/Auth";
+import s from "./page.module.scss";
+import auth from "../components/store/auth";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-    return (
-        <div>
-            <Categories />
-            {/* <Create /> */}
-        </div>
-    );
-};
+const AdminPage = observer(() => {
+    const router = useRouter();
+
+    useEffect(() => {
+        if (auth.login) {
+            router.push("admin/categories");
+        }
+    }, []);
+    return <section className={s.section}>{!auth.login && <Auth />}</section>;
+});
 
 export default AdminPage;

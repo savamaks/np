@@ -67,6 +67,7 @@ export interface ICategory {
         };
         image: {
             data: {
+                id: string;
                 attributes: {
                     formats: {
                         small: {
