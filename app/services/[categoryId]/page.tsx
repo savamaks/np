@@ -14,7 +14,7 @@ import CardProduct from "@/app/components/CardProduct/CardProduct";
 
 const getData = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=images`, {
+        const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=image&populate[products][populate][1]=images`, {
             method: "GET",
             next: {
                 revalidate: 300,
@@ -111,7 +111,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                             let srcImage = "";
 
                             if (el.attributes.images.data !== null) {
-                                srcImage += "https://wclouds.ru" + el.attributes.images.data[0].attributes.formats.small.url;
+                                srcImage += "https://wclouds.ru" + el.attributes.image.data.attributes.formats.small?.url;
                             } else {
                                 srcImage += "https://wclouds.ru" + "/uploads/assets_0f9f13cb55.png";
                             }

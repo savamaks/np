@@ -50,6 +50,21 @@ export interface IProduct {
         name: string;
         description: string;
         video: string;
+        image: {
+            data: {
+                attributes: {
+                    formats: {
+                        small?: {
+                            url?: string;
+                        };
+                        medium?: {
+                            url?: string;
+                        };
+                    };
+                    url: string;
+                };
+            };
+        };
         images: {
             data: Array<IDataImage>;
         };
