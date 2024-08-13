@@ -1,26 +1,25 @@
+"use client";
 import React, { useState, MouseEvent, ChangeEvent } from "react";
-import { observer } from "mobx-react-lite";
 import s from "./Auth.module.scss";
 import Button from "../../Button/Button";
-import { authAdmin } from "@/app/_handlerFunc/authAdmin";
-import auth from "@/app/components/store/auth";
+import { authAdmin } from "@/app/_handlerFunc/admin/authAdmin";
 import { useRouter } from "next/navigation";
-
+import { useStore } from "../../store/useStore";
 
 const Auth = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [active, setActive] = useState(false);
-    const router = useRouter()
+    const router = useRouter();
+    const { authService } = useStore();
 
     const sendForm = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const data = await authAdmin({ identifier: name, password });
         if (data.jwt) {
-            auth.authorization(true, data.jwt);
-            router.push('/admin/categories')
+            authService.authorization(true, data.jwt);
+            router.push("/admin/categories");
         }
-        
     };
 
     return (

@@ -1,5 +1,23 @@
 import { MouseEvent } from "react";
-
+export interface INewData {
+    name: string;
+    title: string;
+    description: string;
+    category?: {
+        connect: [
+            {
+                id: string | undefined;
+                position?: {
+                    start: boolean;
+                };
+            }
+        ];
+    };
+    products?: {
+        connect: Array<string>;
+        disconnect: Array<string>;
+    };
+}
 export interface IImages {
     src: string;
     width: number;
@@ -53,34 +71,45 @@ export interface IProduct {
         images: {
             data: Array<IDataImage>;
         };
+        image: IImage;
+        category: {
+            data: ICategory;
+        };
     };
 }
-
+export interface IImage {
+    data: {
+        id: string;
+        attributes: {
+            formats: {
+                small: {
+                    url: string;
+                };
+                medium: {
+                    url: string;
+                };
+            };
+            url: string;
+        };
+    };
+}
 export interface ICategory {
     id: string;
     attributes: {
         title: string;
         name: string;
         description: string;
-        products: {
+        products?: {
             data: Array<IProduct>;
         };
-        image: {
-            data: {
-                id: string;
-                attributes: {
-                    formats: {
-                        small: {
-                            url: string;
-                        };
-                        medium: {
-                            url: string;
-                        };
-                    };
-                    url: string;
-                };
-            };
+        images?: {
+            data: Array<IDataImage>;
         };
+        video?: string;
+        category?: {
+            data: ICategory;
+        };
+        image: IImage
     };
 }
 

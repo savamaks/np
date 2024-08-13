@@ -6,6 +6,7 @@ import { NextFont } from "next/dist/compiled/@next/font";
 import Head from "next/head";
 import Header from "./components/header/Header";
 import Footer from "./components/Footer/Footer";
+import { StoreWrapper } from "./components/store/provider";
 
 const open: NextFont = Open_Sans({
     subsets: ["latin", "cyrillic"],
@@ -46,9 +47,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Head>
             <html lang="ru">
                 <body className={cn(open.className)}>
-                    <Header />
-                    {children}
-                    <Footer />
+                    <StoreWrapper>
+                        <Header />
+                        {children}
+                        <Footer />
+                    </StoreWrapper>
                 </body>
             </html>
         </>

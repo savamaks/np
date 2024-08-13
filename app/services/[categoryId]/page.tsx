@@ -14,7 +14,7 @@ import CardProduct from "@/app/components/CardProduct/CardProduct";
 
 const getData = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=images`, {
+        const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=image`, {
             method: "GET",
             next: {
                 revalidate: 300,
@@ -24,8 +24,8 @@ const getData = async () => {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
             },
         });
-        const data = response.json();
-        return data;
+        const data = await response.json();
+        return data.data;
     } catch (error) {
         console.log(error);
     }
@@ -42,25 +42,24 @@ const getCategoryMeta = async () => {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
             },
         });
-        const data = response.json();
-        return data;
+        const data = await response.json();
+        return data.data;
     } catch (error) {
         console.log(error);
     }
 };
 //генерация страниц на сервере по полученым данным
 export const generateStaticParams = async () => {
-    const categoryData = await getData();
-    const data: Array<ICategory> = categoryData.data;
+    const categoryData: Array<ICategory> = await getData();
 
-    return data.map(({ attributes }) => attributes.title);
+    return categoryData.map(({ attributes }) => attributes.title);
 };
 
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string } }): Promise<Metadata> => {
     const categoryData = await getCategoryMeta();
 
-    const data: Array<ICategory> = categoryData.data.filter((el: ICategory) => el.attributes.title === params.categoryId);
+    const data: Array<ICategory> = categoryData.filter((el: ICategory) => el.attributes.title === params.categoryId);
 
     if (data.length <= 0) return {};
 
@@ -90,7 +89,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 //страница списка продукции из категории
 const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
     const categoryData = await getData();
-    const data: Array<ICategory> = categoryData.data.filter((el: ICategory) => el.attributes.title === params.categoryId);
+    const data: Array<ICategory> = categoryData.filter((el: ICategory) => el.attributes.title === params.categoryId);
     if (data.length !== 0) {
         return (
             <>
@@ -107,26 +106,28 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                     </nav>
                     <h1 className={cn(s.section__title)}>{data[0].attributes.name}</h1>
                     <div className={s.section__box}>
-                        {data[0].attributes.products.data.map(async (el: IProduct, index: number) => {
-                            let srcImage = "";
-                            if (el.attributes.images.data !== null) {
-                                srcImage += "https://wclouds.ru" + el.attributes.images.data[0].attributes.formats.small.url;
-                            } else {
-                                srcImage += "https://wclouds.ru" + "/uploads/assets_0f9f13cb55.png";
-                            }
+                        {data[0].attributes.products !== undefined &&
+                            data[0].attributes.products.data.map(async (el: IProduct, index: number) => {
+                                let srcImage = "";
+                                console.log(el);
+                                if (el.attributes.image.data !== null) {
+                                    srcImage += "https://wclouds.ru" + el.attributes.image.data.attributes.formats.small.url;
+                                } else {
+                                    srcImage += "https://wclouds.ru" + "/uploads/assets_0f9f13cb55.png";
+                                }
 
-                            const myBlurDataUrl = await getBase64(srcImage);
-                            return (
-                                <CardProduct
-                                    key={index}
-                                    href={`${data[0].attributes.title}/${el.attributes.title}`}
-                                    src={`${srcImage}`}
-                                    blur={myBlurDataUrl}
-                                    name={el.attributes.name}
-                                    description={el.attributes.description}
-                                />
-                            );
-                        })}
+                                const myBlurDataUrl = await getBase64(srcImage);
+                                return (
+                                    <CardProduct
+                                        key={index}
+                                        href={`${data[0].attributes.title}/${el.attributes.title}`}
+                                        src={`${srcImage}`}
+                                        blur={myBlurDataUrl}
+                                        name={el.attributes.name}
+                                        description={el.attributes.description}
+                                    />
+                                );
+                            })}
                     </div>
                 </main>
             </>

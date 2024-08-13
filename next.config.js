@@ -18,6 +18,7 @@ const nextConfig = {
     },
     distDir: "out",
     transpilePackages: ["@plaiceholder/ui"],
+    reactStrictMode: false,
 };
 
 module.exports = nextConfig;

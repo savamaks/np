@@ -16,7 +16,7 @@ import Video from "@/app/components/Video/Video";
 //получение данных
 const getData = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=images`, {
+        const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=image&populate[products][populate][1]=images`, {
             method: "GET",
             next: {
                 revalidate: 300,
@@ -27,8 +27,8 @@ const getData = async () => {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
             },
         });
-        const data = response.json();
-        return data;
+        const data = await response.json();
+        return data.data;
     } catch (error) {
         console.log(error);
     }
@@ -36,8 +36,10 @@ const getData = async () => {
 
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string; productId: string } }): Promise<Metadata> => {
-    const data = await getData();
-    const category: Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
+    const data: Array<ICategory> = await getData();
+    const category: Array<ICategory> = data.filter((el: ICategory) => el.attributes.title === params.categoryId);
+    if (category === undefined) return {};
+    if (category[0].attributes.products === undefined) return {};
     const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
 
     if (product.length <= 0) return {};
@@ -68,19 +70,25 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 //генерация страниц на сервере по полученым данным
 export const generateStaticParams = async ({ params }: { params: { categoryId: string; productId: string } }) => {
     const categoryData = await getData();
-    const data: Array<ICategory> = categoryData.data;
+    const data: Array<ICategory> = categoryData;
 
-    return data.map((category) =>
-        category.attributes.products.data.map((product) => {
-            return { categoryId: category.attributes.title, productId: product.attributes.title };
-        })
-    );
+    return data.map((category) => {
+        if (category.attributes.products === undefined) {
+            return {};
+        } else {
+            category.attributes.products.data.map((product) => {
+                return { categoryId: category.attributes.title, productId: product.attributes.title };
+            });
+        }
+    });
 };
 
 //страница продукта
 const ProductPage = async ({ params }: { params: { categoryId: string; productId: string } }) => {
     const data = await getData();
-    const category: Array<ICategory> = data.data.filter((el: IProduct) => el.attributes.title === params.categoryId);
+    const category: Array<ICategory> = data.filter((el: IProduct) => el.attributes.title === params.categoryId);
+    if (category[0].attributes.products === undefined) return {};
+
     const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
 
     if (product.length > 0) {
@@ -88,7 +96,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
             <>
                 <main>
                     {product.map(async (product: IProduct, index: number) => {
-                        const myBlurDataUrl = await getBase64(`https://wclouds.ru${product.attributes.images.data[0].attributes.formats.small.url}`);
+                        const myBlurDataUrl = await getBase64(`https://wclouds.ru${product.attributes.image.data.attributes.formats.small.url}`);
 
                         return (
                             <section key={index} className={s.section}>
@@ -106,7 +114,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                                 <div className={s.section__cont}>
                                     <Image
                                         className={s.section__cont_image}
-                                        src={`https://wclouds.ru${product.attributes.images.data[0].attributes.url}`}
+                                        src={`https://wclouds.ru${product.attributes.image.data.attributes.url}`}
                                         alt="img"
                                         width={600}
                                         height={450}
@@ -137,4 +145,3 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
     }
 };
 export default ProductPage;
-

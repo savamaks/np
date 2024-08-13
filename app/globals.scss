@@ -19,8 +19,9 @@ body {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+
+    grid-template-rows: 100px 1fr 100px;
     min-height: 100vh;
     // background: #305478;
     background: linear-gradient(142deg, rgba(110,197,238,1) 10%, rgba(26,112,143,1) 64%, rgba(251,164,38,1) 100%);
