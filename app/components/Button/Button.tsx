@@ -20,7 +20,7 @@ const Button: FC<IButton> = ({ animation, children, className, onClick, disabled
             style={style}
             disabled={disabled}
             onClick={onClick}
-            className={cn(className, s.button, type === "noBorder" ? s.border : "", type === "click" ? s.click : "")}
+            className={cn(s.button, type === "noBorder" ? s.border : "", type === "click" ? s.click : "",className)}
         >
             {children}
         </button>

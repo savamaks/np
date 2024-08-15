@@ -13,12 +13,9 @@ import React, { useEffect, useState } from "react";
 interface IPropsData {
     name: string;
     id: string;
-    setData: (value: ICategory | IProduct) => void;
-    router: AppRouterInstance;
-    authorization: (value: boolean, valueTwo: string) => void;
     token: string;
 }
-const getData = async ({ name, id, setData, router, authorization, token }: IPropsData) => {
+const getData = async ({ name, id, token }: IPropsData): Promise<ICategory | IProduct | null> => {
     try {
         const res = await fetch(`https://wclouds.ru/api/${name}/${id}?populate=*`, {
             method: "GET",
@@ -32,26 +29,23 @@ const getData = async ({ name, id, setData, router, authorization, token }: IPro
         });
 
         if (res.status === 401) {
-            authorization(false, "");
-            router.push("/admin");
+            return null;
         }
 
         const data = await res.json();
-        setData(data.data);
+        return data.data;
     } catch (error) {
         console.log(error);
+        return null;
     }
 };
 interface IPropsDataCat {
-    setDataCategories: (value: Array<ICategory>) => void;
-    router: AppRouterInstance;
-    authorization: (value: boolean, valueTwo: string) => void;
     token: string;
 }
 
-const getDataCategories = async ({ setDataCategories, router, authorization, token }: IPropsDataCat) => {
+const getDataCategories = async ({ token }: IPropsDataCat): Promise<Array<ICategory> | null> => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/categories`, {
+        const res = await fetch(`https://wclouds.ru/api/categories?&publicationState=preview`, {
             method: "GET",
             next: {
                 revalidate: 0,
@@ -63,13 +57,13 @@ const getDataCategories = async ({ setDataCategories, router, authorization, tok
         });
 
         if (res.status === 401) {
-            authorization(false, "");
-            router.push("/admin");
+            return null;
         }
         const data = await res.json();
-        setDataCategories(data.data);
+        return data.data;
     } catch (error) {
         console.log(error);
+        return null;
     }
 };
 
@@ -77,21 +71,43 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
     const [data, setData] = useState<ICategory>();
     const [dataCategories, setDataCategories] = useState<Array<ICategory>>([]);
     const [confirmation, setConfirmation] = useState(false);
-
     const [refresh, setRefresh] = useState(false);
+
     const { authService, appService } = useStore();
+
     const router = useRouter();
 
-    useEffect(() => {
-        getDataCategories({ setDataCategories, router, token: authService.token, authorization: authService.authorization });
-        getData({ name: params.name, id: params.redactId, setData, router, token: authService.token, authorization: authService.authorization });
-    }, [refresh]);
-
-    useEffect(() => {
-        if (!authService.login) {
+    const api = async () => {
+        const resultCategory = await getDataCategories({
+            token: authService.token,
+        });
+        if (resultCategory === null) {
+            authService.authorization(false, "");
             router.push("/admin");
+
+            return;
+        } else {
+            setDataCategories(resultCategory);
+
+            const resultProduct = await getData({
+                name: params.name,
+                id: params.redactId,
+
+                token: authService.token,
+            });
+            if (resultProduct === null) {
+                authService.authorization(false, "");
+                router.push("/admin");
+
+                return;
+            } else {
+                setData(resultProduct);
+            }
         }
-    }, [authService.login]);
+    };
+    useEffect(() => {
+        api();
+    }, [refresh]);
 
     if (data === null) {
         return <NotFound />;
@@ -101,11 +117,13 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
             ? `https://wclouds.ru${data.attributes.image.data.attributes.url}`
             : "https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png";
 
-        const idCat = data.attributes.category?.data.id ? data.attributes.category?.data.id : null;
+        const idCat =
+            data.attributes.category !== undefined ? (data.attributes.category?.data !== null ? data.attributes.category?.data.id : null) : null;
         const image = data.attributes.image;
         const images = data.attributes.images?.data ? data.attributes.images?.data : null;
         const productsList = data.attributes.products?.data ? data.attributes.products?.data : null;
         const category = data.attributes.category?.data ? data.attributes.category.data : null;
+        // setPublic(data.attributes.publishedAt)
 
         interface IPropsSaveChange {
             files: FileList;
@@ -116,12 +134,24 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
             idCategory: string;
             listIdConnect: Array<string>;
             listIdDisconnect: Array<string>;
+            published: string;
         }
-        const saveChange = async ({ files, file, name, title, description, idCategory, listIdConnect, listIdDisconnect }: IPropsSaveChange) => {
+        const saveChange = async ({
+            files,
+            file,
+            name,
+            title,
+            description,
+            idCategory,
+            listIdConnect,
+            listIdDisconnect,
+            published,
+        }: IPropsSaveChange) => {
             const dataUpdate: INewData = {
                 name: name,
                 title: title,
                 description: description,
+                publishedAt: published,
             };
             if (idCategory !== null) {
                 dataUpdate.category = {
@@ -197,6 +227,7 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
             <div>
                 {data?.attributes && (
                     <CardUpdate
+                       
                         setConfirmation={setConfirmation}
                         confirmation={confirmation}
                         id={data.id}

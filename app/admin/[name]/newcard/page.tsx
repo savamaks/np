@@ -20,7 +20,7 @@ interface IPropsDataCat {
     token: string;
     authorization: (value: boolean, valueTwo: string) => void;
 }
-const getDataCategories = async ({ setDataCategories, router,token,authorization }: IPropsDataCat) => {
+const getDataCategories = async ({ setDataCategories, router, token, authorization }: IPropsDataCat) => {
     try {
         const res = await fetch(`https://wclouds.ru/api/categories`, {
             method: "GET",
@@ -51,13 +51,20 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
     // const [files, setFiles] = useState<FileList | null>(null);
     // const [file, setFile] = useState<FileList | null>(null);
     // const [preview, setPreview] = useState("https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png");
-    // const [confirmation, setConfirmation] = useState(false);
-
+    const [confirmation, setConfirmation] = useState(false);
+    console.log(params.name);
     const [dataCategories, setDataCategories] = useState([]);
 
     return (
         <>
-            {/* <CardUpdate
+            <CardUpdate
+                id=""
+                saveChange={() => {}}
+                category={null}
+                image={null}
+                confirmation={confirmation}
+                setConfirmation={setConfirmation}
+                images={null}
                 names=""
                 titles=""
                 descriptions=""
@@ -65,7 +72,7 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
                 dataCategories={dataCategories}
                 idCat={null}
                 link={params.name}
-            /> */}
+            />
             d
         </>
     );

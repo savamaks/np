@@ -11,15 +11,12 @@ import { useStore } from "@/app/components/store/useStore";
 
 interface IPropsData {
     name: string;
-    setData: (value: Array<ICategory | IProduct>) => void;
-    router: AppRouterInstance;
     token: string;
-    authorization: (value: boolean, valueTwo: string) => void;
 }
 
-const getData = async ({ setData, name, router, token, authorization }: IPropsData) => {
+const getData = async ({ name, token }: IPropsData): Promise<Array<ICategory> | null | Array<IProduct>> => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/${name}?populate=*`, {
+        const res = await fetch(`https://wclouds.ru/api/${name}?populate=*&publicationState=preview`, {
             method: "GET",
             next: {
                 revalidate: 0,
@@ -31,12 +28,12 @@ const getData = async ({ setData, name, router, token, authorization }: IPropsDa
         });
         const data = await res.json();
         if (res.status === 401) {
-            authorization(false, "");
-            router.push("/admin");
+            return null;
         }
-        setData(data.data);
+        return data.data;
     } catch (error) {
         console.log(error);
+        return null;
     }
 };
 const PanelPage = ({ params }: { params: { name: string } }) => {
@@ -50,11 +47,18 @@ const PanelPage = ({ params }: { params: { name: string } }) => {
         e.preventDefault();
         router.push(`${name}/${product.id}`);
     };
-    useEffect(() => {
-        getData({ setData, name, router, authorization: authService.authorization, token: authService.token });
-        if (!authService.login) {
+    const api = async () => {
+        const res = await getData({ name, token: authService.token });
+
+        if (res === null) {
+            authService.authorization(false, "");
             router.push("/admin");
+        } else {
+            setData(res);
         }
+    };
+    useEffect(() => {
+        api();
     }, []);
 
     return (
@@ -76,6 +80,7 @@ const PanelPage = ({ params }: { params: { name: string } }) => {
             {data !== undefined &&
                 data &&
                 data.map((el: ICategory, index: number) => {
+                    console.log(el.attributes.publishedAt);
                     return <Card onClick={linkRedactPage} key={index} product={el} />;
                 })}
         </div>

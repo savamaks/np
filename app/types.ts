@@ -17,6 +17,7 @@ export interface INewData {
         connect: Array<string>;
         disconnect: Array<string>;
     };
+    publishedAt:string
 }
 export interface IImages {
     src: string;
@@ -75,6 +76,7 @@ export interface IProduct {
         category: {
             data: ICategory;
         };
+        publishedAt: null | string;
     };
 }
 export interface IImage {
@@ -109,7 +111,8 @@ export interface ICategory {
         category?: {
             data: ICategory;
         };
-        image: IImage
+        image: IImage;
+        publishedAt: string | null;
     };
 }
 

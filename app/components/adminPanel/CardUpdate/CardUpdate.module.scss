@@ -20,6 +20,14 @@
         justify-content: center;
         gap: 20px;
     }
+    &__published {
+        border: none;
+        background: rgb(0, 141, 141);
+    }
+    &__draft {
+        background: rgb(129, 26, 0);
+
+    }
     // &__cont{
     //     position: absolute;
     //     top: 0;
@@ -111,6 +119,7 @@
         }
         &__image {
             width: 100%;
+            max-width: 500px;
             height: auto;
         }
         &__inputimage {

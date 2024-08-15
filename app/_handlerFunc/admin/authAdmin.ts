@@ -14,6 +14,9 @@ export const authAdmin = async ({ identifier, password }: IProps) => {
             body: formData,
         });
         const data = await res.json();
+        if (!res.ok) {
+            return res.status;
+        }
         return data;
     } catch (error) {
         console.log(error);

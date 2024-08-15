@@ -12,6 +12,7 @@ import ListProduct from "../ListProduct/ListProduct";
 import AddImages from "../AddImages/AddImages";
 import GalleryImage from "../GalleryImage/GalleryImage";
 import { useStore } from "../../store/useStore";
+import cn from "classnames";
 
 interface IProps {
     id: string;
@@ -30,6 +31,8 @@ interface IProps {
     idCat: string | null;
     setConfirmation: (value: boolean) => void;
     confirmation: boolean;
+    published: null | string;
+    setPublished: (valu: null | string) => void;
 }
 const CardUpdate: FC<IProps> = ({
     images,
@@ -48,11 +51,13 @@ const CardUpdate: FC<IProps> = ({
     saveChange,
     setConfirmation,
     confirmation,
+    published,
+    setPublished,
 }) => {
     const [name, setName] = useState(names);
     const [title, setTitle] = useState(titles);
     const [description, setDescription] = useState(descriptions);
-    const { authService,appService } = useStore();
+    const { authService, appService } = useStore();
 
     // const [activeBtn, setActiveBtn] = useState(false);
     const [preview, setPreview] = useState(previews);
@@ -83,7 +88,7 @@ const CardUpdate: FC<IProps> = ({
     //         setActiveBtn(false);
     //     }
     // }, [name, title, description, preview, idCategory]);
-
+ 
     useEffect(() => {
         if (!authService.login) {
             router.push("/admin");
@@ -163,7 +168,7 @@ const CardUpdate: FC<IProps> = ({
                     e.stopPropagation();
                 }}
             >
-                <p className={s.card__text}>ID: {id}</p>
+                {id !== "" && <p className={s.card__text}>ID: {id}</p>}
                 <Input title="Название" name="name" className={s.card__input} type="text" value={name} setValue={setName} />
                 <Input
                     title="Ссылка (менять только при необходимости)"
@@ -186,9 +191,7 @@ const CardUpdate: FC<IProps> = ({
                     <ListProduct setListIdNotAdded={setListIdDisconnect} setListIdAdded={setListIdConnect} list={productsList ? productsList : []} />
                 )}
 
-                {listcategoryes.length > 0 && category && (
-                    <SelectProduct setIdCategory={setIdCategory} idCategory={idCategory} listCategories={listcategoryes} />
-                )}
+                {productsList === null && <SelectProduct setIdCategory={setIdCategory} idCategory={idCategory} listCategories={listcategoryes} />}
 
                 <h2>Изображение</h2>
                 <AddImages setFiles={setFile} type="one" label="photo" preview={preview} width={500} height={375} />
@@ -227,6 +230,18 @@ const CardUpdate: FC<IProps> = ({
                         className={s.savebtn}
                     >
                         Выйти
+                    </Button>
+                    <Button
+                        onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                            if(published !==null){
+
+
+                                // setPublished()
+                            }
+                        }}
+                        className={cn(s.card__published, published !== null ? "" : s.card__draft)}
+                    >
+                        {published !== null ? "опубликован" : "неопубликован"}
                     </Button>
                 </div>
             </div>

@@ -6,10 +6,14 @@ class Auth {
     login: boolean = false;
     position: boolean = false;
     reboot: boolean = false;
-    
+
     constructor() {
         makeAutoObservable(this);
-        // makePersistable(this, { name: "potolkiAuth", properties: ["token", "login", "position"], storage: window.localStorage });
+        makePersistable(this, {
+            name: "potolkiAuth",
+            properties: ["token", "login", "position"],
+            storage: typeof window !== "undefined" ? window.localStorage : undefined,
+        });
     }
     authorization(login: boolean, newToken: string) {
         this.login = login;

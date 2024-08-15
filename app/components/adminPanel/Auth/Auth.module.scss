@@ -2,7 +2,6 @@
 @use "/app/styles/color.scss" as *;
 @use "/app/styles/sizes.scss" as *;
 
-
 .container {
     display: flex;
     flex-direction: column;
@@ -24,16 +23,24 @@
     }
     &__label {
     }
-
+    &__error {
+        min-height: 10px;
+        color: rgb(240, 5, 5);
+        text-align: center;
+    }
     &__input {
         width: 100%;
         padding: 3px 10px;
         font-size: $size_text;
         border-radius: 10px;
-        border:  none;
+        border: none;
         box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
-
     }
-
-   
+}
+@media (max-width: 760px) {
+    .container {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+    }
 }

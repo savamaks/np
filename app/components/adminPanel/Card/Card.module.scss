@@ -9,6 +9,27 @@
     max-width: 1440px;
     border-bottom: 1px solid #f2f2f24b;
 
+    &__box {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        gap: 20px;
+        justify-items: center;
+        align-items: center;
+    }
+    &__public {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 20px;
+        width: max-content;
+        border-radius: 10px;
+    }
+    &__draft {
+        background: rgb(129, 26, 0);
+    }
+    &__published {
+        background: rgb(0, 141, 141);
+    }
     &:hover {
         transform: scale(1.01);
     }
@@ -33,21 +54,6 @@
         }
 
         &__box {
-            width: 100%;
-
-            &_label {
-                width: 100%;
-            }
-
-            &_input {
-                width: 100%;
-            }
-            &_textarea {
-                width: 100%;
-            }
-
-            &_inputimage {
-            }
         }
     }
 }

@@ -1,7 +1,10 @@
+"use client";
 import { ICategory } from "@/app/types";
 import React, { MouseEvent, ChangeEvent, FC, useEffect, useState } from "react";
 import Image from "next/image";
 import s from "./Card.module.scss";
+import Button from "../../Button/Button";
+import cn from "classnames";
 
 interface IProps {
     product: ICategory;
@@ -15,6 +18,7 @@ const Card: FC<IProps> = ({ product, onClick }) => {
         <>
             <div
                 onClick={(e: MouseEvent<HTMLDivElement>) => {
+                    e.stopPropagation();
                     if (onClick) {
                         onClick(e, product);
                     }
@@ -22,7 +26,12 @@ const Card: FC<IProps> = ({ product, onClick }) => {
                 className={s.card}
             >
                 <p className={s.card__text}>{product.id}</p>
-                <p className={s.card__maintext}>{product.attributes.name}</p>
+                <div className={s.card__box}>
+                    <p className={s.card__maintext}>{product.attributes.name}</p>
+                    <p className={cn(s.card__public, product.attributes.publishedAt === null ? s.card__draft : s.card__published)}>
+                        {product.attributes.publishedAt === null ? "Неопубликован" : "Опубликован"}
+                    </p>
+                </div>
                 <p className={s.card__text}>{product.attributes.title}</p>
                 <Image className={s.card__image} src={srcImage} alt={`image ${product.attributes.name}`} width={200} height={150} />
             </div>
