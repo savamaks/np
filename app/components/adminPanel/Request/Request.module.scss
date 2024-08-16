@@ -1,0 +1,50 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 10px;
+
+    &__box {
+        width: 90%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        &_request {
+            text-align: center;
+            padding: 10px 20px;
+        }
+        &_text {
+            text-align: center;
+            padding: 10px 20px;
+        }
+    }
+
+    &__card {
+        cursor: pointer;
+        width: 90%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 2px solid rgb(255, 255, 255);
+        transition: all 0.2s ease;
+
+        &_request {
+            padding: 10px 20px;
+            border-right: 2px solid rgb(255, 255, 255);
+        }
+        &_text {
+            padding: 10px 20px;
+        }
+        &:hover {
+            transform: scale(1.01);
+        }
+        
+    }
+}
+.select {
+}

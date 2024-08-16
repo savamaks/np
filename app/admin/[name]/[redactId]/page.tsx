@@ -68,7 +68,7 @@ const getDataCategories = async ({ token }: IPropsDataCat): Promise<Array<ICateg
 };
 
 const PageRedact = ({ params }: { params: { name: string; redactId: string } }) => {
-    const [data, setData] = useState<ICategory>();
+    const [data, setData] = useState<ICategory | IProduct>();
     const [dataCategories, setDataCategories] = useState<Array<ICategory>>([]);
     const [confirmation, setConfirmation] = useState(false);
     const [refresh, setRefresh] = useState(false);
@@ -113,16 +113,7 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
         return <NotFound />;
     } else {
         if (data === undefined) return <></>;
-        const previews = data.attributes.image.data
-            ? `https://wclouds.ru${data.attributes.image.data.attributes.url}`
-            : "https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png";
 
-        const idCat =
-            data.attributes.category !== undefined ? (data.attributes.category?.data !== null ? data.attributes.category?.data.id : null) : null;
-        const image = data.attributes.image;
-        const images = data.attributes.images?.data ? data.attributes.images?.data : null;
-        const productsList = data.attributes.products?.data ? data.attributes.products?.data : null;
-        const category = data.attributes.category?.data ? data.attributes.category.data : null;
         // setPublic(data.attributes.publishedAt)
 
         interface IPropsSaveChange {
@@ -147,104 +138,94 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
             listIdDisconnect,
             published,
         }: IPropsSaveChange) => {
-            const dataUpdate: INewData = {
-                name: name,
-                title: title,
-                description: description,
-                publishedAt: published,
-            };
-            if (idCategory !== null) {
-                dataUpdate.category = {
-                    connect: [
-                        {
-                            id: idCategory,
-                            position: {
-                                start: true,
-                            },
-                        },
-                    ],
-                };
-            }
-            if (params.name === "categories") {
-                dataUpdate.products = {
-                    connect: listIdConnect,
-                    disconnect: listIdDisconnect,
-                };
-            }
-            const result = await saveChangeCategory({
-                data: dataUpdate,
-                id: data ? data?.id : "",
-                link: params.name,
-                token: authService.token,
-                router,
-                authorization: authService.authorization,
-            });
+            // const dataUpdate: INewData = {
+            //     name: name,
+            //     title: title,
+            //     description: description,
+            //     publishedAt: published,
+            // };
+            // if (idCategory !== null) {
+            //     dataUpdate.category = {
+            //         connect: [
+            //             {
+            //                 id: idCategory,
+            //                 position: {
+            //                     start: true,
+            //                 },
+            //             },
+            //         ],
+            //     };
+            // }
+            // if (params.name === "categories") {
+            //     dataUpdate.products = {
+            //         connect: listIdConnect,
+            //         disconnect: listIdDisconnect,
+            //     };
+            // }
+            // const result = await saveChangeCategory({
+            //     data: dataUpdate,
+            //     id: data ? data?.id : "",
+            //     link: params.name,
+            //     token: authService.token,
+            //     router,
+            //     authorization: authService.authorization,
+            // });
 
-            //сохранение изображения
+            // //сохранение изображения
 
-            if (file !== null) {
-                const formData = new FormData();
+            // if (file !== null) {
+            //     const formData = new FormData();
 
-                const linkApi = params.name === "categories" ? "category" : "product";
+            //     const linkApi = params.name === "categories" ? "category" : "product";
 
-                formData.append("files", file[0]);
-                formData.append("ref", `api::${linkApi}.${linkApi}`);
-                formData.append("refId", data ? data?.id : "");
-                formData.append("field", "image");
+            //     formData.append("files", file[0]);
+            //     formData.append("ref", `api::${linkApi}.${linkApi}`);
+            //     formData.append("refId", data ? data?.id : "");
+            //     formData.append("field", "image");
 
-                await changeImage({ token: authService.token, formData, router, authorization: authService.authorization });
+            //     await changeImage({ token: authService.token, formData, router, authorization: authService.authorization });
 
-                if (image?.data !== null && image !== undefined) {
-                    const res = await deleteImage({ token: authService.token, id: image.data.id, router, authorization: authService.authorization });
-                    if (res.data !== null) {
-                        setRefresh((prev) => !prev);
-                    }
-                }
-                appService.changePreview([]);
-            }
+            //     if (image?.data !== null && image !== undefined) {
+            //         const res = await deleteImage({ token: authService.token, id: image.data.id, router, authorization: authService.authorization });
+            //         if (res.data !== null) {
+            //             setRefresh((prev) => !prev);
+            //         }
+            //     }
+            //     appService.changePreview([]);
+            // }
 
-            if (files !== null) {
-                const formData = new FormData();
+            // if (files !== null) {
+            //     const formData = new FormData();
 
-                const linkApi = params.name === "categories" ? "category" : "product";
+            //     const linkApi = params.name === "categories" ? "category" : "product";
 
-                for (let index = 0; index < files.length; index++) {
-                    formData.append("files", files[index]);
-                }
-                formData.append("ref", `api::${linkApi}.${linkApi}`);
-                formData.append("refId", data ? data?.id : "");
-                formData.append("field", "images");
+            //     for (let index = 0; index < files.length; index++) {
+            //         formData.append("files", files[index]);
+            //     }
+            //     formData.append("ref", `api::${linkApi}.${linkApi}`);
+            //     formData.append("refId", data ? data?.id : "");
+            //     formData.append("field", "images");
 
-                await changeImage({ token: authService.token, formData, router, authorization: authService.authorization });
+            //     await changeImage({ token: authService.token, formData, router, authorization: authService.authorization });
 
-                appService.changeArrPreviews([]);
-            }
-            setConfirmation(false);
+            //     appService.changeArrPreviews([]);
+            // }
+            // setConfirmation(false);
 
-            setRefresh((prev) => !prev); //обновляет страницу и получает новые данные с API
+            // setRefresh((prev) => !prev); //обновляет страницу и получает новые данные с API
         };
         return (
             <div>
                 {data?.attributes && (
                     <CardUpdate
-                       
+                        data={data}
                         setConfirmation={setConfirmation}
                         confirmation={confirmation}
-                        id={data.id}
-                        names={data.attributes.name}
-                        titles={data.attributes.title}
-                        descriptions={data.attributes.description}
-                        previews={previews}
                         dataCategories={dataCategories}
-                        image={image}
-                        images={images}
-                        productsList={productsList}
-                        category={category}
                         refresh={() => {
                             setRefresh((prev) => !prev);
                         }}
                         link={params.name}
-                        idCat={idCat}
                         saveChange={saveChange}
                     />
                 )}

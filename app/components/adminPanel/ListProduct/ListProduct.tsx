@@ -157,6 +157,7 @@ const ListProduct = ({ list, setListIdAdded, setListIdNotAdded }: IProps) => {
                                             >
                                                 <p className={s.container__card_text}>{el.attributes.name}</p>
                                                 <Button
+                                                    type="noBorder"
                                                     onClick={(e: MouseEvent<HTMLButtonElement>) => {
                                                         e.preventDefault();
                                                         setDeleteProduct(el);

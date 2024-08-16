@@ -57,23 +57,7 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
 
     return (
         <>
-            <CardUpdate
-                id=""
-                saveChange={() => {}}
-                category={null}
-                image={null}
-                confirmation={confirmation}
-                setConfirmation={setConfirmation}
-                images={null}
-                names=""
-                titles=""
-                descriptions=""
-                previews="https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png"
-                dataCategories={dataCategories}
-                idCat={null}
-                link={params.name}
-            />
-            d
+            а
         </>
     );
 };

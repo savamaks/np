@@ -1,6 +1,6 @@
 "use client";
 
-import { ICategory, IDataImage, IImage, IProduct } from "@/app/types";
+import { ICategory, IDataImage, IImage, INewData, IProduct } from "@/app/types";
 import React, { MouseEvent, ChangeEvent, FC, useEffect, useState } from "react";
 import s from "./CardUpdate.module.scss";
 import Button from "@/app/components/Button/Button";
@@ -13,63 +13,45 @@ import AddImages from "../AddImages/AddImages";
 import GalleryImage from "../GalleryImage/GalleryImage";
 import { useStore } from "../../store/useStore";
 import cn from "classnames";
+import { changeImage } from "@/app/_handlerFunc/admin/changeImage";
+import { deleteImage } from "@/app/_handlerFunc/admin/deleteImage";
+import { saveChangeCategory } from "@/app/_handlerFunc/admin/saveChangeCategory";
 
 interface IProps {
-    id: string;
-    names: string;
-    titles: string;
-    descriptions: string;
-    previews: string;
     link: string;
     dataCategories: Array<ICategory>;
-    productsList?: Array<IProduct> | null;
-    category: ICategory | null;
     saveChange: (value: any) => void;
-    refresh?: () => void;
-    image: IImage | null;
-    images: Array<IDataImage> | null;
-    idCat: string | null;
+    refresh: () => void;
     setConfirmation: (value: boolean) => void;
     confirmation: boolean;
-    published: null | string;
-    setPublished: (valu: null | string) => void;
+    data: ICategory | IProduct;
 }
-const CardUpdate: FC<IProps> = ({
-    images,
-    category,
-    productsList,
-    image,
-    id,
-    link,
-    refresh,
-    names,
-    titles,
-    descriptions,
-    previews,
-    idCat,
-    dataCategories,
-    saveChange,
-    setConfirmation,
-    confirmation,
-    published,
-    setPublished,
-}) => {
-    const [name, setName] = useState(names);
-    const [title, setTitle] = useState(titles);
-    const [description, setDescription] = useState(descriptions);
-    const { authService, appService } = useStore();
+const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, confirmation, data, link }) => {
+    console.log(data);
+    const [name, setName] = useState(data.attributes.name);
+    const [title, setTitle] = useState(data.attributes.title);
+    const [description, setDescription] = useState(data.attributes.description);
+    const [video, setVideo] = useState(data.attributes.video);
 
-    // const [activeBtn, setActiveBtn] = useState(false);
-    const [preview, setPreview] = useState(previews);
+    const [preview, setPreview] = useState(
+        data.attributes.image.data
+            ? `https://wclouds.ru${data.attributes.image.data.attributes.url}`
+            : "https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png"
+    );
 
     const [files, setFiles] = useState<FileList | null>(null);
     const [file, setFile] = useState<FileList | null>(null);
-
+    // const [productsList, setProductsList] = useState(data.attributes.products ? data.attributes.products?.data : null);
     const [listcategoryes, setListcategoryes] = useState(dataCategories);
-
-    const [idCategory, setIdCategory] = useState(idCat);
+    const [idCategory, setIdCategory] = useState(
+        data.attributes.category !== undefined ? (data.attributes.category?.data !== null ? data.attributes.category?.data.id : null) : null
+    );
     const [listIdConnect, setListIdConnect] = useState<Array<string>>([]);
     const [listIdDisconnect, setListIdDisconnect] = useState<Array<string>>([]);
+
+    const { authService, appService } = useStore();
+
+    // const [activeBtn, setActiveBtn] = useState(false);
 
     const router = useRouter();
 
@@ -88,78 +70,108 @@ const CardUpdate: FC<IProps> = ({
     //         setActiveBtn(false);
     //     }
     // }, [name, title, description, preview, idCategory]);
- 
+
     useEffect(() => {
         if (!authService.login) {
             router.push("/admin");
         }
     }, [authService.login]);
-    // const saveChange = async (e: MouseEvent<HTMLButtonElement>) => {
-    //     e.preventDefault();
-    //     const data: INewData = {
-    //         name: name,
-    //         title: title,
-    //         description: description,
-    //     };
-    //     if (idCategory !== null) {
-    //         data.category = {
-    //             connect: [
-    //                 {
-    //                     id: idCategory,
-    //                     position: {
-    //                         start: true,
-    //                     },
-    //                 },
-    //             ],
-    //         };
-    //     }
-    //     if (link === "categoryes") {
-    //         data.products = {
-    //             connect: listIdConnect,
-    //             disconnect: listIdDisconnect,
-    //         };
-    //     }
-    //     const result = await saveChangeCategory({ data, id: id, link, token: auth.token });
 
-    //     //сохранение изображения
+    const changePublished = async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const time = new Date().toLocaleDateString().split(".").reverse().join("-");
 
-    //     if (file !== null) {
-    //         const formData = new FormData();
+        console.log(time);
+        const newData: INewData = {
+            publishedAt: data.attributes.publishedAt !== null ? null : time,
+        };
+        const result = await saveChangeCategory({ data: newData, id: data.id, link, token: authService.token });
+        if (result === null) {
+            authService.authorization(false, "");
+            router.push("/admin");
+        } else if (result) {
+            refresh();
+        }
+    };
 
-    //         const linkApi = link === "categoryes" ? "category" : "product";
+    const saveChange = async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const newData: INewData = {
+            name: name,
+            title: title,
+            description: description,
+        };
+        if (idCategory !== null) {
+            newData.category = {
+                connect: [
+                    {
+                        id: idCategory,
+                        position: {
+                            start: true,
+                        },
+                    },
+                ],
+            };
+        }
+        if (link === "categories") {
+            newData.products = {
+                connect: listIdConnect,
+                disconnect: listIdDisconnect,
+            };
+        }
+        const result = await saveChangeCategory({ data: newData, id: data.id, link, token: authService.token });
+        if (result === null) {
+            authService.authorization(false, "");
+            router.push("/admin");
+        }
+        //сохранение изображения
 
-    //         formData.append("files", file[0]);
-    //         formData.append("ref", `api::${linkApi}.${linkApi}`);
-    //         formData.append("refId", id);
-    //         formData.append("field", "image");
+        if (file !== null) {
+            const formData = new FormData();
 
-    //         await changeImage(auth.token, formData);
-    //         if (image) {
-    //             await deleteImage(auth.token, image.data.id);
-    //         }
-    //     }
+            const linkApi = link === "categories" ? "category" : "product";
 
-    //     if (files !== null) {
-    //         const formData = new FormData();
+            formData.append("files", file[0]);
+            formData.append("ref", `api::${linkApi}.${linkApi}`);
+            formData.append("refId", data ? data?.id : "");
+            formData.append("field", "image");
 
-    //         const linkApi = link === "categoryes" ? "category" : "product";
+            await changeImage({ token: authService.token, formData, router, authorization: authService.authorization });
 
-    //         for (let index = 0; index < files.length; index++) {
-    //             formData.append("files", files[index]);
-    //         }
-    //         formData.append("ref", `api::${linkApi}.${linkApi}`);
-    //         formData.append("refId", id);
-    //         formData.append("field", "images");
+            if (data.attributes.image?.data !== null && data.attributes.image !== undefined) {
+                const res = await deleteImage({
+                    token: authService.token,
+                    id: data.attributes.image.data.id,
+                    router,
+                    authorization: authService.authorization,
+                });
+                if (res.data !== null) {
+                    refresh();
+                }
+            }
+            appService.changePreview([]);
+        }
 
-    //         await changeImage(auth.token, formData);
+        if (files !== null) {
+            const formData = new FormData();
 
-    //         auth.changeArrPreviews([]);
-    //     }
-    //     setConfirmation(false);
-    //     if (refresh) {
-    //         refresh(); //обновляет страницу и получает новые данные с API
-    //     }
-    // };
+            const linkApi = link === "categories" ? "category" : "product";
+
+            for (let index = 0; index < files.length; index++) {
+                formData.append("files", files[index]);
+            }
+            formData.append("ref", `api::${linkApi}.${linkApi}`);
+            formData.append("refId", data ? data?.id : "");
+            formData.append("field", "images");
+
+            await changeImage({ token: authService.token, formData, router, authorization: authService.authorization });
+
+            appService.changeArrPreviews([]);
+        }
+        setConfirmation(false);
+
+        refresh(); //обновляет страницу и получает новые данные с API
+    };
     return (
         <>
             <div
@@ -168,7 +180,7 @@ const CardUpdate: FC<IProps> = ({
                     e.stopPropagation();
                 }}
             >
-                {id !== "" && <p className={s.card__text}>ID: {id}</p>}
+                {data.id !== "" && <p className={s.card__text}>ID: {data.id}</p>}
                 <Input title="Название" name="name" className={s.card__input} type="text" value={name} setValue={setName} />
                 <Input
                     title="Ссылка (менять только при необходимости)"
@@ -178,6 +190,10 @@ const CardUpdate: FC<IProps> = ({
                     value={title}
                     setValue={setTitle}
                 />
+                {video !== undefined && (
+                    <Input title="Ссылка на видео" name="video" className={s.card__input} type="text" value={video} setValue={setVideo} />
+                )}
+
                 <label htmlFor="description">Описание</label>
                 <textarea
                     name="description"
@@ -187,16 +203,17 @@ const CardUpdate: FC<IProps> = ({
                         setDescription(e.target.value);
                     }}
                 />
-                {productsList !== null && (
-                    <ListProduct setListIdNotAdded={setListIdDisconnect} setListIdAdded={setListIdConnect} list={productsList ? productsList : []} />
+
+                {link === "categories" && (
+                    <ListProduct setListIdNotAdded={setListIdDisconnect} setListIdAdded={setListIdConnect} list={data.attributes.products.data} />
                 )}
 
-                {productsList === null && <SelectProduct setIdCategory={setIdCategory} idCategory={idCategory} listCategories={listcategoryes} />}
+                {link === "products" && <SelectProduct setIdCategory={setIdCategory} idCategory={idCategory} listCategories={listcategoryes} />}
 
                 <h2>Изображение</h2>
                 <AddImages setFiles={setFile} type="one" label="photo" preview={preview} width={500} height={375} />
 
-                {category && (
+                {data.attributes.category && (
                     <>
                         <h2>Галерея</h2>
                         <AddImages
@@ -209,7 +226,9 @@ const CardUpdate: FC<IProps> = ({
                             height={120}
                         />
 
-                        {images !== null && <GalleryImage refresh={refresh} images={images} />}
+                        {data.attributes.images !== null && data.attributes.images !== undefined  && (
+                            <GalleryImage refresh={refresh} images={data.attributes.images?.data} />
+                        )}
                     </>
                 )}
                 <div className={s.card__box}>
@@ -232,16 +251,11 @@ const CardUpdate: FC<IProps> = ({
                         Выйти
                     </Button>
                     <Button
-                        onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                            if(published !==null){
-
-
-                                // setPublished()
-                            }
-                        }}
-                        className={cn(s.card__published, published !== null ? "" : s.card__draft)}
+                        onClick={changePublished}
+                        type="noBorder"
+                        className={cn(s.card__published, data.attributes.publishedAt !== null ? "" : s.card__draft)}
                     >
-                        {published !== null ? "опубликован" : "неопубликован"}
+                        {data.attributes.publishedAt !== null ? "опубликован" : "неопубликован"}
                     </Button>
                 </div>
             </div>
@@ -259,14 +273,7 @@ const CardUpdate: FC<IProps> = ({
                 >
                     <p>Предыдущие данные будут потеряны, сохранить изменения?</p>
                     <div className={s.confirmation__box}>
-                        <Button
-                            onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                                e.preventDefault();
-                                saveChange({ files, file, name, title, description, idCategory, listIdConnect, listIdDisconnect });
-                            }}
-                        >
-                            ok
-                        </Button>
+                        <Button onClick={saveChange}>ok</Button>
                         <Button
                             onClick={(e: MouseEvent<HTMLButtonElement>) => {
                                 e.stopPropagation();

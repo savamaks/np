@@ -1,8 +1,9 @@
 import { MouseEvent } from "react";
+
 export interface INewData {
-    name: string;
-    title: string;
-    description: string;
+    name?: string;
+    title?: string;
+    description?: string;
     category?: {
         connect: [
             {
@@ -17,7 +18,7 @@ export interface INewData {
         connect: Array<string>;
         disconnect: Array<string>;
     };
-    publishedAt:string
+    publishedAt?: null | string;
 }
 export interface IImages {
     src: string;
@@ -31,9 +32,11 @@ export interface ITarget extends EventTarget {
         index: string;
     };
 }
+
 export interface IMouseEvent extends MouseEvent<HTMLImageElement> {
     target: ITarget;
 }
+
 export interface IDataImage {
     id: string;
     attributes: {
@@ -77,8 +80,12 @@ export interface IProduct {
             data: ICategory;
         };
         publishedAt: null | string;
+        products: {
+            data: Array<IProduct>;
+        };
     };
 }
+
 export interface IImage {
     data: {
         id: string;
@@ -101,7 +108,7 @@ export interface ICategory {
         title: string;
         name: string;
         description: string;
-        products?: {
+        products: {
             data: Array<IProduct>;
         };
         images?: {

@@ -1,20 +1,20 @@
 "use client";
 
-import { ICategory, IProduct } from "@/app/types";
+import { ICategory, IProduct, IRequest } from "@/app/types";
 import React, { useEffect, MouseEvent, useState } from "react";
 import s from "./page.module.scss";
 import { useRouter } from "next/navigation";
 import Card from "@/app/components/adminPanel/Card/Card";
 import Button from "@/app/components/Button/Button";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useStore } from "@/app/components/store/useStore";
+import Request from "@/app/components/adminPanel/Request/Request";
 
 interface IPropsData {
     name: string;
     token: string;
 }
 
-const getData = async ({ name, token }: IPropsData): Promise<Array<ICategory> | null | Array<IProduct>> => {
+const getData = async ({ name, token }: IPropsData) => {
     try {
         const res = await fetch(`https://wclouds.ru/api/${name}?populate=*&publicationState=preview`, {
             method: "GET",
@@ -39,6 +39,8 @@ const getData = async ({ name, token }: IPropsData): Promise<Array<ICategory> | 
 const PanelPage = ({ params }: { params: { name: string } }) => {
     const name = params.name;
     const [data, setData] = useState<Array<ICategory | IProduct>>();
+    const [dataRequest, setDataRequest] = useState<Array<IRequest>>();
+
     const router = useRouter();
     const nameButton = params.name === "categories" ? "Категорию" : "Продукт";
     const { authService } = useStore();
@@ -54,35 +56,42 @@ const PanelPage = ({ params }: { params: { name: string } }) => {
             authService.authorization(false, "");
             router.push("/admin");
         } else {
-            setData(res);
+            if (name === "requests") {
+                setDataRequest(res);
+            } else {
+                setData(res);
+            }
         }
     };
     useEffect(() => {
         api();
     }, []);
-
+    console.log(data, name);
     return (
         <div className={s.container}>
-            <Button
-                className={s.container__button}
-                onClick={() => {
-                    router.push(`${name}/newcard`);
-                }}
-            >
-                Добавить {nameButton}
-            </Button>
-            <div className={s.container__box}>
-                <h2 className={s.container__box_text}>ID</h2>
-                <h2 className={s.container__box_maintext}>Название</h2>
-                <h2 className={s.container__box_text}>Ссылка</h2>
-                <h2 className={s.container__box_maintext}>Обложка</h2>
-            </div>
-            {data !== undefined &&
-                data &&
-                data.map((el: ICategory, index: number) => {
-                    console.log(el.attributes.publishedAt);
-                    return <Card onClick={linkRedactPage} key={index} product={el} />;
-                })}
+            {(name === "products" || name === "categories") && (
+                <>
+                    <Button
+                        className={s.container__button}
+                        onClick={() => {
+                            router.push(`${name}/newcard`);
+                        }}
+                    >
+                        Добавить {nameButton}
+                    </Button>
+                    <div className={s.container__box}>
+                        <h2 className={s.container__box_text}>ID</h2>
+                        <h2 className={s.container__box_maintext}>Название</h2>
+                        <h2 className={s.container__box_text}>Ссылка</h2>
+                        <h2 className={s.container__box_maintext}>Обложка</h2>
+                    </div>
+                    {data &&
+                        data.map((el: ICategory, index: number) => {
+                            return <Card onClick={linkRedactPage} key={index} product={el} />;
+                        })}
+                </>
+            )}
+            {name === "requests" && dataRequest !== undefined && <Request data={dataRequest} />}
         </div>
     );
 };

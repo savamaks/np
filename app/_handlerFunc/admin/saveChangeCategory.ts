@@ -6,11 +6,9 @@ interface IProps {
     id: string;
     link: string;
     token: string;
-    router: AppRouterInstance;
-    authorization: (value: boolean, valueTwo: string) => void;
 }
 
-export const saveChangeCategory = async ({ data, id, link, token, router, authorization }: IProps) => {
+export const saveChangeCategory = async ({ data, id, link, token }: IProps): Promise<boolean | null> => {
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
     try {
@@ -22,8 +20,8 @@ export const saveChangeCategory = async ({ data, id, link, token, router, author
             body: formData,
         });
         if (response.status === 401) {
-            authorization(false, "");
-            router.push("/admin");
+            return null;
+            
         }
         if (!response.ok) {
             throw new Error(`Error uploading file: ${response.statusText}`);
@@ -33,5 +31,6 @@ export const saveChangeCategory = async ({ data, id, link, token, router, author
         return true;
     } catch (error) {
         console.error("Error during file upload:", error);
+        return null;
     }
 };
