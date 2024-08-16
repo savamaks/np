@@ -16,11 +16,26 @@
         gap: 10px;
 
         &_link {
+            position: relative;
+            padding: 5px;
             font-size: 18px;
+            transition: all 0.3s ease;
         }
     }
 
     &__main {
         width: 100%;
     }
+}
+.active {
+    &::after {
+        position: absolute;
+        content: '';
+        left: 0;
+        bottom: 0;
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: #ffffff;
+      }
 }
