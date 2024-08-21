@@ -3,10 +3,8 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 interface IProps {
     token: string;
     formData: any;
-    router: AppRouterInstance;
-    authorization: (value: boolean, valueTwo: string) => void;
 }
-export const changeImage = async ({ token, formData, router, authorization }: IProps) => {
+export const changeImage = async ({ token, formData }: IProps) => {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/upload`, {
             method: "POST",
@@ -16,16 +14,16 @@ export const changeImage = async ({ token, formData, router, authorization }: IP
             body: formData,
         });
         if (response.status === 401) {
-            authorization(false, "");
-            router.push("/admin");
+            return null;
         }
         if (!response.ok) {
             throw new Error(`Error uploading file: ${response.statusText}`);
         }
 
         const data = await response.json();
-        console.log("Категория изменена", data);
+        return true;
     } catch (error) {
         console.error("Error during file upload:", error);
+        return null;
     }
 };

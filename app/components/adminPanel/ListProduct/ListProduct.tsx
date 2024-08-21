@@ -15,7 +15,7 @@ interface IPropsData {
 }
 const getData = async ({ setData, token, authorization }: IPropsData) => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/products`, {
+        const res = await fetch(`https://wclouds.ru/api/products?populate=*&publicationState=preview`, {
             method: "GET",
             next: {
                 revalidate: 0,

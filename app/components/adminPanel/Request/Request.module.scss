@@ -32,10 +32,18 @@
         grid-template-columns: 1fr 1fr;
         border: 2px solid rgb(255, 255, 255);
         transition: all 0.2s ease;
-
-        &_request {
+        
+        &_box{
             padding: 10px 20px;
             border-right: 2px solid rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        &_request {
+           
         }
         &_text {
             padding: 10px 20px;
@@ -43,7 +51,20 @@
         &:hover {
             transform: scale(1.01);
         }
-        
+        &_public {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 20px;
+            width: max-content;
+            border-radius: 10px;
+        }
+        &_draft {
+            background: rgb(129, 26, 0);
+        }
+        &_published {
+            background: rgb(0, 141, 141);
+        }
     }
 }
 .select {

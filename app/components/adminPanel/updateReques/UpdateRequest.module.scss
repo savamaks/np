@@ -1,3 +1,6 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
 
 .card {
     margin: 0 auto;
@@ -9,11 +12,6 @@
     justify-content: center;
     padding: 20px 20px;
     gap: 20px;
-    position: relative;
+
    
-}
-
-@media (max-width: 760px) {
-
-  
 }
