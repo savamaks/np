@@ -5,12 +5,17 @@ export interface INewData {
     title?: string;
     description?: string;
     category?: {
-        connect: [
+        connect?: [
             {
-                id: string | undefined;
+                id: string | null;
                 position?: {
                     start: boolean;
                 };
+            }
+        ];
+        disconnect?: [
+            {
+                id: string | null;
             }
         ];
     };
@@ -124,8 +129,14 @@ export interface ICategory {
 }
 
 export interface IRequest {
+    id: string;
     attributes: {
         request: string;
         answer: string;
+        publishedAt: null | string;
     };
+}
+export interface INewDataRequest {
+    request: string;
+    answer: string;
 }

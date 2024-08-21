@@ -17,7 +17,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: "Продукты", link: "products" },
         { name: "Вопросы", link: "requests" },
     ];
-    console.log(pathname);
     return (
         <section className={s.layout}>
             <nav className={s.layout__nav}>

@@ -66,7 +66,7 @@ const PanelPage = ({ params }: { params: { name: string } }) => {
     useEffect(() => {
         api();
     }, []);
-    console.log(data, name);
+
     return (
         <div className={s.container}>
             {(name === "products" || name === "categories") && (
@@ -91,7 +91,19 @@ const PanelPage = ({ params }: { params: { name: string } }) => {
                         })}
                 </>
             )}
-            {name === "requests" && dataRequest !== undefined && <Request data={dataRequest} />}
+            {name === "requests" && dataRequest !== undefined && (
+                <>
+                    <Button
+                        className={s.container__button}
+                        onClick={() => {
+                            router.push(`${name}/createrequest`);
+                        }}
+                    >
+                        Добавить Вопрос
+                    </Button>
+                    <Request data={dataRequest} />
+                </>
+            )}
         </div>
     );
 };

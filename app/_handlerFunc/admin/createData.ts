@@ -1,19 +1,19 @@
 import { INewData, INewDataRequest } from "@/app/types";
 
-
 interface IProps {
     data: INewData | INewDataRequest;
-    id: string;
     link: string;
     token: string;
+    files?:FileList
 }
 
-export const saveChangeCategory = async ({ data, id, link, token }: IProps): Promise<boolean | null> => {
+export const createData = async ({ data, link, token,files }: IProps) => {
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
+    
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/${link}/${id}`, {
-            method: "PUT",
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/${link}`, {
+            method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -27,7 +27,8 @@ export const saveChangeCategory = async ({ data, id, link, token }: IProps): Pro
         }
 
         const data = await response.json();
-        return true;
+        return data.data;
+        
     } catch (error) {
         console.error("Error during file upload:", error);
         return null;

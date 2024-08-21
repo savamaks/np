@@ -16,17 +16,18 @@ import cn from "classnames";
 import { changeImage } from "@/app/_handlerFunc/admin/changeImage";
 import { deleteImage } from "@/app/_handlerFunc/admin/deleteImage";
 import { saveChangeCategory } from "@/app/_handlerFunc/admin/saveChangeCategory";
+import CardButtons from "../CardButtons/CardButtons";
+import Confirmation from "../Confirmation/Confirmation";
+import { deleteEntry } from "@/app/_handlerFunc/admin/deleteEntry";
 
 interface IProps {
     link: string;
-    dataCategories: Array<ICategory>;
-    saveChange: (value: any) => void;
     refresh: () => void;
     setConfirmation: (value: boolean) => void;
     confirmation: boolean;
     data: ICategory | IProduct;
 }
-const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, confirmation, data, link }) => {
+const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, link }) => {
     console.log(data);
     const [name, setName] = useState(data.attributes.name);
     const [title, setTitle] = useState(data.attributes.title);
@@ -42,12 +43,12 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
     const [files, setFiles] = useState<FileList | null>(null);
     const [file, setFile] = useState<FileList | null>(null);
     // const [productsList, setProductsList] = useState(data.attributes.products ? data.attributes.products?.data : null);
-    const [listcategoryes, setListcategoryes] = useState(dataCategories);
-    const [idCategory, setIdCategory] = useState(
+    const [idCategory, setIdCategory] = useState<string | null>(
         data.attributes.category !== undefined ? (data.attributes.category?.data !== null ? data.attributes.category?.data.id : null) : null
     );
     const [listIdConnect, setListIdConnect] = useState<Array<string>>([]);
     const [listIdDisconnect, setListIdDisconnect] = useState<Array<string>>([]);
+    const [confirmationDel, setConfirmationDel] = useState(false);
 
     const { authService, appService } = useStore();
 
@@ -81,7 +82,6 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
         e.preventDefault();
         const time = new Date().toLocaleDateString().split(".").reverse().join("-");
 
-        console.log(time);
         const newData: INewData = {
             publishedAt: data.attributes.publishedAt !== null ? null : time,
         };
@@ -93,7 +93,6 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
             refresh();
         }
     };
-
     const saveChange = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const newData: INewData = {
@@ -112,6 +111,16 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
                     },
                 ],
             };
+        } else if (idCategory === null && data.attributes.category?.data !== null) {
+            if (data.attributes.category?.data.id !== undefined) {
+                newData.category = {
+                    disconnect: [
+                        {
+                            id: data.attributes.category.data.id,
+                        },
+                    ],
+                };
+            }
         }
         if (link === "categories") {
             newData.products = {
@@ -119,6 +128,7 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
                 disconnect: listIdDisconnect,
             };
         }
+        console.log(newData);
         const result = await saveChangeCategory({ data: newData, id: data.id, link, token: authService.token });
         if (result === null) {
             authService.authorization(false, "");
@@ -136,16 +146,14 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
             formData.append("refId", data ? data?.id : "");
             formData.append("field", "image");
 
-            await changeImage({ token: authService.token, formData, router, authorization: authService.authorization });
+            await changeImage({ token: authService.token, formData });
 
             if (data.attributes.image?.data !== null && data.attributes.image !== undefined) {
                 const res = await deleteImage({
                     token: authService.token,
                     id: data.attributes.image.data.id,
-                    router,
-                    authorization: authService.authorization,
                 });
-                if (res.data !== null) {
+                if (res !== null) {
                     refresh();
                 }
             }
@@ -164,7 +172,7 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
             formData.append("refId", data ? data?.id : "");
             formData.append("field", "images");
 
-            await changeImage({ token: authService.token, formData, router, authorization: authService.authorization });
+            await changeImage({ token: authService.token, formData });
 
             appService.changeArrPreviews([]);
         }
@@ -172,6 +180,35 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
 
         refresh(); //обновляет страницу и получает новые данные с API
     };
+
+    const delEntry = async () => {
+        const res = await deleteEntry({ id: data.id, link: link, token: authService.token });
+
+        if (data.attributes.image?.data !== null && data.attributes.image !== undefined) {
+            const res = await deleteImage({
+                token: authService.token,
+                id: data.attributes.image.data.id,
+            });
+        }
+        if (data.attributes.images?.data !== null && data.attributes.images !== undefined) {
+            data.attributes.images.data.map(async (el: IDataImage) => {
+                const res = await deleteImage({
+                    token: authService.token,
+                    id: el.id,
+                });
+            });
+        }
+
+        if (res) {
+            router.push(`/admin/${link}`);
+        }
+
+        if (res === null) {
+            authService.authorization(false, "");
+            router.push("/admin");
+        }
+    };
+
     return (
         <>
             <div
@@ -181,8 +218,9 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
                 }}
             >
                 {data.id !== "" && <p className={s.card__text}>ID: {data.id}</p>}
-                <Input title="Название" name="name" className={s.card__input} type="text" value={name} setValue={setName} />
+                <Input types="input" title="Название" name="name" className={s.card__input} type="text" value={name} setValue={setName} />
                 <Input
+                    types="input"
                     title="Ссылка (менять только при необходимости)"
                     name="title"
                     className={s.card__input}
@@ -191,24 +229,31 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
                     setValue={setTitle}
                 />
                 {video !== undefined && (
-                    <Input title="Ссылка на видео" name="video" className={s.card__input} type="text" value={video} setValue={setVideo} />
+                    <Input
+                        types="input"
+                        title="Ссылка на видео"
+                        name="video"
+                        className={s.card__input}
+                        type="text"
+                        value={video}
+                        setValue={setVideo}
+                    />
                 )}
 
-                <label htmlFor="description">Описание</label>
-                <textarea
+                <Input
+                    types="textarea"
+                    title="Описание"
                     name="description"
                     className={s.card__textarea}
                     value={description}
-                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                        setDescription(e.target.value);
-                    }}
+                    setValue={setDescription}
                 />
 
                 {link === "categories" && (
                     <ListProduct setListIdNotAdded={setListIdDisconnect} setListIdAdded={setListIdConnect} list={data.attributes.products.data} />
                 )}
 
-                {link === "products" && <SelectProduct setIdCategory={setIdCategory} idCategory={idCategory} listCategories={listcategoryes} />}
+                {link === "products" && <SelectProduct setIdCategory={setIdCategory} idCategory={idCategory} />}
 
                 <h2>Изображение</h2>
                 <AddImages setFiles={setFile} type="one" label="photo" preview={preview} width={500} height={375} />
@@ -226,66 +271,30 @@ const CardUpdate: FC<IProps> = ({ refresh, dataCategories, setConfirmation, conf
                             height={120}
                         />
 
-                        {data.attributes.images !== null && data.attributes.images !== undefined  && (
+                        {data.attributes.images !== null && data.attributes.images !== undefined && (
                             <GalleryImage refresh={refresh} images={data.attributes.images?.data} />
                         )}
                     </>
                 )}
-                <div className={s.card__box}>
-                    <Button
-                        onClick={() => {
-                            setConfirmation(true);
-                        }}
-                        // disabled={!activeBtn}
-                        className={s.savebtn}
-                    >
-                        Сохранить
-                    </Button>
-                    <Button
-                        onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                            router.back();
-                            appService.changeArrPreviews([]);
-                        }}
-                        className={s.savebtn}
-                    >
-                        Выйти
-                    </Button>
-                    <Button
-                        onClick={changePublished}
-                        type="noBorder"
-                        className={cn(s.card__published, data.attributes.publishedAt !== null ? "" : s.card__draft)}
-                    >
-                        {data.attributes.publishedAt !== null ? "опубликован" : "неопубликован"}
-                    </Button>
-                </div>
+                <CardButtons
+                    setConfirmation={setConfirmation}
+                    changePublished={changePublished}
+                    publishedAt={data.attributes.publishedAt}
+                    deleteEntry={setConfirmationDel}
+                />
             </div>
-            <Modal
+            <Confirmation
+                text="Предыдущие данные будут потеряны, сохранить изменения?"
                 active={confirmation}
-                onClick={() => {
-                    setConfirmation(false);
-                }}
-            >
-                <div
-                    className={s.confirmation}
-                    onClick={(e: MouseEvent<HTMLDivElement>) => {
-                        e.stopPropagation();
-                    }}
-                >
-                    <p>Предыдущие данные будут потеряны, сохранить изменения?</p>
-                    <div className={s.confirmation__box}>
-                        <Button onClick={saveChange}>ok</Button>
-                        <Button
-                            onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                                e.stopPropagation();
-
-                                setConfirmation(false);
-                            }}
-                        >
-                            Отмена
-                        </Button>
-                    </div>
-                </div>
-            </Modal>
+                setActive={setConfirmation}
+                functionConfirmation={saveChange}
+            />
+            <Confirmation
+                text="Вы точно хотите удалить запись?"
+                active={confirmationDel}
+                setActive={setConfirmationDel}
+                functionConfirmation={delEntry}
+            />
         </>
     );
 };

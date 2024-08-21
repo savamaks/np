@@ -16,9 +16,8 @@ interface IProps {
 }
 
 const GalleryImage: FC<IProps> = ({ images, refresh }) => {
-    const router = useRouter();
     const { authService } = useStore();
-    console.log(images);
+
     return (
         <div className={s.container}>
             {images !== null &&
@@ -35,7 +34,7 @@ const GalleryImage: FC<IProps> = ({ images, refresh }) => {
                             <Button
                                 onClick={async (e: MouseEvent<HTMLButtonElement>) => {
                                     e.preventDefault();
-                                    await deleteImage({ token: authService.token, id: el.id, router, authorization: authService.authorization });
+                                    await deleteImage({ token: authService.token, id: el.id});
                                     if (refresh) {
                                         refresh();
                                     }
