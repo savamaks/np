@@ -46,7 +46,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 
     const title = product[0].attributes.name;
     const description = product[0].attributes.description;
-    const srcImage = "https://wclouds.ru" + product[0].attributes.images.data[0].attributes.url;
+    const srcImage = "https://wclouds.ru" + product[0].attributes.image.data.attributes.url;
     return {
         title: title,
         description: description,
