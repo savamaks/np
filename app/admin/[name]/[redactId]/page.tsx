@@ -15,7 +15,7 @@ interface IPropsData {
 }
 const getData = async ({ name, id, token }: IPropsData) => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/${name}/${id}?populate=*`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/${name}/${id}?populate=*`, {
             method: "GET",
             next: {
                 revalidate: 0,
@@ -25,12 +25,12 @@ const getData = async ({ name, id, token }: IPropsData) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-
         if (res.status === 401) {
             return null;
         }
 
         const data = await res.json();
+        console.log(data);
         return data.data;
     } catch (error) {
         console.log(error);

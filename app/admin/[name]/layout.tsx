@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import cn from "classnames";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-    const mainPath = "http://localhost:3030/admin/";
+    const mainPath = `${process.env.NEXT_PUBLIC_URL}/admin/`;
     const pathname = usePathname().split("/").reverse()[0];
 
     interface IListPath {

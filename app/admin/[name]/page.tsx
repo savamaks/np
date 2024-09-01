@@ -17,7 +17,7 @@ interface IPropsData {
 
 const getData = async ({ name, token }: IPropsData) => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/${name}?populate=*&publicationState=preview`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/${name}?populate=*&publicationState=preview`, {
             method: "GET",
             next: {
                 revalidate: 0,

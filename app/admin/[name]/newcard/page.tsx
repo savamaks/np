@@ -19,7 +19,7 @@ interface IProps {
 }
 const getData = async ({ token, name }: IProps) => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/${name}?populate=*&publicationState=preview`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/${name}?populate=*&publicationState=preview`, {
             method: "GET",
             next: {
                 revalidate: 0,
@@ -49,7 +49,7 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
     const [video, setVideo] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const [preview, setPreview] = useState("https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png");
+    const [preview, setPreview] = useState(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/uploads/free_icon_image_editing_8304794_ce7538248f.png`);
 
     const [listIdConnect, setListIdConnect] = useState<Array<string>>([]);
     const [listIdDisconnect, setListIdDisconnect] = useState<Array<string>>([]);
