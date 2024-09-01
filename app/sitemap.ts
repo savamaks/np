@@ -22,19 +22,18 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     const categories: Array<ICategory> = data.data;
 
     const idCategory: MetadataRoute.Sitemap = categories.map(({ attributes }) => ({
-
         url: `https://ptz-potolki.ru/services/${attributes.title}`,
     }));
 
     let idProduct: Array<string> = [];
 
     categories.map((el) => {
+        if (el.attributes.products === undefined) return;
         const products = el.attributes.products;
 
-            products.data.map(({ attributes }) => {
-                idProduct.push(`https://ptz-potolki.ru/services/${ el.attributes.title}/${attributes.title}`);
-            });
-        
+        products.data.map(({ attributes }) => {
+            idProduct.push(`https://ptz-potolki.ru/services/${el.attributes.title}/${attributes.title}`);
+        });
     });
 
     const linkProduct: MetadataRoute.Sitemap = idProduct.map((el) => ({
@@ -51,7 +50,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
             url: "https://ptz-potolki.ru/works",
         },
         ...idCategory,
-        ...linkProduct
+        ...linkProduct,
     ];
 };
 

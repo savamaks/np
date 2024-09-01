@@ -1,0 +1,17 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.card {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1045px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 20px;
+    gap: 20px;
+
+   
+}

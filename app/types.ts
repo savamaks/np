@@ -1,5 +1,30 @@
 import { MouseEvent } from "react";
 
+export interface INewData {
+    name?: string;
+    title?: string;
+    description?: string;
+    category?: {
+        connect?: [
+            {
+                id: string | null;
+                position?: {
+                    start: boolean;
+                };
+            }
+        ];
+        disconnect?: [
+            {
+                id: string | null;
+            }
+        ];
+    };
+    products?: {
+        connect: Array<string>;
+        disconnect?: Array<string>;
+    };
+    publishedAt?: null | string;
+}
 export interface IImages {
     src: string;
     width: number;
@@ -12,9 +37,11 @@ export interface ITarget extends EventTarget {
         index: string;
     };
 }
+
 export interface IMouseEvent extends MouseEvent<HTMLImageElement> {
     target: ITarget;
 }
+
 export interface IDataImage {
     id: string;
     attributes: {
@@ -50,27 +77,37 @@ export interface IProduct {
         name: string;
         description: string;
         video: string;
-        image: {
-            data: {
-                attributes: {
-                    formats: {
-                        small?: {
-                            url?: string;
-                        };
-                        medium?: {
-                            url?: string;
-                        };
-                    };
-                    url: string;
-                };
-            };
-        };
+       
         images: {
             data: Array<IDataImage>;
+        };
+        image: IImage;
+        category: {
+            data: ICategory;
+        };
+        publishedAt: null | string;
+        products: {
+            data: Array<IProduct>;
         };
     };
 }
 
+export interface IImage {
+    data: {
+        id: string;
+        attributes: {
+            formats: {
+                small: {
+                    url: string;
+                };
+                medium: {
+                    url: string;
+                };
+            };
+            url: string;
+        };
+    };
+}
 export interface ICategory {
     id: string;
     attributes: {
@@ -80,27 +117,27 @@ export interface ICategory {
         products: {
             data: Array<IProduct>;
         };
-        image: {
-            data: {
-                attributes: {
-                    formats: {
-                        small: {
-                            url: string;
-                        };
-                        medium: {
-                            url: string;
-                        };
-                    };
-                    url: string;
-                };
-            };
+        images?: {
+            data: Array<IDataImage>;
         };
+        video?: string;
+        category?: {
+            data: ICategory;
+        };
+        image: IImage;
+        publishedAt: string | null;
     };
 }
 
 export interface IRequest {
+    id: string;
     attributes: {
         request: string;
         answer: string;
+        publishedAt: null | string;
     };
+}
+export interface INewDataRequest {
+    request: string;
+    answer: string;
 }

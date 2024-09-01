@@ -1,0 +1,78 @@
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.card {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 1fr;
+    justify-items: center;
+    cursor: pointer;
+    padding: 20px 20px;
+    transition: all 0.2s ease;
+    width: 100%;
+    max-width: 1440px;
+    border-bottom: 1px solid #f2f2f24b;
+
+    &__box {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        gap: 20px;
+        justify-items: center;
+        align-items: center;
+    }
+    &__public {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 20px;
+        width: max-content;
+        border-radius: 10px;
+        
+    }
+    &__draft {
+        background: rgb(129, 26, 0);
+    }
+    &__published {
+        background: rgb(0, 141, 141);
+    }
+    &:hover {
+        transform: scale(1.01);
+    }
+
+    &__text {
+        text-align: center;
+        font-size: $size_text;
+
+    }
+    &__maintext {
+        text-align: center;
+        font-size: $size_text;
+
+    }
+    &__image {
+    }
+}
+
+@media (max-width: 760px) {
+    .card {
+        grid-template-columns: 1fr 1fr;
+
+        &__text {
+            display: none;
+        }
+        &__maintext {
+            font-size: $size_min_text;
+        }
+
+        &__box {
+        }
+        &__public {
+            font-size: $size_min_text;
+            padding: 5px 10px;
+
+        }
+        &__image {
+        width: 100%;
+        }
+    }
+}

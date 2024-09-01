@@ -1,0 +1,42 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px 0;
+    &__title {
+        margin: 0 0 20px;
+    }
+
+    &__card {
+        padding: 0 0 0 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        justify-content: space-between;
+        border: 1px solid #f2f2f2;
+        border-radius: 4px;
+
+        &_sort {
+        }
+
+        &_text {
+        }
+
+        
+    }
+}
+.select {
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 10px;
+
+    &__option {
+    }
+}

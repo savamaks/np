@@ -6,12 +6,6 @@ import photo from "@/public/1.jpg";
 import Advantage from "./components/advantages/Advantage";
 import FormTelegram from "./components/FormTelegram/FormTelegram";
 import ArrowUp from "./components/arrowUp/ArrowUp";
-import List from "./components/LIstRequest/List";
-import { RequesrAnswer } from "./data";
-import Link from "next/link";
-import getBase64 from "./_handlerFunc/getLocalBase64";
-import Button from "./components/Button/Button";
-import { ICategory } from "./types";
 import ServicesData from "./components/ServicesData/ServicesData";
 import Sales from "./components/Sales/Sales";
 import MainListRequest from "./components/LIstRequest/MainListRequest";
@@ -58,10 +52,9 @@ const Home = async () => {
                     </div>
                 </section>
                 <Advantage />
-                <ServicesData/>
+                <ServicesData />
                 <Sales />
-                <MainListRequest/>
-               
+                <MainListRequest />
             </main>
         </>
     );

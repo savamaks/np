@@ -1,5 +1,6 @@
 @use "/app/styles/color.scss" as *;
 @use "/app/styles/animate.scss" as *;
+@use "/app/styles/sizes.scss" as *;
 
 @import url("https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap");
 
@@ -19,9 +20,9 @@ body {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+
+    grid-template-rows: 100px 1fr 100px;
     min-height: 100vh;
     // background: #305478;
     background: linear-gradient(142deg, rgba(110,197,238,1) 10%, rgba(26,112,143,1) 64%, rgba(251,164,38,1) 100%);
@@ -58,16 +59,20 @@ a {
 }
 button {
     background: none;
-    border: 2px solid $color_f2;
     cursor: pointer;
     color: $color_f2;
     padding: 10px 15px;
     text-transform: uppercase;
-    font-size: 1em;
-    
+    font-size: $size_text;
 }
 /* @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;
     }
 } */
+@media (max-width: 760px) {
+    button {
+        font-size: $size_min_text;
+
+    }
+}

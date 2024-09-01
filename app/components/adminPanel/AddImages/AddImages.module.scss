@@ -1,0 +1,52 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: start;
+
+    &__label {
+        border: 2px dashed #f2f2f2;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 10px;
+        align-items: flex-start;
+    }
+    &__labelOne {
+        border: none;
+        padding: 0;
+    }
+    &__image {
+        height: auto;
+        border-radius: 10px;
+    }
+    &__box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 20px;
+        border: 2px dashed #f2f2f2;
+        justify-content: space-around;
+
+        &_image {
+        }
+    }
+
+    &__input {
+        opacity: 0;
+        position: absolute;
+        top: -1200px;
+    }
+}
+@media (max-width: 760px) {
+    .container {
+        
+        &__image {
+           width: 100%;
+        }
+        
+    }
+}

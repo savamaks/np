@@ -1,6 +1,5 @@
 import React from "react";
 import s from "./page.module.scss";
-import Image from "next/image";
 import cn from "classnames";
 import Link from "next/link";
 import getBase64 from "@/app/_handlerFunc/getLocalBase64";
@@ -24,8 +23,8 @@ const getData = async () => {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
             },
         });
-        const data = response.json();
-        return data;
+        const data = await response.json();
+        return data.data;
     } catch (error) {
         console.log(error);
     }
@@ -42,25 +41,24 @@ const getCategoryMeta = async () => {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
             },
         });
-        const data = response.json();
-        return data;
+        const data = await response.json();
+        return data.data;
     } catch (error) {
         console.log(error);
     }
 };
 //генерация страниц на сервере по полученым данным
 export const generateStaticParams = async () => {
-    const categoryData = await getData();
-    const data: Array<ICategory> = categoryData.data;
+    const categoryData: Array<ICategory> = await getData();
 
-    return data.map(({ attributes }) => attributes.title);
+    return categoryData.map(({ attributes }) => attributes.title);
 };
 
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string } }): Promise<Metadata> => {
     const categoryData = await getCategoryMeta();
 
-    const data: Array<ICategory> = categoryData.data.filter((el: ICategory) => el.attributes.title === params.categoryId);
+    const data: Array<ICategory> = categoryData.filter((el: ICategory) => el.attributes.title === params.categoryId);
 
     if (data.length <= 0) return {};
 
@@ -90,7 +88,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 //страница списка продукции из категории
 const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
     const categoryData = await getData();
-    const data: Array<ICategory> = categoryData.data.filter((el: ICategory) => el.attributes.title === params.categoryId);
+    const data: Array<ICategory> = categoryData.filter((el: ICategory) => el.attributes.title === params.categoryId);
     if (data.length !== 0) {
         return (
             <>
@@ -116,18 +114,18 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                                 srcImage += "https://wclouds.ru" + "/uploads/assets_0f9f13cb55.png";
                             }
 
-                            const myBlurDataUrl = await getBase64(srcImage);
-                            return (
-                                <CardProduct
-                                    key={index}
-                                    href={`${data[0].attributes.title}/${el.attributes.title}`}
-                                    src={`${srcImage}`}
-                                    blur={myBlurDataUrl}
-                                    name={el.attributes.name}
-                                    description={el.attributes.description}
-                                />
-                            );
-                        })}
+                                const myBlurDataUrl = await getBase64(srcImage);
+                                return (
+                                    <CardProduct
+                                        key={index}
+                                        href={`${data[0].attributes.title}/${el.attributes.title}`}
+                                        src={`${srcImage}`}
+                                        blur={myBlurDataUrl}
+                                        name={el.attributes.name}
+                                        description={el.attributes.description}
+                                    />
+                                );
+                            })}
                     </div>
                 </main>
             </>

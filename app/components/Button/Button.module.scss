@@ -2,19 +2,30 @@
 @use "/app/styles/color.scss" as *;
 @use "/app/styles/sizes.scss" as *;
 .button {
-    animation: down 0.8s ease;
-    border-radius: 20px;
+    animation: scale 0.3s ease;
+    border-radius: 10px;
     transition: all 0.2s ease;
     box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.2);
     align-self: stretch;
+    border: 1px solid $color_f2;
+
     &:hover {
         transform: scale(1.02);
     }
     &:active {
         transform: scale(0.98);
     }
+    &:disabled{
+        color: #ffffff2f;
+        border-color:#ffffff2f ;
+    }
 }
 .click{
     border: none;
     padding: 0;
+}
+
+.border{
+    border: none;
+    box-shadow: none;
 }

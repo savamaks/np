@@ -54,7 +54,7 @@ const ServicesData = async () => {
                                     <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
                                 </Link>
 
-                                {el.attributes.products.data.map((product: IProduct, indexProduct: number) => {
+                                {el.attributes.products?.data.map((product: IProduct, indexProduct: number) => {
                                     return (
                                         <Link
                                             key={indexProduct}
