@@ -16,17 +16,20 @@ import Video from "@/app/components/Video/Video";
 //получение данных
 const getData = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=image&populate[products][populate][1]=images`, {
-            method: "GET",
-            next: {
-                revalidate: 300,
-            },
-            headers: {
-                "Content-Type": "application/json",
+        const response = await fetch(
+            `https://wclouds.ru/api/categories?populate[products][populate][0]=image&populate[products][populate][1]=images`,
+            {
+                method: "GET",
+                next: {
+                    revalidate: 300,
+                },
+                headers: {
+                    "Content-Type": "application/json",
 
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
-            },
-        });
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACESS_TOKEN}`,
+                },
+            }
+        );
         const data = await response.json();
         return data.data;
     } catch (error) {
@@ -96,7 +99,10 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
             <>
                 <main>
                     {product.map(async (product: IProduct, index: number) => {
-                        const myBlurDataUrl = await getBase64(`https://wclouds.ru${product.attributes.image.data.attributes.formats.small.url}`);
+                        let myBlurDataUrl;
+                        if (product.attributes.image.data.attributes.formats.small !== undefined) {
+                            myBlurDataUrl = await getBase64(`https://wclouds.ru${product.attributes.image.data.attributes.formats.small.url}`);
+                        }
 
                         return (
                             <section key={index} className={s.section}>
