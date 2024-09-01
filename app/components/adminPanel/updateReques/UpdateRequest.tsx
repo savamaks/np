@@ -19,6 +19,7 @@ const UpdateRequest: FC<IProps> = ({ data, refresh }) => {
     const [answer, setAnswer] = useState(data.attributes.answer);
     const [confirmationSave, setConfirmationSave] = useState(false);
     const [confirmationDel, setConfirmationDel] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const router = useRouter();
     const { authService } = useStore();
@@ -40,6 +41,8 @@ const UpdateRequest: FC<IProps> = ({ data, refresh }) => {
         }
     };
     const saveChange = async (e: MouseEvent<HTMLButtonElement>) => {
+        setLoading(true);
+
         e.preventDefault();
         const newData = {
             request: request,
@@ -53,9 +56,11 @@ const UpdateRequest: FC<IProps> = ({ data, refresh }) => {
             router.push("/admin");
         }
         setConfirmationSave(false);
+        setLoading(false);
     };
 
     const delEntry = async () => {
+        setLoading(true);
         const res = await deleteEntry({ id: data.id, link: "requests", token: authService.token });
         if (res) {
             router.push("/admin/requests");
@@ -65,6 +70,7 @@ const UpdateRequest: FC<IProps> = ({ data, refresh }) => {
             authService.authorization(false, "");
             router.push("/admin");
         }
+        setLoading(false);
     };
 
     return (
@@ -83,12 +89,14 @@ const UpdateRequest: FC<IProps> = ({ data, refresh }) => {
                 active={confirmationSave}
                 setActive={setConfirmationSave}
                 functionConfirmation={saveChange}
+                loading={loading}
             />
             <Confirmation
                 text="Вы точно хотите удалить запись?"
                 active={confirmationDel}
                 setActive={setConfirmationDel}
                 functionConfirmation={delEntry}
+                loading={loading}
             />
         </section>
     );

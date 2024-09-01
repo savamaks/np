@@ -3,7 +3,6 @@
 import CardButtons from "@/app/components/adminPanel/CardButtons/CardButtons";
 import Confirmation from "@/app/components/adminPanel/Confirmation/Confirmation";
 import Input from "@/app/components/adminPanel/Input/Input";
-import { request } from "http";
 import React, { useState, MouseEvent } from "react";
 import s from "./page.module.scss";
 import { createData } from "@/app/_handlerFunc/admin/createData";

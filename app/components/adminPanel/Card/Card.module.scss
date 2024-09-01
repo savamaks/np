@@ -1,3 +1,7 @@
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+
 .card {
     display: grid;
     grid-template-columns: 100px 1fr 1fr 1fr;
@@ -23,6 +27,7 @@
         padding: 5px 20px;
         width: max-content;
         border-radius: 10px;
+        
     }
     &__draft {
         background: rgb(129, 26, 0);
@@ -36,13 +41,18 @@
 
     &__text {
         text-align: center;
+        font-size: $size_text;
+
     }
     &__maintext {
         text-align: center;
+        font-size: $size_text;
+
     }
     &__image {
     }
 }
+
 @media (max-width: 760px) {
     .card {
         grid-template-columns: 1fr 1fr;
@@ -51,9 +61,18 @@
             display: none;
         }
         &__maintext {
+            font-size: $size_min_text;
         }
 
         &__box {
+        }
+        &__public {
+            font-size: $size_min_text;
+            padding: 5px 10px;
+
+        }
+        &__image {
+        width: 100%;
         }
     }
 }

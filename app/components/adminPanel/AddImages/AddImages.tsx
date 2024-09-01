@@ -16,7 +16,6 @@ interface IProps {
     setFiles: (value: FileList) => void;
 }
 const AddImages: FC<IProps> = ({ type, label, labelText, preview, width, height, setFiles }) => {
-    // const [previews, setPreviews] = useState<Array<string>>([]);
     const { appService } = useStore();
 
     const previews = appService.arrPreviews;
@@ -33,7 +32,6 @@ const AddImages: FC<IProps> = ({ type, label, labelText, preview, width, height,
                 const urlImage = URL.createObjectURL(e.target.files[index]);
                 arrImages.push(urlImage);
             }
-            // setPreviews(arrImages);
             if (type === "one") {
                 appService.changePreview(arrImages);
             } else {

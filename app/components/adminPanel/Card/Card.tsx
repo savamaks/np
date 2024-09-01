@@ -1,9 +1,8 @@
 "use client";
 import { ICategory } from "@/app/types";
-import React, { MouseEvent, ChangeEvent, FC, useEffect, useState } from "react";
+import React, { MouseEvent,  FC } from "react";
 import Image from "next/image";
 import s from "./Card.module.scss";
-import Button from "../../Button/Button";
 import cn from "classnames";
 
 interface IProps {

@@ -21,7 +21,7 @@ export interface INewData {
     };
     products?: {
         connect: Array<string>;
-        disconnect: Array<string>;
+        disconnect?: Array<string>;
     };
     publishedAt?: null | string;
 }

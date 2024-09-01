@@ -1,6 +1,6 @@
 export const getData = async ({setData}:any) => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/categories?populate=*`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?populate=*`, {
             method: "GET",
             next: {
                 revalidate: 0,

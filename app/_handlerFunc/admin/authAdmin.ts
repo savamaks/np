@@ -9,7 +9,7 @@ export const authAdmin = async ({ identifier, password }: IProps) => {
     formData.append("password", password);
 
     try {
-        const res = await fetch(`https://wclouds.ru/api/auth/local/`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/auth/local/`, {
             method: "POST",
             body: formData,
         });

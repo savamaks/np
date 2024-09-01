@@ -37,9 +37,7 @@ const getData = async ({ name, id, token }: IPropsData) => {
         return null;
     }
 };
-interface IPropsDataCat {
-    token: string;
-}
+
 
 const PageRedact = ({ params }: { params: { name: string; redactId: string } }) => {
     const [data, setData] = useState<ICategory | IProduct>();
@@ -47,7 +45,7 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
     const [confirmation, setConfirmation] = useState(false);
     const [refresh, setRefresh] = useState(false);
 
-    const { authService, appService } = useStore();
+    const { authService } = useStore();
 
     const router = useRouter();
 

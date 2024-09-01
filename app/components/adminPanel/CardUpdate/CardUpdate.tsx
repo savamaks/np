@@ -1,10 +1,9 @@
 "use client";
 
-import { ICategory, IDataImage, IImage, INewData, IProduct } from "@/app/types";
-import React, { MouseEvent, ChangeEvent, FC, useEffect, useState } from "react";
+import { ICategory, IDataImage, INewData, IProduct } from "@/app/types";
+import React, { MouseEvent, FC, useEffect, useState } from "react";
 import s from "./CardUpdate.module.scss";
-import Button from "@/app/components/Button/Button";
-import Modal from "../Modal/Modal";
+
 import { useRouter } from "next/navigation";
 import Input from "../Input/Input";
 import SelectProduct from "../SelectProduct/SelectProduct";
@@ -28,12 +27,11 @@ interface IProps {
     data: ICategory | IProduct;
 }
 const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, link }) => {
-    console.log(data);
     const [name, setName] = useState(data.attributes.name);
     const [title, setTitle] = useState(data.attributes.title);
     const [description, setDescription] = useState(data.attributes.description);
     const [video, setVideo] = useState(data.attributes.video);
-
+    const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState(
         data.attributes.image.data
             ? `https://wclouds.ru${data.attributes.image.data.attributes.url}`
@@ -42,7 +40,6 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
 
     const [files, setFiles] = useState<FileList | null>(null);
     const [file, setFile] = useState<FileList | null>(null);
-    // const [productsList, setProductsList] = useState(data.attributes.products ? data.attributes.products?.data : null);
     const [idCategory, setIdCategory] = useState<string | null>(
         data.attributes.category !== undefined ? (data.attributes.category?.data !== null ? data.attributes.category?.data.id : null) : null
     );
@@ -52,25 +49,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
 
     const { authService, appService } = useStore();
 
-    // const [activeBtn, setActiveBtn] = useState(false);
-
     const router = useRouter();
-
-    // useEffect(() => {
-    //     if (
-    //         name !== category.attributes.name ||
-    //         title !== category.attributes.title ||
-    //         description !== category.attributes.description ||
-    //         preview !== `https://wclouds.ru${category.attributes.image.data.attributes.url}` ||
-    //         idCategory !== category.attributes.category?.data.id ||
-    //         listIdConnect.length > 0 ||
-    //         listIdDisconnect.length > 0
-    //     ) {
-    //         setActiveBtn(true);
-    //     } else {
-    //         setActiveBtn(false);
-    //     }
-    // }, [name, title, description, preview, idCategory]);
 
     useEffect(() => {
         if (!authService.login) {
@@ -94,6 +73,8 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
         }
     };
     const saveChange = async (e: MouseEvent<HTMLButtonElement>) => {
+        setLoading(true);
+
         e.preventDefault();
         const newData: INewData = {
             name: name,
@@ -128,7 +109,6 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
                 disconnect: listIdDisconnect,
             };
         }
-        console.log(newData);
         const result = await saveChangeCategory({ data: newData, id: data.id, link, token: authService.token });
         if (result === null) {
             authService.authorization(false, "");
@@ -177,11 +157,12 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
             appService.changeArrPreviews([]);
         }
         setConfirmation(false);
-
         refresh(); //обновляет страницу и получает новые данные с API
+        setLoading(false);
     };
 
     const delEntry = async () => {
+        setLoading(true);
         const res = await deleteEntry({ id: data.id, link: link, token: authService.token });
 
         if (data.attributes.image?.data !== null && data.attributes.image !== undefined) {
@@ -207,6 +188,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
             authService.authorization(false, "");
             router.push("/admin");
         }
+        setLoading(false);
     };
 
     return (
@@ -288,12 +270,14 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
                 active={confirmation}
                 setActive={setConfirmation}
                 functionConfirmation={saveChange}
+                loading={loading}
             />
             <Confirmation
                 text="Вы точно хотите удалить запись?"
                 active={confirmationDel}
                 setActive={setConfirmationDel}
                 functionConfirmation={delEntry}
+                loading={loading}
             />
         </>
     );

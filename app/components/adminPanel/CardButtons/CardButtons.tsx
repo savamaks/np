@@ -22,7 +22,6 @@ const CardButtons: FC<IProps> = ({ setConfirmation, publishedAt, changePublished
                 onClick={() => {
                     setConfirmation(true);
                 }}
-                // disabled={!activeBtn}
                 className={s.box__saveBtn}
             >
                 Сохранить

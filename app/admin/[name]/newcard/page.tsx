@@ -1,24 +1,16 @@
 "use client";
-import React, { MouseEvent, ChangeEvent, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import s from "./page.module.scss";
 import AddImages from "@/app/components/adminPanel/AddImages/AddImages";
-import GalleryImage from "@/app/components/adminPanel/GalleryImage/GalleryImage";
 import Input from "@/app/components/adminPanel/Input/Input";
 import ListProduct from "@/app/components/adminPanel/ListProduct/ListProduct";
 import SelectProduct from "@/app/components/adminPanel/SelectProduct/SelectProduct";
-import Button from "@/app/components/Button/Button";
-import Modal from "@/app/components/Modal/Modal";
-import router from "next/router";
-import { title } from "process";
-import CardUpdate from "@/app/components/adminPanel/CardUpdate/CardUpdate";
 import { ICategory, INewData, IProduct } from "@/app/types";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useStore } from "@/app/components/store/useStore";
 import CardButtons from "@/app/components/adminPanel/CardButtons/CardButtons";
 import Confirmation from "@/app/components/adminPanel/Confirmation/Confirmation";
 import { createData } from "@/app/_handlerFunc/admin/createData";
 import { changeImage } from "@/app/_handlerFunc/admin/changeImage";
-import { link } from "fs";
 import { useRouter } from "next/navigation";
 
 interface IProps {
@@ -54,7 +46,9 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
     const [name, setName] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [video, setVideo] = useState("");
 
+    const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState("https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png");
 
     const [listIdConnect, setListIdConnect] = useState<Array<string>>([]);
@@ -65,7 +59,6 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
     const [files, setFiles] = useState<FileList | null>(null);
     const [file, setFile] = useState<FileList | null>(null);
     const [confirmation, setConfirmation] = useState(false);
-    const [dataCategories, setDataCategories] = useState([]);
 
     const router = useRouter();
     const { authService, appService } = useStore();
@@ -88,8 +81,9 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
     useEffect(() => {
         api();
     }, []);
-
     const saveChange = async () => {
+        setLoading(true);
+
         if (name !== "" && title !== "" && description !== "") {
             const data: INewData = {
                 name: name,
@@ -97,6 +91,7 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
                 description: description,
                 publishedAt: null,
             };
+
             if (idCategory !== null) {
                 data.category = {
                     connect: [
@@ -107,6 +102,12 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
                             },
                         },
                     ],
+                };
+            }
+
+            if (listIdConnect.length > 0) {
+                data.products = {
+                    connect: listIdConnect,
                 };
             }
             const res = await createData({ data, link: params.name, token: authService.token });
@@ -145,12 +146,14 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
             }
         }
         setConfirmation(false);
+        setLoading(false);
     };
     return (
         <>
             <div className={s.card}>
                 <Input setValue={setName} value={name} name="name" title="Имя" types="input" />
                 <Input setValue={setTitle} value={title} name="title" title="Ссылка" types="input" />
+                {params.name === "products" && <Input setValue={setVideo} value={video} name="video" title="Ссылка на видео" types="input" />}
                 <Input setValue={setDescription} value={description} name="description" title="Описание" types="textarea" />
 
                 {params.name === "categories" && <ListProduct setListIdNotAdded={setListIdDisconnect} setListIdAdded={setListIdConnect} list={[]} />}
@@ -174,6 +177,7 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
                 )}
                 <CardButtons setConfirmation={setConfirmation} publishedDisable={true} />
                 <Confirmation
+                    loading={loading}
                     text="Предыдущие данные будут потеряны, сохранить изменения?"
                     active={confirmation}
                     setActive={setConfirmation}

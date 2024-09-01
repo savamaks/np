@@ -8,6 +8,7 @@ import Card from "@/app/components/adminPanel/Card/Card";
 import Button from "@/app/components/Button/Button";
 import { useStore } from "@/app/components/store/useStore";
 import Request from "@/app/components/adminPanel/Request/Request";
+import Loading from "@/app/loading";
 
 interface IPropsData {
     name: string;
@@ -85,10 +86,13 @@ const PanelPage = ({ params }: { params: { name: string } }) => {
                         <h2 className={s.container__box_text}>Ссылка</h2>
                         <h2 className={s.container__box_maintext}>Обложка</h2>
                     </div>
-                    {data &&
+                    {data ? (
                         data.map((el: ICategory, index: number) => {
                             return <Card onClick={linkRedactPage} key={index} product={el} />;
-                        })}
+                        })
+                    ) : (
+                        <Loading />
+                    )}
                 </>
             )}
             {name === "requests" && dataRequest !== undefined && (
@@ -101,7 +105,7 @@ const PanelPage = ({ params }: { params: { name: string } }) => {
                     >
                         Добавить Вопрос
                     </Button>
-                    <Request data={dataRequest} />
+                    {dataRequest ? <Request data={dataRequest} /> : <Loading />}
                 </>
             )}
         </div>
