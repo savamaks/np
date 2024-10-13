@@ -3,6 +3,7 @@
 import CardUpdate from "@/app/components/adminPanel/CardUpdate/CardUpdate";
 import UpdateRequest from "@/app/components/adminPanel/updateReques/UpdateRequest";
 import { useStore } from "@/app/components/store/useStore";
+import useFetchData from "@/app/Hooks/useFetchData";
 import NotFound from "@/app/not-found";
 import { ICategory, IProduct, IRequest } from "@/app/types";
 import { useRouter } from "next/navigation";
@@ -38,7 +39,6 @@ const getData = async ({ name, id, token }: IPropsData) => {
     }
 };
 
-
 const PageRedact = ({ params }: { params: { name: string; redactId: string } }) => {
     const [data, setData] = useState<ICategory | IProduct>();
     const [dataRequest, setDataRequest] = useState<IRequest>();
@@ -48,7 +48,7 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
     const { authService } = useStore();
 
     const router = useRouter();
-
+   
     const api = async () => {
         if (params.name === "requests") {
             const result = await getData({

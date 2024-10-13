@@ -18,6 +18,8 @@
     &:disabled{
         color: #ffffff2f;
         border-color:#ffffff2f ;
+        transform: none;
+        cursor: no-drop;
     }
 }
 .click{

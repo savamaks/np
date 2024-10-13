@@ -5,12 +5,12 @@ import s from "./Rating.module.scss";
 
 interface IPrors {
     setRating: (value: string) => void;
-    setError: (value: string) => void;
+    setError: (value: boolean) => void;
 }
 const Rating: FC<IPrors> = ({ setRating, setError }) => {
     const changeRating = (e: ChangeEvent<HTMLInputElement>) => {
         setRating(e.target.value);
-        setError("");
+        setError(false);
     };
 
     return (

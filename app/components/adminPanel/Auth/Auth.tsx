@@ -5,6 +5,8 @@ import Button from "../../Button/Button";
 import { authAdmin } from "@/app/_handlerFunc/admin/authAdmin";
 import { useRouter } from "next/navigation";
 import { useStore } from "../../store/useStore";
+import cn from "classnames";
+import InputMain from "../../Input/InputMain";
 
 const Auth = () => {
     const [name, setName] = useState("");
@@ -23,54 +25,45 @@ const Auth = () => {
             setError(true);
         } else if (data.jwt) {
             authService.authorization(true, data.jwt);
-            setName('')
-            setPassword('')
+            setName("");
+            setPassword("");
             router.push("/admin/categories");
         }
     };
 
     return (
         <form className={s.container}>
-            <div className={s.container__box}>
-                <label className={s.container__label} htmlFor="">
-                    Логин
-                </label>
-                <input
-                    className={s.container__input}
-                    type="text"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setName(e.target.value);
-                        setError(false);
-                        if (e.target.value !== "" && password !== "") {
-                            setActive(true);
-                        } else {
-                            setActive(false);
-                        }
-                    }}
-                />
-            </div>
-            <div className={s.container__box}>
-                <label className={s.container__label} htmlFor="">
-                    Пароль
-                </label>
-                <input
-                    className={s.container__input}
-                    type="password"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setPassword(e.target.value);
-                        setError(false);
+            <InputMain
+                error={error}
+                label="Логин"
+                typeInput="text"
+                placeholder=""
+                onChangeInput={(e: ChangeEvent<HTMLInputElement>) => {
+                    setName(e.target.value);
+                    setError(false);
+                    if (e.target.value !== "" && password !== "") {
+                        setActive(true);
+                    } else {
+                        setActive(false);
+                    }
+                }}
+            />
+            <InputMain
+                error={error}
+                label="Пароль"
+                typeInput="password"
+                placeholder=""
+                onChangeInput={(e: ChangeEvent<HTMLInputElement>) => {
+                    setPassword(e.target.value);
+                    setError(false);
 
-                        if (name !== "" && e.target.value !== "") {
-                            setActive(true);
-                        } else {
-                            setActive(false);
-                        }
-                    }}
-                />
-            </div>
-            <div className={s.container__error}>
-                <p>{error && "Неправильный логин или пароль"}</p>
-            </div>
+                    if (name !== "" && e.target.value !== "") {
+                        setActive(true);
+                    } else {
+                        setActive(false);
+                    }
+                }}
+            />
 
             <Button onClick={sendForm} disabled={!active}>
                 Войти

@@ -10,13 +10,14 @@ import PhoneInput from "react-phone-input-2";
 import Rating from "../rating/Rating";
 import { createRewiev } from "@/app/_handlerFunc/createRewiev";
 import Button from "../Button/Button";
+import InputMain from "../Input/InputMain";
 
 const WriteRewiev = () => {
     const [active, setActive] = useState(false);
     const [name, setName] = useState("");
     const [rewiev, setRewiev] = useState("");
     const [phone, setPhone] = useState("");
-    const [error, setError] = useState("");
+    const [error, setError] = useState(false);
     const [result, setResult] = useState<boolean | undefined>(false);
     const [valid, setValid] = useState(true);
     const [rating, setRating] = useState("");
@@ -30,7 +31,7 @@ const WriteRewiev = () => {
     const changeNumber = (value: string) => {
         setPhone(value);
         setValid(validatePhone(value));
-        setError("");
+        setError(false);
     };
     const clickActive = () => {
         setActive((prev) => !prev);
@@ -39,18 +40,18 @@ const WriteRewiev = () => {
     const changeName = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setName(e.target.value);
-        setError("");
+        setError(false);
     };
     const changeRewiev = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
         setRewiev(e.target.value);
-        setError("");
+        setError(false);
     };
 
     const sendApplication = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (name === "" || rewiev === "" || phone === "" || !valid || rating === "") {
-            setError("Заполните все поля ввода");
+            setError(true);
             return;
         }
 
@@ -91,30 +92,21 @@ const WriteRewiev = () => {
                         </button>
                         {!result ? (
                             <>
-                                <div title="Введите свое имя..." className={cn(s.modal__form_box)}>
-                                    <label className={cn(s.modal__form_label)} htmlFor="">
-                                        Имя
-                                    </label>
-                                    <input
-                                        ref={inputRef}
-                                        value={name}
-                                        onChange={changeName}
-                                        className={cn(s.modal__form_input)}
-                                        type="text"
-                                        placeholder="Введите свое имя..."
-                                    />
-                                </div>
-                                <div title="Будем благодарны за ваш отзыв!" className={cn(s.modal__form_box)}>
-                                    <label className={cn(s.modal__form_label)} htmlFor="">
-                                        Отзыв
-                                    </label>
-                                    <textarea
-                                        value={rewiev}
-                                        onChange={changeRewiev}
-                                        className={cn(s.modal__form_textArea, s.review)}
-                                        placeholder="Напишите отзыв..."
-                                    />
-                                </div>
+                                <InputMain
+                                    error={error && name === "" ? true : false}
+                                    label="Имя"
+                                    typeInput="text"
+                                    placeholder=""
+                                    onChangeInput={changeName}
+                                />
+                                <InputMain
+                                    error={error && rewiev === "" ? true : false}
+                                    label="Отзыв"
+                                    typeInput="textarea"
+                                    placeholder=""
+                                    onChangeTextarea={changeRewiev}
+                                />
+
                                 <div className={cn(s.modal__form_box)}>
                                     <label className={cn(s.modal__form_label)} htmlFor="">
                                         Оцените нашу работу
@@ -127,7 +119,7 @@ const WriteRewiev = () => {
                                         <PhoneInput
                                             specialLabel=""
                                             disableCountryGuess
-                                            inputClass={cn(s.modal__form_input)}
+                                            inputClass={cn(s.modal__form_input, error ? s.error : "")}
                                             country="ru"
                                             value={phone}
                                             onChange={changeNumber}
@@ -136,8 +128,8 @@ const WriteRewiev = () => {
                                     </label>
                                 </div>
 
-                                <div className={cn(s.modal__form_error)}>{error}</div>
-                                <Button animation disabled={error !== "" && true} onClick={sendApplication}>
+                                <div className={cn(s.modal__form_error)}>{error && "Заполните все поля"}</div>
+                                <Button animation disabled={error} onClick={sendApplication}>
                                     Опубликовать отзыв
                                 </Button>
                             </>
