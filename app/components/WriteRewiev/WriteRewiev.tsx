@@ -119,7 +119,7 @@ const WriteRewiev = () => {
                                         <PhoneInput
                                             specialLabel=""
                                             disableCountryGuess
-                                            inputClass={cn(s.modal__form_input, error ? s.error : "")}
+                                            inputClass={cn(s.modal__form_input, error && !valid ? s.error : "")}
                                             country="ru"
                                             value={phone}
                                             onChange={changeNumber}

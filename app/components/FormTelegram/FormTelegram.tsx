@@ -141,7 +141,7 @@ const FormTelegram: FC<IProps> = ({ children, type, textSale }) => {
                                     <PhoneInput
                                         specialLabel=""
                                         disableCountryGuess={false}
-                                        inputClass={cn(s.modal__form_input, error ? s.error : "")}
+                                        inputClass={cn(s.modal__form_input, error && !valid ? s.error : "")}
                                         value={phone}
                                         country={"ru"}
                                         onChange={changeNumber}
