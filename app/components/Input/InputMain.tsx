@@ -12,7 +12,8 @@ interface IInputMain {
     placeholder: string;
     value?: string;
 }
-const InputMain: FC<IInputMain> = ({ value, error, changeNumber, onChangeInput, onChangeTextarea, label, placeholder, typeInput }) => {
+const InputMain: FC<IInputMain> = ({  value, error, changeNumber, onChangeInput, onChangeTextarea, label, placeholder, typeInput }) => {
+    
     return (
         <div className={s.container}>
             {typeInput === "textarea" ? (
@@ -23,6 +24,7 @@ const InputMain: FC<IInputMain> = ({ value, error, changeNumber, onChangeInput, 
                 ></textarea>
             ) : (
                 <input
+                    value={value}
                     className={cn(s.container__input, error ? s.container__error : "")}
                     placeholder={placeholder}
                     type={typeInput}

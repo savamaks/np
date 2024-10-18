@@ -6,9 +6,10 @@ import cn from "classnames";
 import { TelegramBotRequest } from "@/app/_handlerFunc/telegramBot";
 import Image from "next/image";
 import krestik from "@/public/krestik.svg";
-import PhoneInput from "react-phone-input-2";
 import Button from "../Button/Button";
 import InputMain from "../Input/InputMain";
+import PhoneNumber from "../PhoneNumber/PhoneNumber";
+import { validPhone } from "@/app/_handlerFunc/validPhone";
 
 interface IProps {
     children: ReactNode;
@@ -21,21 +22,11 @@ const FormTelegram: FC<IProps> = ({ children, type, textSale }) => {
     const [adress, setAdress] = useState("");
     const [description, setDescription] = useState("");
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const [phone, setPhone] = useState("");
     const [error, setError] = useState(false);
     const [result, setResult] = useState<boolean | undefined>(false);
-    const [valid, setValid] = useState(true);
+    const [phone, setPhone] = useState("");
+    const [errorPhone, setErrorPhone] = useState(false);
 
-    const validatePhone = (input: string) => {
-        const phonePatern = /^\d{11}$/;
-        return phonePatern.test(input);
-    };
-
-    const changeNumber = (value: string) => {
-        setPhone(value);
-        setValid(validatePhone(value));
-        setError(false);
-    };
     const clickActive = () => {
         setActive((prev) => !prev);
     };
@@ -59,11 +50,14 @@ const FormTelegram: FC<IProps> = ({ children, type, textSale }) => {
 
     const sendApplication = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (name === "" || adress === "" || phone === "" || !valid || description === "") {
+
+        if (name === "" || adress === "" || phone === "" || description === "") {
             setError(true);
+            if (validPhone(phone)) {
+                setErrorPhone(true);
+            }
             return;
         }
-
         const res = await TelegramBotRequest({ name, adress, description, textSale, phone: `+${phone}` });
         setResult(res);
     };
@@ -132,22 +126,7 @@ const FormTelegram: FC<IProps> = ({ children, type, textSale }) => {
                                     placeholder=""
                                     onChangeTextarea={changeDescription}
                                 />
-
-                                <div className={cn(s.modal__form_box)}>
-                                    <label className={cn(s.modal__form_label)} htmlFor="">
-                                        Телефон
-                                    </label>
-
-                                    <PhoneInput
-                                        specialLabel=""
-                                        disableCountryGuess={false}
-                                        inputClass={cn(s.modal__form_input, error && !valid ? s.error : "")}
-                                        value={phone}
-                                        country={"ru"}
-                                        onChange={changeNumber}
-                                        placeholder=""
-                                    />
-                                </div>
+                                <PhoneNumber setErrorPhone={setErrorPhone} setPhone={setPhone} setError={setError} phone={phone} errorPhone={errorPhone} />
 
                                 <div className={cn(s.modal__form_error)}>{error && "Заполните все поля"}</div>
                                 <Button animation disabled={error} onClick={sendApplication}>

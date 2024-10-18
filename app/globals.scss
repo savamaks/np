@@ -25,11 +25,10 @@ body {
     grid-template-rows: 100px 1fr 100px;
     min-height: 100vh;
     // background: #305478;
-    background: linear-gradient(142deg, rgba(110,197,238,1) 10%, rgba(26,112,143,1) 64%, rgba(251,164,38,1) 100%);
+    background: linear-gradient(142deg, rgba(110, 197, 238, 1) 10%, rgba(26, 112, 143, 1) 64%, rgba(251, 164, 38, 1) 100%);
     animation: gradient 10s infinite linear; // 10s - скорость анимации
     background-size: 300%; // Можно менять и подбирать интенсивность    width: 97%;
     color: $color_text;
-    
 }
 @keyframes gradient {
     0% {
@@ -50,6 +49,11 @@ h4 {
     font-weight: 300;
     color: $color_f2;
     margin: 0;
+}
+input,
+textarea {
+    font-weight: 400;
+    letter-spacing: 0.05rem;
 }
 h1 {
 }
@@ -73,6 +77,5 @@ button {
 @media (max-width: 760px) {
     button {
         font-size: $size_min_text;
-
     }
 }

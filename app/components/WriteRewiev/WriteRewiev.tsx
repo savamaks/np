@@ -6,33 +6,24 @@ import cn from "classnames";
 import { TelegramBotRewievs } from "@/app/_handlerFunc/telegramBot";
 import Image from "next/image";
 import krestik from "@/public/krestik.svg";
-import PhoneInput from "react-phone-input-2";
 import Rating from "../rating/Rating";
 import { createRewiev } from "@/app/_handlerFunc/createRewiev";
 import Button from "../Button/Button";
 import InputMain from "../Input/InputMain";
+import PhoneNumber from "../PhoneNumber/PhoneNumber";
+import { validPhone } from "@/app/_handlerFunc/validPhone";
 
 const WriteRewiev = () => {
     const [active, setActive] = useState(false);
     const [name, setName] = useState("");
     const [rewiev, setRewiev] = useState("");
-    const [phone, setPhone] = useState("");
     const [error, setError] = useState(false);
     const [result, setResult] = useState<boolean | undefined>(false);
-    const [valid, setValid] = useState(true);
     const [rating, setRating] = useState("");
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const [phone, setPhone] = useState("");
+    const [errorPhone, setErrorPhone] = useState(false);
 
-    const validatePhone = (input: string) => {
-        const phonePatern = /^\d{11}$/;
-        return phonePatern.test(input);
-    };
-
-    const changeNumber = (value: string) => {
-        setPhone(value);
-        setValid(validatePhone(value));
-        setError(false);
-    };
     const clickActive = () => {
         setActive((prev) => !prev);
     };
@@ -50,8 +41,12 @@ const WriteRewiev = () => {
 
     const sendApplication = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (name === "" || rewiev === "" || phone === "" || !valid || rating === "") {
+
+        if (name === "" || rewiev === "" || phone === "" || rating === "") {
             setError(true);
+            if (validPhone(phone)) {
+                setErrorPhone(true);
+            }
             return;
         }
 
@@ -113,20 +108,13 @@ const WriteRewiev = () => {
                                     </label>
                                     <Rating setRating={setRating} setError={setError} />
                                 </div>
-                                <div title="Введите номер телефона..." className={cn(s.modal__form_box)}>
-                                    <label className={cn(s.modal__form_label)} htmlFor="">
-                                        Телефон
-                                        <PhoneInput
-                                            specialLabel=""
-                                            disableCountryGuess
-                                            inputClass={cn(s.modal__form_input, error && !valid ? s.error : "")}
-                                            country="ru"
-                                            value={phone}
-                                            onChange={changeNumber}
-                                            placeholder="+7 (900) 123-45-67"
-                                        />
-                                    </label>
-                                </div>
+                                <PhoneNumber
+                                    setErrorPhone={setErrorPhone}
+                                    setPhone={setPhone}
+                                    setError={setError}
+                                    phone={phone}
+                                    errorPhone={errorPhone}
+                                />
 
                                 <div className={cn(s.modal__form_error)}>{error && "Заполните все поля"}</div>
                                 <Button animation disabled={error} onClick={sendApplication}>
