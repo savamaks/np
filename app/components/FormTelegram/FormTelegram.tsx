@@ -58,7 +58,7 @@ const FormTelegram: FC<IProps> = ({ children, type, textSale }) => {
             }
             return;
         }
-        const res = await TelegramBotRequest({ name, adress, description, textSale, phone: `+${phone}` });
+        const res = await TelegramBotRequest({ name, adress, description, textSale, phone: `${phone}` });
         setResult(res);
     };
     useEffect(() => {

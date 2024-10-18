@@ -50,8 +50,8 @@ const WriteRewiev = () => {
             return;
         }
 
-        const res = await TelegramBotRewievs({ name, rewiev, phone: `+${phone}`, rating });
-        const create = await createRewiev({ name, rewiev, phone: `+${phone}`, rating });
+        const res = await TelegramBotRewievs({ name, rewiev, phone: `${phone}`, rating });
+        const create = await createRewiev({ name, rewiev, phone: `${phone}`, rating });
 
         setResult(create);
     };
