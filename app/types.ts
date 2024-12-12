@@ -4,6 +4,7 @@ export interface INewData {
     name?: string;
     title?: string;
     description?: string;
+    video?: string;
     category?: {
         connect?: [
             {
@@ -77,7 +78,7 @@ export interface IProduct {
         name: string;
         description: string;
         video: string;
-       
+
         images: {
             data: Array<IDataImage>;
         };

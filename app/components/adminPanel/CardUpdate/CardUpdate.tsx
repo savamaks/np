@@ -80,6 +80,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
             name: name,
             title: title,
             description: description,
+            video:video
         };
         if (idCategory !== null) {
             newData.category = {
