@@ -17,7 +17,6 @@ interface IProps {
 }
 const AddImages: FC<IProps> = ({ type, label, labelText, preview, width, height, setFiles }) => {
     const { appService } = useStore();
-
     const previews = appService.arrPreviews;
     const previewMobx = appService.prewiew;
 

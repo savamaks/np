@@ -17,6 +17,7 @@
         "mobx": "^6.13.1",
         "mobx-persist-store": "^1.1.5",
         "mobx-react-lite": "^4.0.7",
+        "motion": "^11.14.1",
         "next": "^14.0.4",
         "plaiceholder": "^3.0.0",
         "react": "^18.3.1",

@@ -18,7 +18,7 @@ const AdminPage = observer(() => {
 
     return (
         <>
-            <section className={s.section}>{!authService.login && <Auth/>}</section>
+           {!authService.login && <Auth/>}
         </>
     );
 });

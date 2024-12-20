@@ -1,0 +1,29 @@
+@use "/app/styles/animate.scss" as *;
+@use "/app/styles/color.scss" as *;
+@use "/app/styles/sizes.scss" as *;
+.section {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    &__title {
+    }
+
+    &__cont {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px 40px;
+        align-self: flex-start;
+        background: $BG_MAIN;
+        border-radius: 5%;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}

@@ -178,7 +178,7 @@ const NewCardPage = ({ params }: { params: { name: string } }) => {
                 <CardButtons setConfirmation={setConfirmation} publishedDisable={true} />
                 <Confirmation
                     loading={loading}
-                    text="Предыдущие данные будут потеряны, сохранить изменения?"
+                    text="Создать новую запись?"
                     active={confirmation}
                     setActive={setConfirmation}
                     functionConfirmation={saveChange}

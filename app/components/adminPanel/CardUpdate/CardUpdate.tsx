@@ -27,6 +27,7 @@ interface IProps {
     data: ICategory | IProduct;
 }
 const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, link }) => {
+    console.log(data);
     const [name, setName] = useState(data.attributes.name);
     const [title, setTitle] = useState(data.attributes.title);
     const [description, setDescription] = useState(data.attributes.description);
@@ -80,7 +81,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
             name: name,
             title: title,
             description: description,
-            video:video
+            video: video,
         };
         if (idCategory !== null) {
             newData.category = {
@@ -140,6 +141,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
             }
             appService.changePreview([]);
         }
+        //сохранение нескольких изображений
 
         if (files !== null) {
             const formData = new FormData();
@@ -156,10 +158,17 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
             await changeImage({ token: authService.token, formData });
 
             appService.changeArrPreviews([]);
+            setFiles(null);
         }
         setConfirmation(false);
-        refresh(); //обновляет страницу и получает новые данные с API
         setLoading(false);
+        // разобраться с обновлением данных и изображения!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // const timer = setTimeout(() => {
+        //     console.log(data.attributes.image.data.attributes);
+            refresh(); //обновляет страницу и получает новые данные с API
+        // }, 1000);
+        // return() => clearTimeout(timer);
+        
     };
 
     const delEntry = async () => {

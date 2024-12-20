@@ -36,9 +36,16 @@ const Confirmation: FC<IProps> = ({ active, setActive, functionConfirmation, tex
                     }}
                 >
                     <>
-                        <p>{text}</p>
+                        <p className={s.confirmation__text}>{text}</p>
                         <div className={s.confirmation__box}>
-                            <Button onClick={functionConfirmation}>ok</Button>
+                            <Button
+                                onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                                    functionConfirmation(e);
+                                    setActive(false);
+                                }}
+                            >
+                                ok
+                            </Button>
                             <Button
                                 onClick={(e: MouseEvent<HTMLButtonElement>) => {
                                     e.stopPropagation();
