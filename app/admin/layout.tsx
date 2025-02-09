@@ -26,6 +26,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: "Категории", link: "categories" },
         { name: "Продукты", link: "products" },
         { name: "Вопросы", link: "requests" },
+        { name: "Заявки", link: "applications" },
+        { name: "Новая заявка", link: "applications/create" },
     ];
 
     const exitAccount = (e: MouseEvent<HTMLButtonElement>) => {
