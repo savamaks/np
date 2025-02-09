@@ -13,7 +13,7 @@ import CardProduct from "@/app/components/CardProduct/CardProduct";
 
 const getData = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/categories?populate[products][populate][0]=image&populate[products][populate][1]=images`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?populate[products][populate][0]=image&populate[products][populate][1]=images`, {
             method: "GET",
             next: {
                 revalidate: 300,
@@ -31,7 +31,7 @@ const getData = async () => {
 };
 const getCategoryMeta = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/categories?populate=*`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?populate=*`, {
             method: "GET",
             next: {
                 revalidate: 300,
@@ -64,7 +64,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 
     const title = data[0].attributes.name;
     const description = data[0].attributes.description;
-    const srcImage = "https://wclouds.ru" + data[0].attributes.image.data.attributes.formats.small.url;
+    const srcImage = `${process.env.NEXT_PUBLIC_SRC_STRAPI} `+ data[0].attributes.image.data.attributes.formats.small.url;
 
     return {
         title: title,
@@ -109,9 +109,9 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                             let srcImage = "";
 
                             if (el.attributes.images.data !== null) {
-                                srcImage += "https://wclouds.ru" + el.attributes.image.data.attributes.formats.small?.url;
+                                srcImage += `${process.env.NEXT_PUBLIC_SRC_STRAPI}` + el.attributes.image.data.attributes.formats.small?.url;
                             } else {
-                                srcImage += "https://wclouds.ru" + "/uploads/assets_0f9f13cb55.png";
+                                srcImage += `${process.env.NEXT_PUBLIC_SRC_STRAPI}` + "/uploads/assets_0f9f13cb55.png";
                             }
 
                                 const myBlurDataUrl = await getBase64(srcImage);

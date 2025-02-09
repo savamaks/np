@@ -17,7 +17,7 @@ import Video from "@/app/components/Video/Video";
 const getData = async () => {
     try {
         const response = await fetch(
-            `https://wclouds.ru/api/categories?populate[products][populate][0]=image&populate[products][populate][1]=images`,
+            `${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?populate[products][populate][0]=image&populate[products][populate][1]=images`,
             {
                 method: "GET",
                 next: {
@@ -49,7 +49,7 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 
     const title = product[0].attributes.name;
     const description = product[0].attributes.description;
-    const srcImage = "https://wclouds.ru" + product[0].attributes.image.data.attributes.url;
+    const srcImage = `${process.env.NEXT_PUBLIC_SRC_STRAPI}` + product[0].attributes.image.data.attributes.url;
     return {
         title: title,
         description: description,
@@ -101,7 +101,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                     {product.map(async (product: IProduct, index: number) => {
                         let myBlurDataUrl;
                         if (product.attributes.image.data.attributes.formats.small !== undefined) {
-                            myBlurDataUrl = await getBase64(`https://wclouds.ru${product.attributes.image.data.attributes.formats.small.url}`);
+                            myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.image.data.attributes.formats.small.url}`);
                         }
 
                         return (
@@ -120,7 +120,7 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                                 <div className={s.section__cont}>
                                     <Image
                                         className={s.section__cont_image}
-                                        src={`https://wclouds.ru${product.attributes.image.data.attributes.url}`}
+                                        src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.image.data.attributes.url}`}
                                         alt="img"
                                         width={600}
                                         height={450}

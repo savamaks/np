@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const getData = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/categories/?populate=*`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories/?populate=*`, {
             method: "GET",
             next: {
                 revalidate: 300,
@@ -36,12 +36,12 @@ const ServicesData = async () => {
             <p className={s.container__text}>Мы производим и делаем монтаж любого вида потолка.</p>
             <div className={s.box}>
                 {data.data.map(async (el: ICategory, index: number) => {
-                    const myBlurDataUrl = await getBase64("https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`);
+                    const myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.attributes.image.data.attributes.formats.small.url}`);
                     return (
                         <div key={index} className={cn(s.card)}>
                             <Image
                                 className={s.card__image}
-                                src={"https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`}
+                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.attributes.image.data.attributes.formats.small.url}`}
                                 loading="lazy"
                                 width={350}
                                 height={250}

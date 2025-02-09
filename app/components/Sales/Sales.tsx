@@ -7,7 +7,7 @@ import Contacts from "../Contacts/Contacts";
 
 const getData = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/sales`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/sales`, {
             method: "GET",
             next: {
                 revalidate: 300,

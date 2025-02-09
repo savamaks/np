@@ -25,7 +25,7 @@ interface IData {
 }
 const getData = async () => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/rewiews?sort=date:desc`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/rewiews?sort=date:desc`, {
             method: "GET",
             next: {
                 revalidate: 300,

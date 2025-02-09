@@ -28,7 +28,7 @@ const GalleryImage: FC<IProps> = ({ images, refresh }) => {
                         : el.attributes.url;
                     return (
                         <div className={s.container__box} key={index}>
-                            <Image className={s.container__box_image} alt="" src={`https://wclouds.ru${srcImage}`} width={200} height={150} />
+                            <Image className={s.container__box_image} alt="" src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${srcImage}`} width={200} height={150} />
                             <Button
                                 onClick={async (e: MouseEvent<HTMLButtonElement>) => {
                                     e.preventDefault();

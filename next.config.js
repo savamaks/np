@@ -10,7 +10,7 @@ const nextConfig = {
             // },
             {
                 protocol: "https",
-                hostname: "wclouds.ru",
+                hostname: "wclouds.ptz-potolki.ru",
                 port: "",
                 pathname: "/uploads/**",
             },

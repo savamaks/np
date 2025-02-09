@@ -13,7 +13,7 @@ interface IPropsData {
 
 const getData = async ({ token }: IPropsData): Promise<Array<ICategory> | null> => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/categories?&publicationState=preview`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories?&publicationState=preview`, {
             method: "GET",
             next: {
                 revalidate: 0,

@@ -11,8 +11,8 @@ interface IProps {
 }
 const Card: FC<IProps> = ({ product, onClick }) => {
     const srcImage = product.attributes.image.data
-        ? `https://wclouds.ru${product.attributes.image.data.attributes.url}`
-        : "https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png";
+        ? `${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.image.data.attributes.url}`
+        : `${process.env.NEXT_PUBLIC_SRC_STRAPI}/uploads/free_icon_image_editing_8304794_ce7538248f.png`;
     return (
         <>
             <div

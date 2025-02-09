@@ -13,7 +13,7 @@ import CardProduct from "../components/CardProduct/CardProduct";
 
 const getData = async () => {
     try {
-        const response = await fetch(`https://wclouds.ru/api/categories/?populate=*`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/categories/?populate=*`, {
             method: "GET",
             next: {
                 revalidate: 300,
@@ -48,12 +48,12 @@ const Services = async () => {
                 <h1 className={cn(s.section__title)}>Виды услуг</h1>
                 <div className={s.section__box}>
                     {data.data.map(async (el: ICategory, index: number) => {
-                        const myBlurDataUrl = await getBase64("https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`);
+                        const myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.attributes.image.data.attributes.formats.small.url}`);
                         return (
                             <CardProduct
                                 key={index}
                                 href={`/services/${el.attributes.title}`}
-                                src={"https://wclouds.ru" + `${el.attributes.image.data.attributes.formats.small.url}`}
+                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.attributes.image.data.attributes.formats.small.url}`}
                                 blur={myBlurDataUrl}
                                 name={el.attributes.name}
                                 description={el.attributes.description}

@@ -12,7 +12,7 @@ import MainListRequest from "./components/LIstRequest/MainListRequest";
 
 const getData = async () => {
     try {
-        const res = await fetch(`https://wclouds.ru/api/main`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SRC_STRAPI}/api/main`, {
             method: "GET",
             next: {
                 revalidate: 300,

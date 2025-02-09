@@ -35,8 +35,8 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState(
         data.attributes.image.data
-            ? `https://wclouds.ru${data.attributes.image.data.attributes.url}`
-            : "https://wclouds.ru/uploads/free_icon_image_editing_8304794_ce7538248f.png"
+            ? `${process.env.NEXT_PUBLIC_SRC_STRAPI}${data.attributes.image.data.attributes.url}`
+            : `${process.env.NEXT_PUBLIC_SRC_STRAPI}/uploads/free_icon_image_editing_8304794_ce7538248f.png`
     );
 
     const [files, setFiles] = useState<FileList | null>(null);

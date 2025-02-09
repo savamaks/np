@@ -15,7 +15,7 @@ const open: NextFont = Open_Sans({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://wclouds.ru"),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_SRC_STRAPI}`),
     title: {
         default: "Натяжные потолки | Петрозаводск, Кондопога",
         template: "Натяжные потолки | %s",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         description: "",
         images: [
             {
-                url: "https://wclouds.ru/uploads/light_2_c4fedcaf67.jpg",
+                url: `${process.env.NEXT_PUBLIC_SRC_STRAPI}/uploads/light_2_c4fedcaf67.jpg`,
                 width: 800,
                 height: 600,
             },
