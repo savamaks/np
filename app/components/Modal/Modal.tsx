@@ -133,7 +133,7 @@ const Modal: FC<IModalProps> = ({ numIndex, setIndex, images }) => {
                                             key={index}
                                             onClick={clickImage}
                                             className={cn(s.modal__cont_image)}
-                                            src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${el.attributes.url}`}
+                                            src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${el.url}`}
                                             placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(200, 100))}`}
                                             alt="fullImage"
                                             width={3000}

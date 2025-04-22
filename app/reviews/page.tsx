@@ -8,18 +8,8 @@ import { Metadata } from "next";
 import WriteRewiev from "../components/WriteRewiev/WriteRewiev";
 import { correctDate } from "../_handlerFunc/correctDate";
 import ArrowUp from "../components/arrowUp/ArrowUp";
+import { IDataRewive } from "../types";
 
-interface IDataRewive {
-    id: number;
-    attributes: {
-        name: string;
-        text: string;
-        date: string;
-        rating: string;
-        createdAt: string;
-        published: boolean;
-    };
-}
 interface IData {
     data: Array<IDataRewive>;
 }
@@ -48,37 +38,37 @@ export const metadata: Metadata = {
     },
 };
 const ReviewsPage = async () => {
-    const data: IData = await getData();
-   
-   return (
+    const data:IData = await getData();
+
+    return (
         <>
             <section className={cn(s.section)}>
                 <div className={cn(s.section__box)}>
-                <FormTelegram>Заявка на замер</FormTelegram>
-                <WriteRewiev />
+                    <FormTelegram>Заявка на замер</FormTelegram>
+                    <WriteRewiev />
                 </div>
                 <ArrowUp />
 
                 <div className={cn(s.section__box)}>
                     {data.data.map((el: IDataRewive, index: number) => {
-                        if (!el.attributes.published) return;
-                        // console.log(el.attributes.date);
+                        if (!el.published) return;
+                        // console.log(el.date);
                         let arrStar = [];
-                        for (let i = 0; i < +el.attributes.rating; i++) {
+                        for (let i = 0; i < +el.rating; i++) {
                             arrStar.push(i);
                         }
 
-                        const correctName = el.attributes.name
+                        const correctName = el.name
                             .split(" ")
                             .map((el: string) => el[0].toUpperCase() + el.slice(1))
                             .join(" ");
 
                         let date: string = "";
 
-                        if (el.attributes.date !== null) {
-                            date = correctDate(el.attributes.date);
+                        if (el.date !== null) {
+                            date = correctDate(el.date);
                         } else {
-                            date = correctDate(el.attributes.createdAt.slice(0, 10));
+                            date = correctDate(el.createdAt.slice(0, 10));
                         }
 
                         return (
@@ -91,7 +81,7 @@ const ReviewsPage = async () => {
                                     })}
                                 </div>
                                 <p className={cn(s.section__card_text, s.date)}>{date}</p>
-                                <p className={cn(s.section__card_text)}>{el.attributes.text}</p>
+                                <p className={cn(s.section__card_text)}>{el.text}</p>
                             </div>
                         );
                     })}

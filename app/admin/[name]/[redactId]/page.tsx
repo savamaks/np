@@ -93,7 +93,7 @@ const PageRedact = ({ params }: { params: { name: string; redactId: string } }) 
             <>
                 {(params.name === "categories" || params.name === "products") && (
                     <div>
-                        {data?.attributes && (
+                        {data && (
                             <CardUpdate
                                 data={data}
                                 setConfirmation={setConfirmation}

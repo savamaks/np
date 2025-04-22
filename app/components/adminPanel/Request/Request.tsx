@@ -27,17 +27,17 @@ const Request: FC<IProps> = ({ data }) => {
                         className={s.container__card}
                     >
                         <div className={s.container__card_box}>
-                            <p className={s.container__card_request}> {el.attributes.request}</p>
+                            <p className={s.container__card_request}> {el.request}</p>
                             <p
                                 className={cn(
                                     s.container__card_public,
-                                    el.attributes.publishedAt === null ? s.container__card_draft : s.container__card_published
+                                    el.publishedAt === null ? s.container__card_draft : s.container__card_published
                                 )}
                             >
-                                {el.attributes.publishedAt === null ? "Неопубликован" : "Опубликован"}
+                                {el.publishedAt === null ? "Неопубликован" : "Опубликован"}
                             </p>
                         </div>
-                        <p className={s.container__card_text}> {el.attributes.answer}</p>
+                        <p className={s.container__card_text}> {el.answer}</p>
                     </div>
                 );
             })}

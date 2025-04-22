@@ -46,7 +46,7 @@ const Home = async () => {
                             <h1 className={cn(s.section__title)}>Потолки</h1>
                         </div>
 
-                        <p className={s.section__text}>{data.data.attributes.text}</p>
+                        <p className={s.section__text}>{data.data.text}</p>
 
                         <FormTelegram>Заявка на замер</FormTelegram>
                     </div>

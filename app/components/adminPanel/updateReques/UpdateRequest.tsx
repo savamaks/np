@@ -15,8 +15,8 @@ interface IProps {
 }
 
 const UpdateRequest: FC<IProps> = ({ data, refresh }) => {
-    const [request, setRequest] = useState(data.attributes.request);
-    const [answer, setAnswer] = useState(data.attributes.answer);
+    const [request, setRequest] = useState(data.request);
+    const [answer, setAnswer] = useState(data.answer);
     const [confirmationSave, setConfirmationSave] = useState(false);
     const [confirmationDel, setConfirmationDel] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ const UpdateRequest: FC<IProps> = ({ data, refresh }) => {
         const time = new Date().toLocaleDateString().split(".").reverse().join("-");
 
         const newData: INewData = {
-            publishedAt: data.attributes.publishedAt !== null ? null : time,
+            publishedAt: data.publishedAt !== null ? null : time,
         };
         const result = await saveChangeCategory({ data: newData, id: data.id, link: "requests", token: authService.token });
 
@@ -81,7 +81,7 @@ const UpdateRequest: FC<IProps> = ({ data, refresh }) => {
             <CardButtons
                 setConfirmation={setConfirmationSave}
                 changePublished={changePublished}
-                publishedAt={data.attributes.publishedAt}
+                publishedAt={data.publishedAt}
                 deleteEntry={setConfirmationDel}
             />
             <Confirmation

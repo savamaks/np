@@ -45,100 +45,90 @@ export interface IMouseEvent extends MouseEvent<HTMLImageElement> {
 
 export interface IDataImage {
     id: string;
-    attributes: {
-        formats: {
-            small: {
-                url: string;
-            };
-            medium: {
-                url: string;
-            };
-            large?: {
-                url: string;
-            };
+
+    formats: {
+        small: {
+            url: string;
         };
-        name: string;
-        url: string;
+        medium: {
+            url: string;
+        };
+        large?: {
+            url: string;
+        };
     };
+    name: string;
+    url: string;
 }
 export interface IWorkPhoto {
     id: string;
-    attributes: {
-        title: string;
-        images: {
-            data: Array<IDataImage>;
-        };
-    };
+
+    title: string;
+    images: Array<IDataImage>;
 }
 
 export interface IProduct {
     id: string;
-    attributes: {
-        title: string;
-        name: string;
-        description: string;
-        video: string;
 
-        images: {
-            data: Array<IDataImage>;
-        };
-        image: IImage;
-        category: {
-            data: ICategory;
-        };
-        publishedAt: null | string;
-        products: {
-            data: Array<IProduct>;
-        };
-    };
+    title: string;
+    name: string;
+    description: string;
+    video: string;
+
+    images: Array<IDataImage>;
+
+    image: IImage;
+    category: ICategory;
+
+    publishedAt: null | string;
+    products: Array<IProduct>;
 }
 
 export interface IImage {
-    data: {
-        id: string;
-        attributes: {
-            formats: {
-                small: {
-                    url: string;
-                };
-                medium: {
-                    url: string;
-                };
-            };
+    id: string;
+
+    formats: {
+        small: {
+            url: string;
+        };
+        medium: {
             url: string;
         };
     };
+    url: string;
 }
 export interface ICategory {
     id: string;
-    attributes: {
-        title: string;
-        name: string;
-        description: string;
-        products: {
-            data: Array<IProduct>;
-        };
-        images?: {
-            data: Array<IDataImage>;
-        };
-        video?: string;
-        category?: {
-            data: ICategory;
-        };
-        image: IImage;
-        publishedAt: string | null;
-    };
+    title: string;
+    name: string;
+    description: string;
+    products: Array<IProduct>;
+
+    images?: Array<IDataImage>;
+
+    video?: string;
+    category?: ICategory;
+    image: IImage;
+    publishedAt: string | null;
 }
 
 export interface IRequest {
     id: string;
-    attributes: {
-        request: string;
-        answer: string;
-        publishedAt: null | string;
-    };
+    request: string;
+    answer: string;
+    publishedAt: null | string;
 }
 export interface INewDataRequest {
     request: string;
     answer: string;
+}
+
+export interface IDataRewive {
+    id: number;
+    name: string;
+    text: string;
+    date: string;
+    rating: string;
+    createdAt: string;
+    published: boolean;
 }

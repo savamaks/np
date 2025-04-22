@@ -47,24 +47,24 @@ const getCategoryMeta = async () => {
         console.log(error);
     }
 };
-//генерация страниц на сервере по полученым данным
+ //генерация страниц на сервере по полученым данным
 export const generateStaticParams = async () => {
     const categoryData: Array<ICategory> = await getData();
 
-    return categoryData.map(({ attributes }) => attributes.title);
+    return categoryData.map(({ title }) => title);
 };
 
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string } }): Promise<Metadata> => {
     const categoryData = await getCategoryMeta();
 
-    const data: Array<ICategory> = categoryData.filter((el: ICategory) => el.attributes.title === params.categoryId);
+    const data: Array<ICategory> = categoryData.filter((el: ICategory) => el.title === params.categoryId);
 
     if (data.length <= 0) return {};
 
-    const title = data[0].attributes.name;
-    const description = data[0].attributes.description;
-    const srcImage = `${process.env.NEXT_PUBLIC_SRC_STRAPI} `+ data[0].attributes.image.data.attributes.formats.small.url;
+    const title = data[0].name;
+    const description = data[0].description;
+    const srcImage = `${process.env.NEXT_PUBLIC_SRC_STRAPI} `+ data[0].image.formats.small.url;
 
     return {
         title: title,
@@ -88,7 +88,8 @@ export const generateMetadata = async ({ params }: { params: { categoryId: strin
 //страница списка продукции из категории
 const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
     const categoryData = await getData();
-    const data: Array<ICategory> = categoryData.filter((el: ICategory) => el.attributes.title === params.categoryId);
+    console.log(categoryData);
+    const data: Array<ICategory> = categoryData.filter((el: ICategory) => el.title === params.categoryId);
     if (data.length !== 0) {
         return (
             <>
@@ -100,16 +101,16 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                         <p>
                             {<Link href="/services">Услуги</Link>}
                             {" > "}
-                            {data[0].attributes.name}
+                            {data[0].name}
                         </p>
                     </nav>
-                    <h1 className={cn(s.section__title)}>{data[0].attributes.name}</h1>
+                    <h1 className={cn(s.section__title)}>{data[0].name}</h1>
                     <div className={s.section__box}>
-                        {data[0].attributes.products.data.map(async (el: IProduct, index: number) => {
+                        {data[0].products.map(async (el: IProduct, index: number) => {
                             let srcImage = "";
 
-                            if (el.attributes.images.data !== null) {
-                                srcImage += `${process.env.NEXT_PUBLIC_SRC_STRAPI}` + el.attributes.image.data.attributes.formats.small?.url;
+                            if (el.images !== null) {
+                                srcImage += `${process.env.NEXT_PUBLIC_SRC_STRAPI}` + el.image.formats.small?.url;
                             } else {
                                 srcImage += `${process.env.NEXT_PUBLIC_SRC_STRAPI}` + "/uploads/assets_0f9f13cb55.png";
                             }
@@ -118,11 +119,11 @@ const CategoryPage = async ({ params }: { params: { categoryId: string } }) => {
                                 return (
                                     <CardProduct
                                         key={index}
-                                        href={`${data[0].attributes.title}/${el.attributes.title}`}
+                                        href={`${data[0].title}/${el.title}`}
                                         src={`${srcImage}`}
                                         blur={myBlurDataUrl}
-                                        name={el.attributes.name}
-                                        description={el.attributes.description}
+                                        name={el.name}
+                                        description={el.description}
                                     />
                                 );
                             })}

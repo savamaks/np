@@ -8,9 +8,8 @@ import Modal from "../Modal/Modal";
 import { toBase64, shimmer } from "@/app/_handlerFunc/toBase64";
 
 interface IProps {
-    images: {
-        data: Array<IDataImage>;
-    };
+    images: Array<IDataImage>;
+    
 }
 const FullImage: FC<IProps> = ({ images }) => {
     const [index, setIndex] = useState("");
@@ -19,17 +18,17 @@ const FullImage: FC<IProps> = ({ images }) => {
     };
     return (
         <>
-            {index !== "" && <Modal images={images.data} numIndex={index} setIndex={setIndex} />}
+            {index !== "" && <Modal images={images} numIndex={index} setIndex={setIndex} />}
             <div className={s.box}>
-                {images.data.map((el: IDataImage, index: number) => {
+                {images.map((el: IDataImage, index: number) => {
                     return (
                         <Image
                             onClick={clickImage}
                             className={s.box__image}
                             key={index}
                             data-index={index}
-                            data-src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${el.attributes.url}`}
-                            src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${el.attributes.url}`}
+                            data-src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${el.url}`}
+                            src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${el.url}`}
                             alt="workImage"
                             placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(240, 180))}`}
                             width={400}

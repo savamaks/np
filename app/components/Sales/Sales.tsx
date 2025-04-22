@@ -34,10 +34,10 @@ const Sales = async () => {
             <div className={s.box}>
                 {data.data.map((el: any, index: number) => {
                     return (
-                        <FormTelegram key={index} type="click" textSale={el.attributes.title}>
+                        <FormTelegram key={index} type="click" textSale={el.title}>
                             <div className={s.card} key={index}>
-                                <h2 className={s.card__title}>{el.attributes.title}</h2>
-                                <p className={s.card__text}>{el.attributes.description}</p>
+                                <h2 className={s.card__title}>{el.title}</h2>
+                                <p className={s.card__text}>{el.description}</p>
                             </div>
                         </FormTelegram>
                     );

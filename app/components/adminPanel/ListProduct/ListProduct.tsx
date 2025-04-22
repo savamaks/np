@@ -134,7 +134,7 @@ const ListProduct = ({ list, setListIdAdded, setListIdNotAdded }: IProps) => {
                 {productsNotAdded.map((el: IProduct, index: number) => {
                     return (
                         <option value={el.id} key={index} className={s.select__option}>
-                            {el.attributes.name}
+                            {el.name}
                         </option>
                     );
                 })}
@@ -155,7 +155,7 @@ const ListProduct = ({ list, setListIdAdded, setListIdNotAdded }: IProps) => {
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                             >
-                                                <p className={s.container__card_text}>{el.attributes.name}</p>
+                                                <p className={s.container__card_text}>{el.name}</p>
                                                 <Button
                                                     type="noBorder"
                                                     onClick={(e: MouseEvent<HTMLButtonElement>) => {

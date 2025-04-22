@@ -36,12 +36,12 @@ const ServicesData = async () => {
             <p className={s.container__text}>Мы производим и делаем монтаж любого вида потолка.</p>
             <div className={s.box}>
                 {data.data.map(async (el: ICategory, index: number) => {
-                    const myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.attributes.image.data.attributes.formats.small.url}`);
+                    const myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.image.formats.small.url}`);
                     return (
                         <div key={index} className={cn(s.card)}>
                             <Image
                                 className={s.card__image}
-                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.attributes.image.data.attributes.formats.small.url}`}
+                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.image.formats.small.url}`}
                                 loading="lazy"
                                 width={350}
                                 height={250}
@@ -50,18 +50,18 @@ const ServicesData = async () => {
                                 blurDataURL={myBlurDataUrl}
                             />
                             <div className={s.card__cont}>
-                                <Link href={`services/${el.attributes.title}`}>
-                                    <h3 className={cn(s.card__cont_title)}>{el.attributes.name}</h3>
+                                <Link href={`services/${el.title}`}>
+                                    <h3 className={cn(s.card__cont_title)}>{el.name}</h3>
                                 </Link>
 
-                                {el.attributes.products?.data.map((product: IProduct, indexProduct: number) => {
+                                {el.products?.map((product: IProduct, indexProduct: number) => {
                                     return (
                                         <Link
                                             key={indexProduct}
                                             className={s.link}
-                                            href={`services/${el.attributes.title}/${product.attributes.title}`}
+                                            href={`services/${el.title}/${product.title}`}
                                         >
-                                            <p className={s.card__cont_product}>{product.attributes.name}</p>
+                                            <p className={s.card__cont_product}>{product.name}</p>
                                         </Link>
                                     );
                                 })}

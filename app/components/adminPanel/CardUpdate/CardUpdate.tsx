@@ -28,21 +28,21 @@ interface IProps {
 }
 const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, link }) => {
     console.log(data);
-    const [name, setName] = useState(data.attributes.name);
-    const [title, setTitle] = useState(data.attributes.title);
-    const [description, setDescription] = useState(data.attributes.description);
-    const [video, setVideo] = useState(data.attributes.video);
+    const [name, setName] = useState(data.name);
+    const [title, setTitle] = useState(data.title);
+    const [description, setDescription] = useState(data.description);
+    const [video, setVideo] = useState(data.video);
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState(
-        data.attributes.image.data
-            ? `${process.env.NEXT_PUBLIC_SRC_STRAPI}${data.attributes.image.data.attributes.url}`
+        data.image
+            ? `${process.env.NEXT_PUBLIC_SRC_STRAPI}${data.image.url}`
             : `${process.env.NEXT_PUBLIC_SRC_STRAPI}/uploads/free_icon_image_editing_8304794_ce7538248f.png`
     );
 
     const [files, setFiles] = useState<FileList | null>(null);
     const [file, setFile] = useState<FileList | null>(null);
     const [idCategory, setIdCategory] = useState<string | null>(
-        data.attributes.category !== undefined ? (data.attributes.category?.data !== null ? data.attributes.category?.data.id : null) : null
+        data.category !== undefined ? (data.category !== null ? data.category.id : null) : null
     );
     const [listIdConnect, setListIdConnect] = useState<Array<string>>([]);
     const [listIdDisconnect, setListIdDisconnect] = useState<Array<string>>([]);
@@ -63,7 +63,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
         const time = new Date().toLocaleDateString().split(".").reverse().join("-");
 
         const newData: INewData = {
-            publishedAt: data.attributes.publishedAt !== null ? null : time,
+            publishedAt: data.publishedAt !== null ? null : time,
         };
         const result = await saveChangeCategory({ data: newData, id: data.id, link, token: authService.token });
         if (result === null) {
@@ -94,12 +94,12 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
                     },
                 ],
             };
-        } else if (idCategory === null && data.attributes.category?.data !== null) {
-            if (data.attributes.category?.data.id !== undefined) {
+        } else if (idCategory === null && data.category !== null) {
+            if (data.category?.id !== undefined) {
                 newData.category = {
                     disconnect: [
                         {
-                            id: data.attributes.category.data.id,
+                            id: data.category.id,
                         },
                     ],
                 };
@@ -130,10 +130,10 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
 
             await changeImage({ token: authService.token, formData });
 
-            if (data.attributes.image?.data !== null && data.attributes.image !== undefined) {
+            if (data.image !== null && data.image !== undefined) {
                 const res = await deleteImage({
                     token: authService.token,
-                    id: data.attributes.image.data.id,
+                    id: data.image.id,
                 });
                 if (res !== null) {
                     refresh();
@@ -164,7 +164,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
         setLoading(false);
         // разобраться с обновлением данных и изображения!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // const timer = setTimeout(() => {
-        //     console.log(data.attributes.image.data.attributes);
+        //     console.log(data.image.data);
             refresh(); //обновляет страницу и получает новые данные с API
         // }, 1000);
         // return() => clearTimeout(timer);
@@ -175,14 +175,14 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
         setLoading(true);
         const res = await deleteEntry({ id: data.id, link: link, token: authService.token });
 
-        if (data.attributes.image?.data !== null && data.attributes.image !== undefined) {
+        if (data.image !== null && data.image !== undefined) {
             const res = await deleteImage({
                 token: authService.token,
-                id: data.attributes.image.data.id,
+                id: data.image.id,
             });
         }
-        if (data.attributes.images?.data !== null && data.attributes.images !== undefined) {
-            data.attributes.images.data.map(async (el: IDataImage) => {
+        if (data.images !== null && data.images !== undefined) {
+            data.images.map(async (el: IDataImage) => {
                 const res = await deleteImage({
                     token: authService.token,
                     id: el.id,
@@ -242,7 +242,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
                 />
 
                 {link === "categories" && (
-                    <ListProduct setListIdNotAdded={setListIdDisconnect} setListIdAdded={setListIdConnect} list={data.attributes.products.data} />
+                    <ListProduct setListIdNotAdded={setListIdDisconnect} setListIdAdded={setListIdConnect} list={data.products} />
                 )}
 
                 {link === "products" && <SelectProduct setIdCategory={setIdCategory} idCategory={idCategory} />}
@@ -250,7 +250,7 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
                 <h2>Изображение</h2>
                 <AddImages setFiles={setFile} type="one" label="photo" preview={preview} width={500} height={375} />
 
-                {data.attributes.category && (
+                {data.category && (
                     <>
                         <h2>Галерея</h2>
                         <AddImages
@@ -263,15 +263,15 @@ const CardUpdate: FC<IProps> = ({ refresh, setConfirmation, confirmation, data, 
                             height={120}
                         />
 
-                        {data.attributes.images !== null && data.attributes.images !== undefined && (
-                            <GalleryImage refresh={refresh} images={data.attributes.images?.data} />
+                        {data.images !== null && data.images !== undefined && (
+                            <GalleryImage refresh={refresh} images={data.images} />
                         )}
                     </>
                 )}
                 <CardButtons
                     setConfirmation={setConfirmation}
                     changePublished={changePublished}
-                    publishedAt={data.attributes.publishedAt}
+                    publishedAt={data.publishedAt}
                     deleteEntry={setConfirmationDel}
                 />
             </div>

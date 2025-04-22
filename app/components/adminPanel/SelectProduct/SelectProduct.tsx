@@ -66,7 +66,7 @@ const SelectProduct = ({ idCategory, setIdCategory }: IProps) => {
                     data.map((el: ICategory, index: number) => {
                         return (
                             <option value={el.id} key={index} className={s.select__option} selected={idCategory === el.id ? true : false}>
-                                {el.attributes.name}
+                                {el.name}
                             </option>
                         );
                     })}

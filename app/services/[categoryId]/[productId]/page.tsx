@@ -40,16 +40,16 @@ const getData = async () => {
 //генерация метаданных
 export const generateMetadata = async ({ params }: { params: { categoryId: string; productId: string } }): Promise<Metadata> => {
     const data: Array<ICategory> = await getData();
-    const category: Array<ICategory> = data.filter((el: ICategory) => el.attributes.title === params.categoryId);
+    const category: Array<ICategory> = data.filter((el: ICategory) => el.title === params.categoryId);
     if (category === undefined) return {};
-    if (category[0].attributes.products === undefined) return {};
-    const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
+    if (category[0].products === undefined) return {};
+    const product: Array<IProduct> = category[0].products.filter((el: IProduct) => el.title === params.productId);
 
     if (product.length <= 0) return {};
 
-    const title = product[0].attributes.name;
-    const description = product[0].attributes.description;
-    const srcImage = `${process.env.NEXT_PUBLIC_SRC_STRAPI}` + product[0].attributes.image.data.attributes.url;
+    const title = product[0].name;
+    const description = product[0].description;
+    const srcImage = `${process.env.NEXT_PUBLIC_SRC_STRAPI}` + product[0].image.url;
     return {
         title: title,
         description: description,
@@ -76,11 +76,11 @@ export const generateStaticParams = async ({ params }: { params: { categoryId: s
     const data: Array<ICategory> = categoryData;
 
     return data.map((category) => {
-        if (category.attributes.products === undefined) {
+        if (category.products === undefined) {
             return {};
         } else {
-            category.attributes.products.data.map((product) => {
-                return { categoryId: category.attributes.title, productId: product.attributes.title };
+            category.products.map((product) => {
+                return { categoryId: category.title, productId: product.title };
             });
         }
     });
@@ -89,19 +89,22 @@ export const generateStaticParams = async ({ params }: { params: { categoryId: s
 //страница продукта
 const ProductPage = async ({ params }: { params: { categoryId: string; productId: string } }) => {
     const data = await getData();
-    const category: Array<ICategory> = data.filter((el: IProduct) => el.attributes.title === params.categoryId);
-    if (category[0].attributes.products === undefined) return {};
+    const category: Array<ICategory> = data.filter((el: IProduct) => el.title === params.categoryId);
 
-    const product: Array<IProduct> = category[0].attributes.products.data.filter((el: IProduct) => el.attributes.title === params.productId);
+    if (category[0].products === undefined) return {};
+
+    const product: Array<IProduct> = category[0].products.filter((el: IProduct) => el.title === params.productId);
+    console.log(product);
 
     if (product.length > 0) {
         return (
             <>
                 <main>
                     {product.map(async (product: IProduct, index: number) => {
+                        console.log(product);
                         let myBlurDataUrl;
-                        if (product.attributes.image.data.attributes.formats.small !== undefined) {
-                            myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.image.data.attributes.formats.small.url}`);
+                        if (product.image.formats.small !== undefined) {
+                            myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.image.formats.small.url}`);
                         }
 
                         return (
@@ -111,35 +114,34 @@ const ProductPage = async ({ params }: { params: { categoryId: string; productId
                                     <p>
                                         {<Link href="/services">Услуги</Link>}
                                         {" > "}
-                                        {<Link href={`/services/${params.categoryId}`}>{category[0].attributes.name}</Link>}
+                                        {<Link href={`/services/${params.categoryId}`}>{category[0].name}</Link>}
                                         {" > "}
-                                        {product.attributes.name}
+                                        {product.name}
                                     </p>
                                 </nav>
-                                <h2 className={cn(s.section__title)}>{product.attributes.name}</h2>
+                                <h2 className={cn(s.section__title)}>{product.name}</h2>
                                 <div className={s.section__cont}>
                                     <Image
                                         className={s.section__cont_image}
-                                        src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.image.data.attributes.url}`}
+                                        src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.image.url}`}
                                         alt="img"
                                         width={600}
                                         height={450}
                                         placeholder="blur"
                                         blurDataURL={myBlurDataUrl}
                                     />
-                                    <p className={s.section__cont_text}>{product.attributes.description}</p>
+                                    <p className={s.section__cont_text}>{product.description}</p>
                                 </div>
                                 <FormTelegram>Заявка на замер</FormTelegram>
 
-                                {product.attributes.video && (
+                                {product.video && (
                                     <>
                                         <h2 className={cn(s.section__title)}>Видео</h2>
-                                        <Video title={product.attributes.name} src={product.attributes.video} />
+                                        <Video title={product.name} src={product.video} />
                                     </>
                                 )}
                                 <h2 className={cn(s.section__title)}>Галерея</h2>
-                                <FullImage images={product.attributes.images} />
-                                {/* <SliderCont el={product.attributes.images.data} /> */}
+                                <FullImage images={product.images} />
                             </section>
                         );
                     })}

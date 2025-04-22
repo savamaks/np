@@ -21,11 +21,11 @@ const GalleryImage: FC<IProps> = ({ images, refresh }) => {
         <div className={s.container}>
             {images !== null &&
                 images.map((el: IDataImage, index: number) => {
-                    const srcImage = el.attributes.formats
-                        ? el.attributes.formats.small
-                            ? el.attributes.formats.small.url
-                            : el.attributes.url
-                        : el.attributes.url;
+                    const srcImage = el.formats
+                        ? el.formats.small
+                            ? el.formats.small.url
+                            : el.url
+                        : el.url;
                     return (
                         <div className={s.container__box} key={index}>
                             <Image className={s.container__box_image} alt="" src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${srcImage}`} width={200} height={150} />

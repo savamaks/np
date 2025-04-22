@@ -21,18 +21,18 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     const data = await getData();
     const categories: Array<ICategory> = data.data;
 
-    const idCategory: MetadataRoute.Sitemap = categories.map(({ attributes }) => ({
-        url: `https://ptz-potolki.ru/services/${attributes.title}`,
+    const idCategory: MetadataRoute.Sitemap = categories.map(({ title }) => ({
+        url: `https://ptz-potolki.ru/services/${title}`,
     }));
 
     let idProduct: Array<string> = [];
 
     categories.map((el) => {
-        if (el.attributes.products === undefined) return;
-        const products = el.attributes.products;
+        if (el.products === undefined) return;
+        const products = el.products;
 
-        products.data.map(({ attributes }) => {
-            idProduct.push(`https://ptz-potolki.ru/services/${el.attributes.title}/${attributes.title}`);
+        products.map(({ title }) => {
+            idProduct.push(`https://ptz-potolki.ru/services/${el.title}/${title}`);
         });
     });
 

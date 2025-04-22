@@ -44,14 +44,13 @@ export const metadata: Metadata = {
 const CatalogWork = async () => {
     const data = await getData();
     const photo: Array<IWorkPhoto> = data.data;
-    
 
     return (
         <>
             <section className={cn(s.section)}>
                 <ArrowUp />
                 <FormTelegram>Заявка на замер</FormTelegram>
-                <FullImage images={photo[0].attributes.images} />
+                <FullImage images={photo[0].images} />
             </section>
         </>
     );

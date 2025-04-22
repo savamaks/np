@@ -43,10 +43,10 @@ const SliderCont: FC<IProps> = ({ el }) => {
                             <Image
                                 onClick={clickImage}
                                 data-index={index}
-                                data-src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
-                                id={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
+                                data-src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.url}`}
+                                id={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.url}`}
                                 className={s.slider_image}
-                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.attributes.url}`}
+                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}${image.url}`}
                                 alt="img"
                                 width={300}
                                 height={225}

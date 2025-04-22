@@ -48,15 +48,15 @@ const Services = async () => {
                 <h1 className={cn(s.section__title)}>Виды услуг</h1>
                 <div className={s.section__box}>
                     {data.data.map(async (el: ICategory, index: number) => {
-                        const myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.attributes.image.data.attributes.formats.small.url}`);
+                        const myBlurDataUrl = await getBase64(`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.image.formats.small.url}`);
                         return (
                             <CardProduct
                                 key={index}
-                                href={`/services/${el.attributes.title}`}
-                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.attributes.image.data.attributes.formats.small.url}`}
+                                href={`/services/${el.title}`}
+                                src={`${process.env.NEXT_PUBLIC_SRC_STRAPI}` + `${el.image.formats.small.url}`}
                                 blur={myBlurDataUrl}
-                                name={el.attributes.name}
-                                description={el.attributes.description}
+                                name={el.name}
+                                description={el.description}
                             />
                         );
                     })}

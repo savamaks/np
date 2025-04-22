@@ -14,8 +14,8 @@ const List: FC<IProps> = ({ data }) => {
         <div className="contBox">
             {data.map((el: IRequest, index: number) => {
                 return (
-                    <Item count={count} setCount={setCount} index={index} key={index} request={el.attributes.request} close={"+"}>
-                        <p className="text">{el.attributes.answer}</p>
+                    <Item count={count} setCount={setCount} index={index} key={index} request={el.request} close={"+"}>
+                        <p className="text">{el.answer}</p>
                     </Item>
                 );
             })}

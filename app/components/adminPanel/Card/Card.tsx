@@ -10,8 +10,8 @@ interface IProps {
     onClick?: (e: MouseEvent<HTMLDivElement>, product: ICategory) => void;
 }
 const Card: FC<IProps> = ({ product, onClick }) => {
-    const srcImage = product.attributes.image.data
-        ? `${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.attributes.image.data.attributes.url}`
+    const srcImage = product.image
+        ? `${process.env.NEXT_PUBLIC_SRC_STRAPI}${product.image.url}`
         : `${process.env.NEXT_PUBLIC_SRC_STRAPI}/uploads/free_icon_image_editing_8304794_ce7538248f.png`;
     return (
         <>
@@ -26,13 +26,13 @@ const Card: FC<IProps> = ({ product, onClick }) => {
             >
                 <p className={s.card__text}>{product.id}</p>
                 <div className={s.card__box}>
-                    <p className={s.card__maintext}>{product.attributes.name}</p>
-                    <p className={cn(s.card__public, product.attributes.publishedAt === null ? s.card__draft : s.card__published)}>
-                        {product.attributes.publishedAt === null ? "Неопубликован" : "Опубликован"}
+                    <p className={s.card__maintext}>{product.name}</p>
+                    <p className={cn(s.card__public, product.publishedAt === null ? s.card__draft : s.card__published)}>
+                        {product.publishedAt === null ? "Неопубликован" : "Опубликован"}
                     </p>
                 </div>
-                <p className={s.card__text}>{product.attributes.title}</p>
-                <Image className={s.card__image} src={srcImage} alt={`image ${product.attributes.name}`} width={200} height={150} />
+                <p className={s.card__text}>{product.title}</p>
+                <Image className={s.card__image} src={srcImage} alt={`image ${product.name}`} width={200} height={150} />
             </div>
         </>
     );
